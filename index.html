@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dan Talks AI – Simplifying AI for Creators & Small Businesses</title>
+    <meta name="description" content="Join Dan, a U.S. Army veteran and creator, as he simplifies artificial intelligence for creators and small businesses. Get tutorials, practical tools, and a free AI Starter Pack.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- TailwindCSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Tailwind custom theme to match the dark, modern palette requested
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: '#6c63ff',
+                light: '#7d79ff',
+                dark: '#5a53d1'
+              },
+              secondary: {
+                DEFAULT: '#3e4e98'
+              },
+              dark: {
+                DEFAULT: '#0f172a',
+                light: '#1e293b'
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-dark text-white leading-relaxed antialiased">
+  <!-- Navigation -->
+  <header class="relative z-20">
+    <nav class="container mx-auto px-6 py-6 flex justify-between items-center">
+      <a href="#hero" class="text-2xl font-bold text-primary">Dan Talks AI</a>
+      <ul class="hidden md:flex space-x-8 text-gray-300">
+        <li><a href="#tutorials" class="hover:text-primary transition-colors">Tutorials</a></li>
+        <li><a href="#about" class="hover:text-primary transition-colors">About</a></li>
+        <li><a href="https://shop.dantalks.ai" target="_blank" class="hover:text-primary transition-colors">Shop</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative bg-dark flex items-center min-h-[70vh] overflow-hidden">
+    <div class="container mx-auto px-6 py-12 flex flex-col-reverse md:flex-row items-center justify-between">
+      <div class="w-full md:w-1/2 mt-8 md:mt-0">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6">Simplifying AI for Creators &amp; Businesses</h1>
+        <p class="text-lg md:text-xl mb-8 text-gray-300 max-w-prose">Discover practical AI tools, tutorials, and insights without the hype. Learn how to harness AI to grow your creative business.</p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#latest-video" class="bg-primary hover:bg-primary-dark text-dark font-bold py-3 px-6 rounded-md text-center">Watch Latest</a>
+          <a href="#starter-pack" class="border border-primary text-primary hover:bg-primary hover:text-dark font-bold py-3 px-6 rounded-md text-center">Get Starter Pack</a>
+        </div>
+      </div>
+      <div class="w-full md:w-1/2 flex justify-center">
+        <!-- Illustration or hero image -- placeholder unsplash image -->
+        <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="AI illustration" class="max-w-md rounded-lg shadow-lg">
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Video Section -->
+  <section id="latest-video" class="bg-dark-light py-16">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Latest Video</h2>
+      <p class="text-gray-400 mb-8">Stay up to date with my latest YouTube tutorials. Dive into practical walkthroughs and real-world AI use cases.</p>
+      <!-- Responsive video embed using aspect ratio utilities -->
+      <div class="relative" style="padding-top: 56.25%"> <!-- 16:9 aspect ratio -->
+        <iframe class="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg" src="https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID" title="Dan Talks AI - Latest Video" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Free AI Starter Pack Section -->
+  <section id="starter-pack" class="bg-dark py-16">
+    <div class="container mx-auto px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Get Your Free AI Starter Pack</h2>
+        <p class="text-gray-400 mb-8">Kickstart your AI journey with our curated resources and tools. Join my community and receive actionable tips right in your inbox.</p>
+        <form action="#" method="post" class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+          <input type="email" name="email" placeholder="Enter your email" required class="w-full sm:w-auto px-6 py-3 rounded-md text-dark focus:ring-2 focus:ring-primary" />
+          <button type="submit" class="bg-primary hover:bg-primary-dark text-dark font-bold px-6 py-3 rounded-md">Get Starter Pack</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Tutorials & Tools Section -->
+  <section id="tutorials" class="bg-dark-light py-16">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Featured Tutorials &amp; Tools</h2>
+      <p class="text-gray-400 mb-8">Explore our top guides and tools designed to help you master AI at your own pace.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-dark border border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-2">ChatGPT for Creators</h3>
+          <p class="text-gray-400 mb-4">Learn how to use ChatGPT to brainstorm, write scripts, and enhance your content creation.</p>
+          <a href="#" class="text-primary font-bold hover:underline">Read tutorial →</a>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-dark border border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-2">Automate with AI Workflows</h3>
+          <p class="text-gray-400 mb-4">Discover AI workflows that save you hours on tasks like social media posting, transcription, and research.</p>
+          <a href="#" class="text-primary font-bold hover:underline">Read tutorial →</a>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-dark border border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-2">Midjourney &amp; Image Generation</h3>
+          <p class="text-gray-400 mb-4">Unlock the creative potential of AI image generation tools to elevate your brand visuals.</p>
+          <a href="#" class="text-primary font-bold hover:underline">Read tutorial →</a>
+        </div>
+        <!-- Card 4 -->
+        <div class="bg-dark border border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-2">AI Tools for Small Biz</h3>
+          <p class="text-gray-400 mb-4">A curated list of AI tools that help entrepreneurs automate, analyze, and grow their businesses.</p>
+          <a href="#" class="text-primary font-bold hover:underline">Explore tools →</a>
+        </div>
+        <!-- Card 5 -->
+        <div class="bg-dark border border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-2">Podcast &amp; Audio Production</h3>
+          <p class="text-gray-400 mb-4">Use AI to streamline your podcast editing, transcripts, and distribution.</p>
+          <a href="#" class="text-primary font-bold hover:underline">Read tutorial →</a>
+        </div>
+        <!-- Card 6 -->
+        <div class="bg-dark border border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-2">AI for Video Creation</h3>
+          <p class="text-gray-400 mb-4">Learn about AI-powered video editing and generation tools that can transform your workflow.</p>
+          <a href="#" class="text-primary font-bold hover:underline">Discover tools →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="bg-dark py-16">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+      <div class="md:w-1/2">
+        <img src="https://images.unsplash.com/photo-1581094797734-3f9a4a08ae18?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Dan Talks AI" class="rounded-lg shadow-xl">
+      </div>
+      <div class="md:w-1/2">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">About Dan</h2>
+        <p class="text-gray-400 mb-4">Hey, I'm Dan — a U.S. Army veteran, creator, and AI enthusiast. After serving my country, I turned my passion for technology into a mission: to demystify artificial intelligence for creators and entrepreneurs. My approach is all about real-world applications, not buzzwords.</p>
+        <p class="text-gray-400 mb-4">Through videos, tutorials, and hands‑on guides, I help you integrate AI into your workflow, so you can focus on what matters: making great content and growing your business.</p>
+        <a href="#starter-pack" class="text-primary font-bold hover:underline">Join the community →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking & Sponsor Section -->
+  <section id="contact" class="bg-dark-light py-16">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Work with Dan</h2>
+      <p class="text-gray-400 mb-8">Looking for a custom AI strategy, workshop, or sponsorship opportunity? Let's chat and explore how we can collaborate.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="mailto:hello@dantalks.ai" class="bg-primary hover:bg-primary-dark text-dark font-bold px-6 py-3 rounded-md">Book a Session</a>
+        <a href="mailto:sponsor@dantalks.ai" class="border border-primary text-primary hover:bg-primary hover:text-dark font-bold px-6 py-3 rounded-md">Sponsor the Show</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark border-t border-gray-700 py-8">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+      <div class="flex gap-4 mb-4 md:mb-0 text-gray-300">
+        <a href="#hero" class="hover:text-primary">Home</a>
+        <a href="#tutorials" class="hover:text-primary">Tutorials</a>
+        <a href="#about" class="hover:text-primary">About</a>
+        <a href="https://shop.dantalks.ai" target="_blank" class="hover:text-primary">Shop</a>
+      </div>
+      <p class="text-gray-500">&copy; <span id="year"></span> Dan Talks AI. All Rights Reserved.</p>
+    </div>
+  </footer>
+  <script>
+    // Set the current year in the footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
