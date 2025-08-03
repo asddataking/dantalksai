@@ -13,25 +13,25 @@ export default function Home() {
       </Head>
       <main className="bg-black text-gray-100 min-h-screen font-sans">
         {/* Hero Section */}
-        <section className="flex flex-col items-center justify-center text-center py-20 px-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-purple-400 mb-4">
+        <section className="flex flex-col items-center justify-center text-center py-32 px-4 bg-gradient-to-b from-black via-gray-900 to-black">
+          <h1 className="text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-purple-400 to-blue-400 text-transparent bg-clip-text mb-6">
             Real AI. Real Life. Let’s Build Something Wild.
           </h1>
           <p className="text-lg md:text-xl max-w-2xl text-gray-300 mb-8">
-            Sharing real-world AI tools, building projects, and inspiring creators.
+            Exploring AI tools, sharing exclusive deals, and writing about real-world automation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <a
-              href="#"
+              href="#deals"
               className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-md font-semibold text-center"
             >
-              Watch on YouTube
+              Browse Deals
             </a>
             <a
-              href="#"
+              href="#blog"
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-semibold text-center"
             >
-              Join the Vault
+              Read Articles
             </a>
           </div>
         </section>
@@ -65,15 +65,80 @@ export default function Home() {
           </div>
         </section>
 
-        {/* AI Vault Section */}
-        <section className="py-16 px-4">
+        {/* Affiliate Deals Section */}
+        <section id="deals" className="py-16 px-4">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-purple-400">The AI Vault</h2>
+            <h2 className="text-3xl font-bold mb-8 text-purple-400">Featured Deals</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: 'AI Course 50% Off',
+                  description: 'Master AI fundamentals with this exclusive discount.',
+                },
+                {
+                  title: 'Automation Toolkit',
+                  description: 'Save hours with ready-made scripts and workflows.',
+                },
+                {
+                  title: 'Design Assets Pack',
+                  description: 'Beautiful UI assets for your next project.',
+                },
+              ].map((deal, i) => (
+                <div key={i} className="bg-gray-800 rounded-lg p-6 shadow-lg flex flex-col">
+                  <h3 className="text-xl font-semibold mb-2">{deal.title}</h3>
+                  <p className="text-gray-400 flex-grow">{deal.description}</p>
+                  <a
+                    href="#"
+                    className="mt-4 inline-block bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-center"
+                  >
+                    Get Deal
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* AI Vault Section */}
+        <section className="py-16 px-4 bg-gray-900">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold mb-8 text-blue-400">The AI Vault</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="bg-gray-800 rounded-lg p-6 shadow-lg">
                   <h3 className="text-xl font-semibold mb-2">Tool {i + 1}</h3>
                   <p className="text-gray-400">Description of AI tool {i + 1} and what it can do for you.</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Blog Articles Section */}
+        <section id="blog" className="py-16 px-4">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold mb-8 text-purple-400">Latest Articles</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: 'Getting Started with AI Automation',
+                  excerpt: 'A beginner-friendly guide to automate workflows using AI tools.',
+                },
+                {
+                  title: 'Top 5 AI APIs in 2024',
+                  excerpt: 'We compare popular APIs to build your next AI app.',
+                },
+                {
+                  title: 'Prompt Engineering Tips',
+                  excerpt: 'Craft prompts that yield better results from large language models.',
+                },
+              ].map((post, i) => (
+                <div key={i} className="bg-gray-800 rounded-lg p-6 shadow-lg flex flex-col">
+                  <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
+                  <p className="text-gray-400 flex-grow">{post.excerpt}</p>
+                  <a href="#" className="mt-4 inline-block text-blue-400 hover:underline">
+                    Read More →
+                  </a>
                 </div>
               ))}
             </div>
