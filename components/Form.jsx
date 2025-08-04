@@ -22,13 +22,14 @@ export default function Form({ onSuccess }) {
       onSubmit={handleSubmit(onSubmit)}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-xl mx-auto p-8 bg-slate-900/60 backdrop-blur rounded-lg shadow-lg space-y-6 text-white"
+      className="max-w-xl mx-auto p-8 bg-slate-900/70 backdrop-blur rounded-lg shadow-xl space-y-6 text-white"
     >
       <div>
         <label className="block mb-2">Business Type</label>
         <select
           {...register('businessType', { required: true })}
-          className="w-full px-4 py-2 rounded-md bg-slate-800"
+          title="Select your business type"
+          className="w-full px-4 py-2 rounded-md bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:shadow-[0_0_10px_rgba(139,92,246,0.5)] transition"
         >
           <option value="">Select...</option>
           <option>Agency</option>
@@ -48,7 +49,7 @@ export default function Form({ onSuccess }) {
                 type="checkbox"
                 value={item}
                 {...register('needs', { required: true })}
-                className="text-purple-500"
+                className="text-purple-500 focus:ring-purple-500"
               />
               {item}
             </label>
@@ -61,7 +62,8 @@ export default function Form({ onSuccess }) {
         <label className="block mb-2">Budget</label>
         <select
           {...register('budget', { required: true })}
-          className="w-full px-4 py-2 rounded-md bg-slate-800"
+          title="Select your budget"
+          className="w-full px-4 py-2 rounded-md bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:shadow-[0_0_10px_rgba(139,92,246,0.5)] transition"
         >
           <option value="">Select...</option>
           <option>Under $1k</option>
@@ -75,8 +77,9 @@ export default function Form({ onSuccess }) {
         <label className="block mb-2">Name</label>
         <input
           type="text"
+          placeholder="Your name"
           {...register('name', { required: true })}
-          className="w-full px-4 py-2 rounded-md bg-slate-800"
+          className="w-full px-4 py-2 rounded-md bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:shadow-[0_0_10px_rgba(139,92,246,0.5)] transition"
         />
         {errors.name && <p className="text-red-500 text-sm mt-1">Name is required.</p>}
       </div>
@@ -85,8 +88,9 @@ export default function Form({ onSuccess }) {
         <label className="block mb-2">Email</label>
         <input
           type="email"
+          placeholder="you@example.com"
           {...register('email', { required: true })}
-          className="w-full px-4 py-2 rounded-md bg-slate-800"
+          className="w-full px-4 py-2 rounded-md bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:shadow-[0_0_10px_rgba(139,92,246,0.5)] transition"
         />
         {errors.email && <p className="text-red-500 text-sm mt-1">Email is required.</p>}
       </div>
@@ -95,15 +99,16 @@ export default function Form({ onSuccess }) {
         <label className="block mb-2">Phone (optional)</label>
         <input
           type="tel"
+          placeholder="Optional"
           {...register('phone')}
-          className="w-full px-4 py-2 rounded-md bg-slate-800"
+          className="w-full px-4 py-2 rounded-md bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:shadow-[0_0_10px_rgba(139,92,246,0.5)] transition"
         />
       </div>
 
       <motion.button
         type="submit"
         whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(139,92,246,0.8)' }}
-        className="w-full py-3 rounded-md bg-purple-600 font-semibold"
+        className="w-full py-3 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 font-semibold shadow-lg hover:shadow-purple-500/50 transition"
       >
         Submit
       </motion.button>
