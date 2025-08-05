@@ -2,7 +2,9 @@ import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
 import Hero from '../components/Hero'
 import Form from '../components/Form'
+import BlogPosts from '../components/BlogPosts'
 import Footer from '../components/Footer'
+import { getPosts } from '../lib/ghost'
 
 const deals = [
   {
@@ -17,20 +19,7 @@ const deals = [
   },
 ]
 
-const articles = [
-  {
-    title: 'How to Automate Sales Calls',
-    excerpt: 'Use AI to scale your outreach without hiring a team.',
-    link: '#',
-  },
-  {
-    title: 'Top Tools for Booking Appointments',
-    excerpt: 'Our favorite platforms to keep your calendar full.',
-    link: '#',
-  },
-]
-
-export default function Home() {
+export default function Home({ posts }) {
   const router = useRouter()
   return (
     <Layout>
@@ -38,6 +27,7 @@ export default function Home() {
       <div id="contact">
         <Form onSuccess={() => router.push('/thank-you')} />
       </div>
+      <BlogPosts posts={posts} />
       <section id="deals" className="max-w-5xl mx-auto px-6 py-16">
         <h2 className="text-3xl font-bold text-white text-center mb-8">Featured Deals</h2>
         <div className="grid gap-8 md:grid-cols-2">
@@ -55,21 +45,15 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section id="articles" className="max-w-5xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-white text-center mb-8">Latest Articles</h2>
-        <div className="grid gap-8 md:grid-cols-2">
-          {articles.map((article) => (
-            <div key={article.title} className="p-6 rounded-xl bg-slate-900/60 border border-slate-700">
-              <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
-              <p className="mb-4 text-slate-300">{article.excerpt}</p>
-              <a href={article.link} className="text-indigo-400 hover:text-indigo-300">
-                Read More →
-              </a>
-            </div>
-          ))}
-        </div>
-      </section>
       <Footer />
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  const posts = await getPosts()
+  return {
+    props: { posts },
+    revalidate: 60,
+  }
 }
