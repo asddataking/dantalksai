@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap --config next-sitemap.js",
     "start": "next start"
   },
   "dependencies": {
     "next": "latest",
+    "next-seo": "^6.8.0",
+    "next-sitemap": "^4.2.3",
     "react": "latest",
     "react-dom": "latest"
   },
