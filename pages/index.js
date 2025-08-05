@@ -1,6 +1,8 @@
 import Head from 'next/head'
+import BlogPosts from '../components/BlogPosts'
+import { getPosts } from '../lib/ghost'
 
-export default function Home() {
+export default function Home({ posts }) {
   const year = new Date().getFullYear()
   return (
     <>
@@ -46,6 +48,8 @@ export default function Home() {
             </p>
           </div>
         </section>
+
+        <BlogPosts posts={posts} />
 
         {/* Latest Videos Section */}
         <section className="py-16 px-4 bg-gray-900">
@@ -133,4 +137,9 @@ export default function Home() {
       </main>
     </>
   )
+}
+
+export async function getStaticProps() {
+  const posts = getPosts().slice(0, 3)
+  return { props: { posts } }
 }
