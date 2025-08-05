@@ -2,6 +2,9 @@ import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/router'
+import { submitFormResponse } from '../lib/formHandler'
+import { getLatestYouTubeVideo } from '../lib/youtubeApi'
+import { getBlogPosts } from '../lib/blogHandler'
 
 export default function Home() {
   const router = useRouter()
@@ -14,6 +17,10 @@ export default function Home() {
     monthlyBudget: ''
   })
   const [isLoading, setIsLoading] = useState(false)
+  const [latestVideo, setLatestVideo] = useState(null)
+  const [videoLoading, setVideoLoading] = useState(true)
+  const [blogPosts, setBlogPosts] = useState([])
+  const [blogLoading, setBlogLoading] = useState(true)
   
   const heroPhrases = [
     "Take Sales Calls While You Sleep",
@@ -29,15 +36,53 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [])
 
+  useEffect(() => {
+    const fetchLatestVideo = async () => {
+      setVideoLoading(true)
+      const result = await getLatestYouTubeVideo()
+      if (result.success) {
+        setLatestVideo(result.video)
+      }
+      setVideoLoading(false)
+    }
+
+    fetchLatestVideo()
+  }, [])
+
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      setBlogLoading(true)
+      const result = await getBlogPosts()
+      if (result.success) {
+        setBlogPosts(result.data)
+      }
+      setBlogLoading(false)
+    }
+
+    fetchBlogPosts()
+  }, [])
+
   const handleFormSubmit = async (e) => {
     e.preventDefault()
+    
     if (formStep < 4) {
       setFormStep(formStep + 1)
     } else {
       setIsLoading(true)
-      setTimeout(() => {
-        router.push('/thank-you.html')
-      }, 2000)
+      
+      // Submit form data to Supabase
+      const result = await submitFormResponse(formData)
+      
+      if (result.success) {
+        // Redirect to thank you page after successful submission
+        setTimeout(() => {
+          router.push('/thank-you.html')
+        }, 2000)
+      } else {
+        // Handle error - you might want to show an error message
+        console.error('Form submission failed:', result.error)
+        setIsLoading(false)
+      }
     }
   }
 
@@ -70,6 +115,33 @@ export default function Home() {
     enter: { x: 300, opacity: 0 },
     center: { x: 0, opacity: 1 },
     exit: { x: -300, opacity: 0 }
+  }
+
+  // Wave animation variants
+  const waveVariants = {
+    animate: {
+      scale: [1, 1.2, 1],
+      opacity: [0.3, 0.8, 0.3],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  }
+
+  // Function to render hero phrase with "While you Sleep" in deep purple
+  const renderHeroPhrase = (phrase) => {
+    if (phrase.includes("While You Sleep")) {
+      const parts = phrase.split("While You Sleep")
+      return (
+        <>
+          {parts[0]}
+          <span className="text-purple-600">While You Sleep</span>
+        </>
+      )
+    }
+    return phrase
   }
 
   return (
@@ -116,9 +188,29 @@ export default function Home() {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
                 >
-                  {heroPhrases[currentPhrase]}
+                  {renderHeroPhrase(heroPhrases[currentPhrase])}
                 </motion.h2>
               </AnimatePresence>
+            </motion.div>
+            
+            {/* Animated Talking Waves */}
+            <motion.div 
+              className="flex justify-center items-center mb-6"
+              variants={itemVariants}
+            >
+              <div className="flex space-x-1">
+                {[0, 1, 2, 3, 4].map((index) => (
+                  <motion.div
+                    key={index}
+                    className="w-2 h-8 bg-cyan-400 rounded-full"
+                    variants={waveVariants}
+                    animate="animate"
+                    style={{
+                      animationDelay: `${index * 0.2}s`
+                    }}
+                  />
+                ))}
+              </div>
             </motion.div>
             
             <motion.p 
@@ -345,17 +437,39 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-10 h-10 text-black" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                    </svg>
+              {videoLoading ? (
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto mb-4"
+                    ></motion.div>
+                    <p className="text-xl text-gray-300">Loading video...</p>
                   </div>
-                  <p className="text-xl text-gray-300">Latest YouTube Video</p>
-                  <p className="text-gray-500">Coming soon...</p>
                 </div>
-              </div>
+              ) : latestVideo ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${latestVideo.id.videoId}`}
+                  title={latestVideo.snippet.title}
+                  className="w-full h-full"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <svg className="w-10 h-10 text-black" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-xl text-gray-300">Latest YouTube Video</p>
+                    <p className="text-gray-500">Coming soon...</p>
+                  </div>
+                </div>
+              )}
             </motion.div>
             
             <motion.div 
@@ -396,42 +510,87 @@ export default function Home() {
             </motion.h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "5 AI Tools That Will 10x Your Lead Generation",
-                  snippet: "Discover the AI tools that are revolutionizing how entrepreneurs capture and convert leads automatically.",
-                  readMore: "#"
-                },
-                {
-                  title: "How to Build an AI Agent That Books Your Calendar",
-                  snippet: "Step-by-step guide to creating an AI assistant that handles your scheduling while you focus on closing deals.",
-                  readMore: "#"
-                },
-                {
-                  title: "The Future of Sales: AI-Powered Follow-up Sequences",
-                  snippet: "Why traditional follow-up is dead and how AI is creating personalized sequences that actually convert.",
-                  readMore: "#"
-                }
-              ].map((post, index) => (
-                <motion.div 
-                  key={index}
-                  className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-cyan-500 transition-colors"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  whileHover={{ y: -5 }}
-                  viewport={{ once: true }}
-                >
-                  <h3 className="text-xl font-bold mb-4 text-white">{post.title}</h3>
-                  <p className="text-gray-300 mb-6 leading-relaxed">{post.snippet}</p>
-                  <a 
-                    href={post.readMore}
-                    className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
+              {blogLoading ? (
+                // Loading state
+                Array.from({ length: 3 }).map((_, index) => (
+                  <motion.div 
+                    key={index}
+                    className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1 }}
+                    viewport={{ once: true }}
                   >
-                    Read More →
-                  </a>
-                </motion.div>
-              ))}
+                    <div className="animate-pulse">
+                      <div className="h-6 bg-gray-700 rounded mb-4"></div>
+                      <div className="h-4 bg-gray-700 rounded mb-2"></div>
+                      <div className="h-4 bg-gray-700 rounded mb-2"></div>
+                      <div className="h-4 bg-gray-700 rounded mb-6"></div>
+                      <div className="h-4 bg-gray-600 rounded w-1/3"></div>
+                    </div>
+                  </motion.div>
+                ))
+              ) : blogPosts.length > 0 ? (
+                // Blog posts from Supabase
+                blogPosts.map((post, index) => (
+                  <motion.div 
+                    key={post.id}
+                    className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-cyan-500 transition-colors"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1 }}
+                    whileHover={{ y: -5 }}
+                    viewport={{ once: true }}
+                  >
+                    <h3 className="text-xl font-bold mb-4 text-white">{post.title}</h3>
+                    <p className="text-gray-300 mb-6 leading-relaxed">{post.snippet}</p>
+                    <a 
+                      href={`/blog/${post.slug}`}
+                      className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
+                    >
+                      Read More →
+                    </a>
+                  </motion.div>
+                ))
+              ) : (
+                // Fallback content if no blog posts
+                [
+                  {
+                    title: "5 AI Tools That Will 10x Your Lead Generation",
+                    snippet: "Discover the AI tools that are revolutionizing how entrepreneurs capture and convert leads automatically.",
+                    slug: "ai-tools-lead-generation"
+                  },
+                  {
+                    title: "How to Build an AI Agent That Books Your Calendar",
+                    snippet: "Step-by-step guide to creating an AI assistant that handles your scheduling while you focus on closing deals.",
+                    slug: "ai-agent-calendar-booking"
+                  },
+                  {
+                    title: "The Future of Sales: AI-Powered Follow-up Sequences",
+                    snippet: "Why traditional follow-up is dead and how AI is creating personalized sequences that actually convert.",
+                    slug: "ai-powered-follow-up-sequences"
+                  }
+                ].map((post, index) => (
+                  <motion.div 
+                    key={index}
+                    className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-cyan-500 transition-colors"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1 }}
+                    whileHover={{ y: -5 }}
+                    viewport={{ once: true }}
+                  >
+                    <h3 className="text-xl font-bold mb-4 text-white">{post.title}</h3>
+                    <p className="text-gray-300 mb-6 leading-relaxed">{post.snippet}</p>
+                    <a 
+                      href={`/blog/${post.slug}`}
+                      className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
+                    >
+                      Read More →
+                    </a>
+                  </motion.div>
+                ))
+              )}
             </div>
           </div>
         </motion.section>
