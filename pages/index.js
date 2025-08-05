@@ -1,145 +1,529 @@
 import Head from 'next/head'
-import BlogPosts from '../components/BlogPosts'
-import { getPosts } from '../lib/ghost'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useRouter } from 'next/router'
 
-export default function Home({ posts }) {
-  const year = new Date().getFullYear()
+export default function Home() {
+  const router = useRouter()
+  const [currentPhrase, setCurrentPhrase] = useState(0)
+  const [formStep, setFormStep] = useState(1)
+  const [formData, setFormData] = useState({
+    businessFocus: '',
+    weeklyLeads: '',
+    aiAgent: '',
+    monthlyBudget: ''
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  
+  const heroPhrases = [
+    "Take Sales Calls While You Sleep",
+    "Book Appointments While You Sleep",
+    "Schedule More Appointments While You Sleep",
+    "Let AI Handle the Hustle"
+  ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPhrase((prev) => (prev + 1) % heroPhrases.length)
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault()
+    if (formStep < 4) {
+      setFormStep(formStep + 1)
+    } else {
+      setIsLoading(true)
+      setTimeout(() => {
+        router.push('/thank-you.html')
+      }, 2000)
+    }
+  }
+
+  const updateFormData = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
+  }
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
+  }
+
+  const formStepVariants = {
+    enter: { x: 300, opacity: 0 },
+    center: { x: 0, opacity: 1 },
+    exit: { x: -300, opacity: 0 }
+  }
+
   return (
     <>
       <Head>
-        <title>Dan Talks AI - Real AI. Real Life. Let’s Build Something Wild.</title>
+        <title>Dan Talks AI - AI-Powered Appointment Booking System</title>
         <meta
           name="description"
-          content="Dan Talks AI - real-world AI tools, experiments, and automation tutorials for creators, beginners, and curious minds."
+          content="AI systems that book, follow up, and convert leads — even while you sleep."
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
-      <main className="bg-black text-gray-100 min-h-screen font-sans">
+      
+      <main className="bg-black text-white min-h-screen font-['Inter']">
         {/* Hero Section */}
-        <section className="flex flex-col items-center justify-center text-center py-20 px-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-purple-400 mb-4">
-            Real AI. Real Life. Let’s Build Something Wild.
-          </h1>
-          <p className="text-lg md:text-xl max-w-2xl text-gray-300 mb-8">
-            Sharing real-world AI tools, building projects, and inspiring creators.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a
-              href="#"
-              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-md font-semibold text-center"
+        <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-purple-900/20 to-black"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,255,0.1),transparent_50%)]"></div>
+          <motion.div 
+            className="relative z-10 max-w-5xl mx-auto"
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+          >
+            <motion.h1 
+              className="text-6xl md:text-8xl font-bold mb-8"
+              variants={itemVariants}
             >
-              Watch on YouTube
-            </a>
-            <a
-              href="#"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-semibold text-center"
+              <span className="text-white">Dan Talks</span>
+              <span className="text-cyan-400"> AI</span>
+            </motion.h1>
+            
+            <motion.div 
+              className="h-32 md:h-40 mb-8"
+              variants={itemVariants}
             >
-              Join the Vault
-            </a>
-          </div>
-        </section>
-
-        {/* About Section */}
-        <section className="py-16 px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-4 text-purple-400">About Dan</h2>
-            <p className="text-lg text-gray-300 mb-6">
-              Dan is a U.S. Army veteran turned tech nerd and tortilla‑wrapped food lover. He simplifies AI for creators and
-              small businesses with a friendly, grounded tone.
-            </p>
-          </div>
-        </section>
-
-        <BlogPosts posts={posts} />
-
-        {/* Latest Videos Section */}
-        <section className="py-16 px-4 bg-gray-900">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-blue-400">Latest Videos</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {['1', '2', '3'].map((i) => (
-                <div key={i} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-                  <div className="h-48 bg-gray-700 flex items-center justify-center">Video {i}</div>
-                  <div className="p-4">
-                    <h3 className="text-xl font-semibold mb-2">Video Title {i}</h3>
-                    <p className="text-gray-400">Short description of the video goes here.</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* AI Vault Section */}
-        <section className="py-16 px-4">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-purple-400">The AI Vault</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="bg-gray-800 rounded-lg p-6 shadow-lg">
-                  <h3 className="text-xl font-semibold mb-2">Tool {i + 1}</h3>
-                  <p className="text-gray-400">Description of AI tool {i + 1} and what it can do for you.</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Services Section */}
-        <section className="py-16 px-4 bg-gray-900">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4 text-blue-400">
-              Need AI in your biz? Let’s make it happen.
-            </h2>
-            <p className="text-gray-300 mb-6">
-              Coming soon: AI consulting, automation audits, and micro‑SaaS tools powered by Go High Level.
-            </p>
-          </div>
-        </section>
-
-        {/* Email Signup Section */}
-        <section className="py-16 px-4">
-          <div className="max-w-lg mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4 text-purple-400">Get Dan’s AI Drops</h2>
-            <p className="text-gray-300 mb-6">
-              Weekly tool drops, memes, and experiments delivered to your inbox.
-            </p>
-            <form className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="flex-grow px-4 py-3 rounded-md text-black"
-              />
-              <button
-                type="submit"
-                className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-md font-semibold"
+              <AnimatePresence mode="wait">
+                <motion.h2 
+                  key={currentPhrase}
+                  className="text-4xl md:text-6xl font-bold text-cyan-400"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {heroPhrases[currentPhrase]}
+                </motion.h2>
+              </AnimatePresence>
+            </motion.div>
+            
+            <motion.p 
+              className="text-xl md:text-2xl max-w-4xl mx-auto text-gray-300 mb-12 leading-relaxed"
+              variants={itemVariants}
+            >
+              AI systems that book, follow up, and convert leads — even while you sleep.
+            </motion.p>
+            
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+              variants={itemVariants}
+            >
+              <motion.button 
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-10 py-5 rounded-xl font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Subscribe
-              </button>
-            </form>
-          </div>
+                Get the AI System
+              </motion.button>
+              <motion.button 
+                className="border-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black px-10 py-5 rounded-xl font-bold text-xl transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Watch Demo First
+              </motion.button>
+            </motion.div>
+          </motion.div>
         </section>
+
+        {/* Multi-Step Form Section */}
+        <motion.section 
+          className="py-20 px-4 bg-gradient-to-b from-gray-900 to-black"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="max-w-2xl mx-auto">
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-center mb-12 text-cyan-400"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              Get Your AI System
+            </motion.h2>
+            
+            <motion.div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700">
+              <form onSubmit={handleFormSubmit} className="space-y-8">
+                <AnimatePresence mode="wait">
+                  {formStep === 1 && (
+                    <motion.div
+                      key="step1"
+                      variants={formStepVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.3 }}
+                    >
+                      <label className="block text-xl font-semibold mb-4 text-white">
+                        What's your business focus?
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.businessFocus}
+                        onChange={(e) => updateFormData('businessFocus', e.target.value)}
+                        placeholder="e.g., Real estate, Consulting, Fitness..."
+                        className="w-full px-6 py-4 rounded-xl bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none text-lg"
+                        required
+                      />
+                    </motion.div>
+                  )}
+
+                  {formStep === 2 && (
+                    <motion.div
+                      key="step2"
+                      variants={formStepVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.3 }}
+                    >
+                      <label className="block text-xl font-semibold mb-4 text-white">
+                        How many new leads would change your week?
+                      </label>
+                      <input
+                        type="number"
+                        value={formData.weeklyLeads}
+                        onChange={(e) => updateFormData('weeklyLeads', e.target.value)}
+                        placeholder="e.g., 5, 10, 20..."
+                        className="w-full px-6 py-4 rounded-xl bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none text-lg"
+                        required
+                      />
+                    </motion.div>
+                  )}
+
+                  {formStep === 3 && (
+                    <motion.div
+                      key="step3"
+                      variants={formStepVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.3 }}
+                    >
+                      <label className="block text-xl font-semibold mb-4 text-white">
+                        Would you like an AI agent to contact your leads?
+                      </label>
+                      <div className="grid grid-cols-2 gap-4">
+                        <button
+                          type="button"
+                          onClick={() => updateFormData('aiAgent', 'yes')}
+                          className={`px-6 py-4 rounded-xl border-2 text-lg font-semibold transition-all ${
+                            formData.aiAgent === 'yes'
+                              ? 'border-cyan-500 bg-cyan-500 text-black'
+                              : 'border-gray-600 text-gray-300 hover:border-cyan-500'
+                          }`}
+                        >
+                          Yes
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => updateFormData('aiAgent', 'no')}
+                          className={`px-6 py-4 rounded-xl border-2 text-lg font-semibold transition-all ${
+                            formData.aiAgent === 'no'
+                              ? 'border-cyan-500 bg-cyan-500 text-black'
+                              : 'border-gray-600 text-gray-300 hover:border-cyan-500'
+                          }`}
+                        >
+                          No
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {formStep === 4 && (
+                    <motion.div
+                      key="step4"
+                      variants={formStepVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.3 }}
+                    >
+                      <label className="block text-xl font-semibold mb-4 text-white">
+                        What's your monthly budget for automation?
+                      </label>
+                      <select
+                        value={formData.monthlyBudget}
+                        onChange={(e) => updateFormData('monthlyBudget', e.target.value)}
+                        className="w-full px-6 py-4 rounded-xl bg-gray-700 border border-gray-600 text-white focus:border-cyan-500 focus:outline-none text-lg"
+                        required
+                      >
+                        <option value="">Select budget range</option>
+                        <option value="<$100">Less than $100</option>
+                        <option value="$100-$500">$100 – $500</option>
+                        <option value="$500-$2K">$500 – $2K</option>
+                        <option value="$2K+">$2K+</option>
+                      </select>
+                    </motion.div>
+                  )}
+
+                  {isLoading && (
+                    <motion.div
+                      key="loading"
+                      variants={formStepVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.3 }}
+                      className="text-center py-8"
+                    >
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto mb-4"
+                      ></motion.div>
+                      <p className="text-xl text-cyan-400 font-semibold">One moment...</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {!isLoading && (
+                  <motion.button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-8 py-5 rounded-xl font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {formStep < 4 ? 'Next' : 'Get My AI System'}
+                  </motion.button>
+                )}
+              </form>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Video Section */}
+        <motion.section 
+          className="py-20 px-4"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="max-w-6xl mx-auto">
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-center mb-16 text-cyan-400"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              Latest From Dan Talks AI
+            </motion.h2>
+            
+            <motion.div 
+              className="aspect-video bg-gray-800 rounded-2xl overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-10 h-10 text-black" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <p className="text-xl text-gray-300">Latest YouTube Video</p>
+                  <p className="text-gray-500">Coming soon...</p>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              className="text-center mt-8"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <motion.button 
+                className="border-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                More on YouTube
+              </motion.button>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Blog Section */}
+        <motion.section 
+          className="py-20 px-4 bg-gradient-to-b from-black to-gray-900"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="max-w-6xl mx-auto">
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-center mb-16 text-cyan-400"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              AI Tips, Tools & Talk
+            </motion.h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "5 AI Tools That Will 10x Your Lead Generation",
+                  snippet: "Discover the AI tools that are revolutionizing how entrepreneurs capture and convert leads automatically.",
+                  readMore: "#"
+                },
+                {
+                  title: "How to Build an AI Agent That Books Your Calendar",
+                  snippet: "Step-by-step guide to creating an AI assistant that handles your scheduling while you focus on closing deals.",
+                  readMore: "#"
+                },
+                {
+                  title: "The Future of Sales: AI-Powered Follow-up Sequences",
+                  snippet: "Why traditional follow-up is dead and how AI is creating personalized sequences that actually convert.",
+                  readMore: "#"
+                }
+              ].map((post, index) => (
+                <motion.div 
+                  key={index}
+                  className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-cyan-500 transition-colors"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  viewport={{ once: true }}
+                >
+                  <h3 className="text-xl font-bold mb-4 text-white">{post.title}</h3>
+                  <p className="text-gray-300 mb-6 leading-relaxed">{post.snippet}</p>
+                  <a 
+                    href={post.readMore}
+                    className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
+                  >
+                    Read More →
+                  </a>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Social Proof Section */}
+        <motion.section 
+          className="py-20 px-4"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="max-w-6xl mx-auto">
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-center mb-16 text-cyan-400"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              Real Results from Real Entrepreneurs
+            </motion.h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  name: "Sarah Johnson",
+                  role: "Real Estate Agent",
+                  result: "Increased appointments by 300%",
+                  testimonial: "Dan's AI system transformed my business. I went from 5 appointments a month to 15+ while working less."
+                },
+                {
+                  name: "Mike Chen",
+                  role: "Consultant",
+                  result: "Saved 20+ hours per week",
+                  testimonial: "The automation is incredible. My calendar is now full of qualified prospects without any manual work."
+                },
+                {
+                  name: "Lisa Rodriguez",
+                  role: "Fitness Coach",
+                  result: "Doubled revenue in 3 months",
+                  testimonial: "This AI system is like having a full-time assistant that never sleeps. Game changer for my business."
+                }
+              ].map((testimonial, index) => (
+                <motion.div 
+                  key={index} 
+                  className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-cyan-500 transition-colors"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="mb-4">
+                    <div className="w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center text-black font-bold">
+                      {testimonial.name.charAt(0)}
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mb-4 italic">"{testimonial.testimonial}"</p>
+                  <div className="border-t border-gray-700 pt-4">
+                    <p className="font-semibold text-white">{testimonial.name}</p>
+                    <p className="text-cyan-400 text-sm">{testimonial.role}</p>
+                    <p className="text-green-400 text-sm font-semibold">{testimonial.result}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
 
         {/* Footer */}
-        <footer className="py-6 px-4 bg-gray-900 text-center text-gray-400">
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-4">
-            <a href="#" className="hover:text-white">
-              YouTube
-            </a>
-            <a href="#" className="hover:text-white">
-              X (Twitter)
-            </a>
-            <a href="#" className="hover:text-white">
-              Email
-            </a>
+        <motion.footer 
+          className="py-12 px-4 bg-gray-900 border-t border-gray-800"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-gray-400 mb-4">
+              Built by <a href="#" className="text-cyan-400 hover:text-cyan-300 transition-colors">Dan Richmond</a>
+            </p>
+            <motion.button 
+              className="fixed bottom-6 right-6 bg-black border-2 border-cyan-500 text-cyan-400 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-cyan-500 hover:text-black transition-all duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Follow on X
+            </motion.button>
           </div>
-          <p>© {year} Dan Talks AI. Built with caffeine and cosmic code.</p>
-        </footer>
+        </motion.footer>
       </main>
     </>
   )
-}
-
-export async function getStaticProps() {
-  const posts = getPosts().slice(0, 3)
-  return { props: { posts } }
 }
