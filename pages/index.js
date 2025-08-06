@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { submitFormResponse } from '../lib/formHandler'
 import { getLatestYouTubeVideo } from '../lib/youtubeApi'
 import { getBlogPosts } from '../lib/blogHandler'
+import AIAnimation from '../components/AIAnimation'
 
 export default function Home() {
   const router = useRouter()
@@ -156,6 +157,7 @@ export default function Home() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
       
+      <AIAnimation />
       <main className="bg-black text-white min-h-screen font-['Inter']">
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen">
