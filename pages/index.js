@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { submitFormResponse } from '../lib/formHandler'
 import { getLatestYouTubeVideo } from '../lib/youtubeApi'
 import { getBlogPosts } from '../lib/blogHandler'
-import AIAnimation from '../components/AIAnimation'
+
 
 export default function Home() {
   const router = useRouter()
@@ -24,10 +24,16 @@ export default function Home() {
   const [blogLoading, setBlogLoading] = useState(true)
   
   const heroPhrases = [
-    "Take Sales Calls While You Sleep",
-    "Book Appointments While You Sleep",
-    "Schedule More Appointments While You Sleep",
-    "Let AI Handle the Hustle"
+    "Answer Customer Questions While You Sleep",
+    "Close Sales While You Sleep",
+    "Run Ad Campaigns While You Sleep",
+    "Qualify Leads While You Sleep",
+    "Write Follow-up Emails While You Sleep",
+    "Send Invoices While You Sleep",
+    "Rebook Past Clients While You Sleep",
+    "Edit Video Clips While You Sleep",
+    "Generate Blog Posts While You Sleep",
+    "Build Your Email List While You Sleep"
   ]
 
   useEffect(() => {
@@ -157,7 +163,7 @@ export default function Home() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
       
-      <AIAnimation />
+
       <main className="bg-black text-white min-h-screen font-['Inter']">
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen">
