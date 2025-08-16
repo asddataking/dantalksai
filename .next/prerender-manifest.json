@@ -1,1 +1,11 @@
-{"version":4,"routes":{"/blog/first-post":{},"/blog/second-post":{}},"dynamicRoutes":{"/blog/[slug]":{"fallback":false}},"notFoundRoutes":[],"preview":{"previewModeId":"a6f2914f308a69a72f64ca7b08731788","previewModeSigningKey":"5983691139adffb78d5bdf21c9571d30c5a7c0fddd93b3950951c9056b69e0a7","previewModeEncryptionKey":"adb5b005a3b325c49133cccc84344cbc79bd597446085f6a80551378990f2c6c"}}
+{
+  "version": 4,
+  "routes": {},
+  "dynamicRoutes": {},
+  "preview": {
+    "previewModeId": "dbba483122ff76877004bd271edff6dd",
+    "previewModeSigningKey": "c7a7eb26058290a747861284709addac20f65015f0be1d27d3184e906478c151",
+    "previewModeEncryptionKey": "a4c3a031878df914a172b9c14537ccf40079dc577635a63dddd76444fe5b50c7"
+  },
+  "notFoundRoutes": []
+}
