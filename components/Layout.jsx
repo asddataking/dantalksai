@@ -32,7 +32,7 @@ export default function Layout({ children }) {
         />
         
         {/* Favicon */}
-        <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+        <link rel="icon" type="image/png" href="/logo.png" />
         
         <title>AI Agency in Michigan serving the United States</title>
         <meta

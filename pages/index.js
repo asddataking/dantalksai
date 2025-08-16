@@ -165,20 +165,6 @@ export default function Home() {
       
 
       <main className="bg-black text-white min-h-screen font-['Inter']">
-        {/* Header with Logo */}
-        <header className="relative z-20 w-full py-6 px-4 border-b border-gray-800/50">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <div className="flex items-center">
-              <img src="/logo-full.svg" alt="Dan Talks AI" className="h-12" />
-            </div>
-            <nav className="hidden md:flex items-center space-x-8">
-              <a href="#services" className="text-gray-300 hover:text-cyan-400 transition-colors">Services</a>
-              <a href="#about" className="text-gray-300 hover:text-cyan-400 transition-colors">About</a>
-              <a href="#contact" className="text-gray-300 hover:text-cyan-400 transition-colors">Contact</a>
-            </nav>
-          </div>
-        </header>
-
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen">
           <div className="absolute inset-0 bg-gradient-to-br from-black via-purple-900/20 to-black"></div>
