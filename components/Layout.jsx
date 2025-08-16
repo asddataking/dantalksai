@@ -18,6 +18,22 @@ export default function Layout({ children }) {
   return (
     <>
       <Head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-MJVT3C61J0"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-MJVT3C61J0');
+            `
+          }}
+        />
+        
+        {/* Favicon */}
+        <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+        
         <title>AI Agency in Michigan serving the United States</title>
         <meta
           name="description"
