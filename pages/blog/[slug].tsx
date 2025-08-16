@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { supabase } from '../../lib/supabase'
+import { getBlogPostBySlug } from '../../lib/blogHandler'
 
 export default function BlogPost() {
   const router = useRouter()
@@ -22,17 +22,12 @@ export default function BlogPost() {
       setLoading(true)
       setError(null)
       
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('slug', slug)
-        .single()
+      const result = await getBlogPostBySlug(slug as string)
 
-      if (error) {
-        console.error('Error fetching blog post:', error)
-        setError('Blog post not found')
+      if (!result.success) {
+        setError(result.error || 'Blog post not found')
       } else {
-        setPost(data)
+        setPost(result.data)
       }
     } catch (err) {
       console.error('Error:', err)
