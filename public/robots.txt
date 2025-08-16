@@ -1,4 +1,21 @@
 User-agent: *
 Allow: /
 
+# AI Automation Content Priority
+Allow: /ai-automation
+Allow: /services
+Allow: /case-studies
+Allow: /resources
+Allow: /blog/
+
+# Disallow admin area from public crawling
+Disallow: /admin
+
+# Sitemap location
 Sitemap: https://www.dantalks.ai/sitemap.xml
+
+# Crawl delay for better AI content indexing
+Crawl-delay: 1
+
+# Additional AI-focused crawling hints
+# Focus on AI automation, business solutions, and Dan Talks AI content

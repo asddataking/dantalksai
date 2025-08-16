@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Main AI Agency Homepage -->
+  <url>
+    <loc>https://www.dantalks.ai/</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.dantalks.ai/logo.png</image:loc>
+      <image:title>Dan Talks AI - AI Agency in Michigan</image:title>
+      <image:caption>Leading AI automation agency serving the United States</image:caption>
+    </image:image>
+  </url>
+
+  <!-- AI Strategy Call Thank You Page -->
+  <url>
+    <loc>https://www.dantalks.ai/thank-you.html</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.dantalks.ai/logo.png</image:loc>
+      <image:title>AI Strategy Call Preparation</image:title>
+      <image:caption>Essential video to watch before your AI automation strategy call</image:caption>
+    </image:image>
+  </url>
+
+  <!-- AI Automation Blog Content -->
+  <url>
+    <loc>https://www.dantalks.ai/blog/first-post</loc>
+    <lastmod>2023-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.dantalks.ai/logo.png</image:loc>
+      <image:title>AI Automation Insights</image:title>
+      <image:caption>Latest insights on AI automation for business growth</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.dantalks.ai/blog/second-post</loc>
+    <lastmod>2023-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.dantalks.ai/logo.png</image:loc>
+      <image:title>AI Business Solutions</image:title>
+      <image:caption>Advanced AI solutions for modern businesses</image:caption>
+    </image:image>
+  </url>
+
+  <!-- AI Services & Solutions (Future Pages) -->
+  <url>
+    <loc>https://www.dantalks.ai/services</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.dantalks.ai/logo.png</image:loc>
+      <image:title>AI Automation Services</image:title>
+      <image:caption>Complete AI automation solutions for business growth</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.dantalks.ai/ai-automation</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.dantalks.ai/logo.png</image:loc>
+      <image:title>AI Automation Solutions</image:title>
+      <image:caption>Transform your business with AI automation</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.dantalks.ai/case-studies</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.dantalks.ai/logo.png</image:loc>
+      <image:title>AI Success Stories</image:title>
+      <image:caption>Real results from AI automation implementations</image:caption>
+    </image:image>
+  </url>
+
+  <!-- AI Resources & Education -->
+  <url>
+    <loc>https://www.dantalks.ai/resources</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.dantalks.ai/logo.png</image:loc>
+      <image:title>AI Resources</image:title>
+      <image:caption>Free AI automation resources and guides</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.dantalks.ai/contact</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.dantalks.ai/logo.png</image:loc>
+      <image:title>Contact Dan Talks AI</image:title>
+      <image:caption>Get started with AI automation today</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Admin Dashboard (Lower Priority for AI Focus) -->
+  <url>
+    <loc>https://www.dantalks.ai/admin</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.2</priority>
+  </url>
+
+</urlset>
