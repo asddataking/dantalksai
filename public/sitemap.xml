@@ -19,7 +19,7 @@
     </image:image>
   </url>
 
-  <!-- AI Strategy Call Thank You Page -->
+  <!-- Thank You Page -->
   <url>
     <loc>https://www.dantalks.ai/thank-you.html</loc>
     <lastmod>2024-01-01</lastmod>
@@ -32,28 +32,41 @@
     </image:image>
   </url>
 
+  <!-- Admin Login Page -->
+  <url>
+    <loc>https://www.dantalks.ai/login</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+    <image:image>
+      <image:loc>https://www.dantalks.ai/logo.png</image:loc>
+      <image:title>Admin Login - Dan Talks AI</image:title>
+      <image:caption>Secure access to the admin dashboard</image:caption>
+    </image:image>
+  </url>
+
   <!-- AI Automation Blog Content -->
   <url>
     <loc>https://www.dantalks.ai/blog/first-post</loc>
-    <lastmod>2023-10-01</lastmod>
+    <lastmod>2024-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://www.dantalks.ai/logo.png</image:loc>
-      <image:title>AI Automation Insights</image:title>
-      <image:caption>Latest insights on AI automation for business growth</image:caption>
+      <image:title>AI Automation: The Future of Business Growth</image:title>
+      <image:caption>Discover how AI automation can transform your business operations</image:caption>
     </image:image>
   </url>
 
   <url>
     <loc>https://www.dantalks.ai/blog/second-post</loc>
-    <lastmod>2023-10-10</lastmod>
+    <lastmod>2024-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://www.dantalks.ai/logo.png</image:loc>
-      <image:title>AI Business Solutions</image:title>
-      <image:caption>Advanced AI solutions for modern businesses</image:caption>
+      <image:title>5 Ways AI is Revolutionizing Customer Service</image:title>
+      <image:caption>Learn how AI-powered customer service solutions are transforming business</image:caption>
     </image:image>
   </url>
 
