@@ -18,20 +18,32 @@ export default function Login() {
     setError('')
 
     try {
+      console.log('Attempting login with Supabase...')
+      console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL || 'Using fallback URL')
+      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       })
 
       if (error) {
-        setError(error.message)
+        console.error('Supabase auth error:', error)
+        setError(`Authentication failed: ${error.message}`)
       } else if (data.user) {
+        console.log('Login successful:', data.user.email)
         // Redirect to admin dashboard
         router.push('/admin')
       }
     } catch (err) {
-      setError('An unexpected error occurred')
-      console.error('Login error:', err)
+      console.error('Network/Login error:', err)
+      
+      if (err.message === 'Failed to fetch') {
+        setError('Network error: Unable to connect to authentication service. Please check your internet connection and try again.')
+      } else if (err.name === 'TypeError' && err.message.includes('fetch')) {
+        setError('Connection error: Unable to reach the authentication service. This may be a temporary issue.')
+      } else {
+        setError(`Unexpected error: ${err.message}`)
+      }
     } finally {
       setLoading(false)
     }
