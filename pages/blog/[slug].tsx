@@ -4,12 +4,23 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { getBlogPostBySlug } from '../../lib/blogHandler'
 
+interface BlogPost {
+  id: number
+  title: string
+  slug: string
+  snippet: string
+  content: string
+  featured_image?: string
+  created_at: string
+  updated_at: string
+}
+
 export default function BlogPost() {
   const router = useRouter()
   const { slug } = router.query
-  const [post, setPost] = useState(null)
+  const [post, setPost] = useState<BlogPost | null>(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (slug) {
@@ -65,7 +76,7 @@ export default function BlogPost() {
     )
   }
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
@@ -77,9 +88,9 @@ export default function BlogPost() {
     <>
       <Head>
         <title>{post.title} - Dan Talks AI</title>
-        <meta name="description" content={post.snippet || post.excerpt} />
+        <meta name="description" content={post.snippet} />
         <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.snippet || post.excerpt} />
+        <meta property="og:description" content={post.snippet} />
         {post.featured_image && (
           <meta property="og:image" content={post.featured_image} />
         )}
@@ -128,9 +139,9 @@ export default function BlogPost() {
               <span>{formatDate(post.created_at)}</span>
             </div>
 
-            {(post.snippet || post.excerpt) && (
+            {post.snippet && (
               <p className="text-xl text-gray-300 leading-relaxed mb-6">
-                {post.snippet || post.excerpt}
+                {post.snippet}
               </p>
             )}
           </header>
