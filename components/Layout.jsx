@@ -1,20 +1,21 @@
 import Head from 'next/head';
+import { useMemo } from 'react';
 
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Dan Talks AI",
-  url: "https://www.dantalks.ai/",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Michigan",
-    addressRegion: "MI",
-    addressCountry: "US"
-  },
-  areaServed: "United States"
-};
+const Layout = ({ children }) => {
+  const organizationJsonLd = useMemo(() => ({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Dan Talks AI",
+    url: "https://www.dantalks.ai/",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Michigan",
+      addressRegion: "MI",
+      addressCountry: "US"
+    },
+    areaServed: "United States"
+  }), []);
 
-export default function Layout({ children }) {
   return (
     <>
       <Head>
@@ -100,4 +101,6 @@ export default function Layout({ children }) {
       {children}
     </>
   );
-}
+};
+
+export default Layout;

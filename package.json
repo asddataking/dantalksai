@@ -9,11 +9,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.0",
+    "@supabase/supabase-js": "^2.55.0",
     "framer-motion": "^12.23.12",
-    "gray-matter": "^4.0.3",
     "next": "latest",
-    "next-mdx-remote": "^5.0.0",
     "next-seo": "^6.8.0",
     "next-sitemap": "^4.2.3",
     "react": "latest",

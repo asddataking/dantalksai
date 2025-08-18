@@ -1,7 +1,8 @@
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { submitFormResponse } from '../lib/formHandler'
 import { getLatestYouTubeVideo } from '../lib/youtubeApi'
 import { getBlogPosts } from '../lib/blogHandler'
@@ -23,7 +24,7 @@ export default function Home() {
   const [blogPosts, setBlogPosts] = useState([])
   const [blogLoading, setBlogLoading] = useState(true)
   
-  const heroPhrases = [
+  const heroPhrases = useMemo(() => [
     "Answer Customer Questions While You Sleep",
     "Close Sales While You Sleep",
     "Run Ad Campaigns While You Sleep",
@@ -34,7 +35,7 @@ export default function Home() {
     "Edit Video Clips While You Sleep",
     "Generate Blog Posts While You Sleep",
     "Build Your Email List While You Sleep"
-  ]
+  ], [])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,33 +44,33 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    const fetchLatestVideo = async () => {
-      setVideoLoading(true)
-      const result = await getLatestYouTubeVideo()
-      if (result.success) {
-        setLatestVideo(result.video)
-      }
-      setVideoLoading(false)
+  const fetchLatestVideo = useCallback(async () => {
+    setVideoLoading(true)
+    const result = await getLatestYouTubeVideo()
+    if (result.success) {
+      setLatestVideo(result.video)
     }
+    setVideoLoading(false)
+  }, [])
 
+  const fetchBlogPosts = useCallback(async () => {
+    setBlogLoading(true)
+    const result = await getBlogPosts()
+    if (result.success) {
+      setBlogPosts(result.data)
+    }
+    setBlogLoading(false)
+  }, [])
+
+  useEffect(() => {
     fetchLatestVideo()
-  }, [])
+  }, [fetchLatestVideo])
 
   useEffect(() => {
-    const fetchBlogPosts = async () => {
-      setBlogLoading(true)
-      const result = await getBlogPosts()
-      if (result.success) {
-        setBlogPosts(result.data)
-      }
-      setBlogLoading(false)
-    }
-
     fetchBlogPosts()
-  }, [])
+  }, [fetchBlogPosts])
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = useCallback(async (e) => {
     e.preventDefault()
     
     if (formStep < 4) {
@@ -91,11 +92,11 @@ export default function Home() {
         setIsLoading(false)
       }
     }
-  }
+  }, [formStep, formData, router])
 
-  const updateFormData = (field, value) => {
+  const updateFormData = useCallback((field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }))
-  }
+  }, [])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -552,52 +553,19 @@ export default function Home() {
                   >
                     <h3 className="text-xl font-bold mb-4 text-white">{post.title}</h3>
                     <p className="text-gray-300 mb-6 leading-relaxed">{post.snippet}</p>
-                    <a 
+                    <Link 
                       href={`/blog/${post.slug}`}
                       className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
                     >
                       Read More →
-                    </a>
+                    </Link>
                   </motion.div>
                 ))
               ) : (
-                // Fallback content if no blog posts
-                [
-                  {
-                    title: "5 AI Tools That Will 10x Your Lead Generation",
-                    snippet: "Discover the AI tools that are revolutionizing how entrepreneurs capture and convert leads automatically.",
-                    slug: "ai-tools-lead-generation"
-                  },
-                  {
-                    title: "How to Build an AI Agent That Books Your Calendar",
-                    snippet: "Step-by-step guide to creating an AI assistant that handles your scheduling while you focus on closing deals.",
-                    slug: "ai-agent-calendar-booking"
-                  },
-                  {
-                    title: "The Future of Sales: AI-Powered Follow-up Sequences",
-                    snippet: "Why traditional follow-up is dead and how AI is creating personalized sequences that actually convert.",
-                    slug: "ai-powered-follow-up-sequences"
-                  }
-                ].map((post, index) => (
-                  <motion.div 
-                    key={index}
-                    className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-cyan-500 transition-colors"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
-                    whileHover={{ y: -5 }}
-                    viewport={{ once: true }}
-                  >
-                    <h3 className="text-xl font-bold mb-4 text-white">{post.title}</h3>
-                    <p className="text-gray-300 mb-6 leading-relaxed">{post.snippet}</p>
-                    <a 
-                      href={`/blog/${post.slug}`}
-                      className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
-                    >
-                      Read More →
-                    </a>
-                  </motion.div>
-                ))
+                // No blog posts found
+                <div className="col-span-full text-center py-12">
+                  <p className="text-gray-400 text-lg">No blog posts found. Check back soon!</p>
+                </div>
               )}
             </div>
           </div>

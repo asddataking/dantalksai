@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { getYouTubeConfig, updateYouTubeConfig } from '../lib/youtubeApi'
 import { getFormResponses } from '../lib/formHandler'
-import { getBlogPosts, createBlogPost } from '../lib/blogHandler'
+import { getAllBlogPosts, createBlogPost, deleteBlogPost } from '../lib/blogHandler'
 import { useAuth } from '../lib/authContext'
 import ProtectedRoute from '../components/ProtectedRoute'
 
@@ -42,7 +42,7 @@ export default function Admin() {
     }
 
     // Load blog posts
-    const blogResult = await getBlogPosts()
+    const blogResult = await getAllBlogPosts()
     if (blogResult.success) {
       setBlogPosts(blogResult.data || [])
     }
@@ -66,40 +66,81 @@ export default function Admin() {
     setLoading(false)
   }
 
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/(^-|-$)/g, '')
+  }
+
+  const handleDeleteBlogPost = async (id) => {
+    if (!confirm('Are you sure you want to delete this blog post? This action cannot be undone.')) {
+      return
+    }
+
+    setLoading(true)
+    setMessage('')
+
+    try {
+      const result = await deleteBlogPost(id)
+      
+      if (result.success) {
+        setMessage('Blog post deleted successfully!')
+        loadData() // Reload blog posts
+      } else {
+        setMessage(`Error: ${result.error}`)
+      }
+    } catch (error) {
+      setMessage(`Error: ${error.message}`)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleBlogPostSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     setMessage('')
 
-    // Generate slug from title if not provided
-    if (!newBlogPost.slug) {
-      newBlogPost.slug = newBlogPost.title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '')
-    }
+    try {
+      // Generate slug from title if not provided
+      if (!newBlogPost.slug) {
+        newBlogPost.slug = generateSlug(newBlogPost.title)
+      }
 
-    const result = await createBlogPost({
-      ...newBlogPost,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    })
-    
-    if (result.success) {
-      setMessage('Blog post created successfully!')
-      setNewBlogPost({
-        title: '',
-        slug: '',
-        snippet: '',
-        content: '',
-        featured_image: '/logo.png'
+      // Validate slug format
+      if (!/^[a-z0-9-]+$/.test(newBlogPost.slug)) {
+        setMessage('Error: Invalid slug format. Use only lowercase letters, numbers, and hyphens.')
+        setLoading(false)
+        return
+      }
+
+      const result = await createBlogPost({
+        ...newBlogPost,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
       })
-      loadData() // Reload blog posts
-    } else {
-      setMessage(`Error: ${result.error}`)
+      
+      if (result.success) {
+        setMessage('Blog post created successfully!')
+        setNewBlogPost({
+          title: '',
+          slug: '',
+          snippet: '',
+          content: '',
+          featured_image: '/logo.png'
+        })
+        loadData() // Reload blog posts
+      } else {
+        setMessage(`Error: ${result.error}`)
+      }
+    } catch (error) {
+      setMessage(`Error: ${error.message}`)
+    } finally {
+      setLoading(false)
     }
-
-    setLoading(false)
   }
 
   return (
@@ -264,13 +305,23 @@ export default function Admin() {
                     
                     <div>
                       <label className="block text-sm font-medium mb-2 text-gray-300">Slug (optional - auto-generated)</label>
-                      <input
-                        type="text"
-                        value={newBlogPost.slug}
-                        onChange={(e) => setNewBlogPost(prev => ({ ...prev, slug: e.target.value }))}
-                        className="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none"
-                        placeholder="blog-post-slug"
-                      />
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={newBlogPost.slug}
+                          onChange={(e) => setNewBlogPost(prev => ({ ...prev, slug: e.target.value }))}
+                          className="flex-1 px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none"
+                          placeholder="blog-post-slug"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setNewBlogPost(prev => ({ ...prev, slug: generateSlug(prev.title) }))}
+                          className="px-4 py-3 bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-colors"
+                          disabled={!newBlogPost.title}
+                        >
+                          Generate
+                        </button>
+                      </div>
                     </div>
                     
                     <div>
@@ -325,8 +376,17 @@ export default function Admin() {
                   <h3 className="text-lg font-semibold mb-4 text-white">Existing Blog Posts ({blogPosts.length})</h3>
                   <div className="space-y-4 max-h-96 overflow-y-auto">
                     {blogPosts.map((post, index) => (
-                      <div key={index} className="bg-gray-700/50 p-4 rounded-lg border border-gray-600">
-                        <h4 className="font-semibold text-white mb-2">{post.title}</h4>
+                      <div key={post.id || index} className="bg-gray-700/50 p-4 rounded-lg border border-gray-600">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-semibold text-white">{post.title}</h4>
+                          <button
+                            onClick={() => handleDeleteBlogPost(post.id)}
+                            className="text-red-400 hover:text-red-300 text-sm px-2 py-1 rounded transition-colors"
+                            title="Delete blog post"
+                          >
+                            🗑️
+                          </button>
+                        </div>
                         <p className="text-sm text-gray-300 mb-2">{post.snippet}</p>
                         <div className="text-xs text-gray-400">
                           <span>Slug: {post.slug}</span>
