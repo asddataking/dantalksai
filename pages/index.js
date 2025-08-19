@@ -300,8 +300,8 @@ export default function Home() {
               className="text-6xl md:text-8xl font-bold mb-8"
               variants={itemVariants}
             >
-              <span className="text-white neon-glow">Dan Talks</span>
-              <span className="gradient-text"> AI</span>
+              <span className="text-white">Dan Talks</span>
+              <span className="text-cyan-400"> AI</span>
             </motion.h1>
             
             <motion.div 
@@ -311,7 +311,7 @@ export default function Home() {
               <AnimatePresence mode="wait">
                 <motion.h2 
                   key={currentPhrase}
-                  className="text-4xl md:text-6xl font-bold text-cyan-400 neon-glow"
+                  className="text-4xl md:text-6xl font-bold text-cyan-400"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
@@ -350,6 +350,21 @@ export default function Home() {
             </motion.p>
             
             <motion.div 
+              className="mb-8"
+              variants={itemVariants}
+            >
+              <Link 
+                href="/faq"
+                className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold transition-colors text-lg"
+              >
+                <span>Have questions? Check out our FAQ</span>
+                <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </Link>
+            </motion.div>
+            
+            <motion.div 
               className="flex flex-col sm:flex-row gap-6 justify-center items-center"
               variants={itemVariants}
             >
@@ -383,6 +398,7 @@ export default function Home() {
 
         {/* ChatGPT-Style AI System Builder */}
         <motion.section 
+          id="ai-system"
           className="py-20 px-4 bg-gradient-to-b from-gray-900 to-black"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -814,6 +830,7 @@ export default function Home() {
 
         {/* AI Tools & Talk Section - Substack Style */}
         <motion.section 
+          id="blog"
           className="py-20 px-4 bg-gradient-to-b from-black to-gray-900"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -863,33 +880,51 @@ export default function Home() {
                 blogPosts.map((post, index) => (
                   <motion.div 
                     key={post.id}
-                    className="group bg-gray-800/30 backdrop-blur-md p-6 rounded-2xl border border-gray-600/50 hover:border-cyan-400/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20"
+                    className="group bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-600/50 hover:border-cyan-400/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 overflow-hidden"
                     initial={{ opacity: 0, y: 30, scale: 0.9 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
                     whileHover={{ y: -8, scale: 1.02 }}
                     viewport={{ once: true }}
                   >
-                    <div className="relative overflow-hidden">
-                      {/* Glowing border effect on hover */}
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      
-                      <div className="relative z-10">
-                        <h3 className="text-xl font-bold mb-4 text-white group-hover:text-cyan-300 transition-colors duration-300">
-                          {post.title}
-                        </h3>
-                        <p className="text-gray-300 mb-6 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
-                          {post.snippet}
-                        </p>
-                        <Link 
-                          href={`/blog/${post.slug}`}
-                          className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold transition-all duration-300 group-hover:translate-x-1"
-                        >
-                          Read More 
-                          <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                          </svg>
-                        </Link>
+                    {/* Blog Post Image */}
+                    <div className="relative h-48 overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+                      <img 
+                        src={post.image || `https://picsum.photos/400/300?random=${index + 1}`}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      {/* Category Badge */}
+                      <div className="absolute top-4 left-4 z-20">
+                        <span className="bg-cyan-500/90 text-black text-xs font-semibold px-3 py-1 rounded-full">
+                          AI Tips
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="p-6">
+                      <div className="relative overflow-hidden">
+                        {/* Glowing border effect on hover */}
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div className="relative z-10">
+                          <h3 className="text-xl font-bold mb-4 text-white group-hover:text-cyan-300 transition-colors duration-300">
+                            {post.title}
+                          </h3>
+                          <p className="text-gray-300 mb-6 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
+                            {post.snippet}
+                          </p>
+                          <Link 
+                            href={`/blog/${post.slug}`}
+                            className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold transition-all duration-300 group-hover:translate-x-1"
+                          >
+                            Read More 
+                            <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -944,6 +979,7 @@ export default function Home() {
 
         {/* Video Section */}
         <motion.section 
+          id="video"
           className="py-20 px-4"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1021,9 +1057,7 @@ export default function Home() {
           </div>
         </motion.section>
 
-
-
-        {/* FAQ Section */}
+        {/* FAQ Link Section */}
         <motion.section 
           className="py-20 px-4"
           initial={{ opacity: 0, y: 50 }}
@@ -1031,143 +1065,49 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
             <motion.h2 
-              className="text-4xl md:text-5xl font-bold text-center mb-16 text-cyan-400"
+              className="text-4xl md:text-5xl font-bold mb-8 text-cyan-400"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Frequently Asked Questions
+              Have Questions?
             </motion.h2>
             
-            <div className="space-y-6">
-              {[
-                {
-                  question: "What does Dan Talks AI actually build?",
-                  answer: "We design done-for-you AI systems that answer leads 24/7, qualify them, and book calls while you sleep. Our core setup is a software system that manages CRM, automations, and calendars, but we can also deploy chat or voice agents using tools like Vapi, Synthflow, or a custom stack."
-                },
-                {
-                  question: "Do I need a specific software system?",
-                  answer: "Not necessarily. We usually recommend a central software system because it combines CRM, funnels, and automations in one place. If you're already on another platform, we can integrate with it. For chat or voice agents we often use Vapi or Synthflow and still route leads and bookings into your system."
-                },
-                {
-                  question: "How fast will I see results?",
-                  answer: "Most clients notice more replies and booked calls within 1–3 weeks. ROI depends on your close rate and service pricing, but just a few extra appointments per week usually covers the cost of the system."
-                },
-                {
-                  question: "What parts of my funnel get automated?",
-                  answer: "We automate lead capture, instant replies, FAQs, follow-ups, appointment scheduling, reminders, and even post-call nudges. Features like missed-call text-back and review prompts are included so you never lose a lead."
-                },
-                {
-                  question: "Should I use a voice agent or a chat agent?",
-                  answer: "Chat agents are great for websites, SMS, and social DMs. Voice agents are perfect for missed calls or phone-first customers. Many businesses use both: chat for inbound leads and voice for after-hours or overflow."
-                },
-                {
-                  question: "Do you help with YouTube Shorts or Reels for lead generation?",
-                  answer: "Yes. We set up simple workflows that repurpose your videos into short clips with clear CTAs. The AI system then captures viewers who engage and books them straight into your calendar."
-                },
-                {
-                  question: "How does pricing work?",
-                  answer: "There's a one-time setup fee to deploy your core AI system (CRM, automations, and agent). After that, we charge a flat monthly rate for management and support. Usage fees from tools like Vapi or Synthflow are billed directly to you."
-                },
-                {
-                  question: "Which tools can you integrate with?",
-                  answer: "We connect with software systems, Google/Outlook calendars, Stripe, Facebook/Instagram lead ads, Shopify, and more. Agents built on Vapi or Synthflow can also push data into your CRM or custom workflows."
-                },
-                {
-                  question: "How do you handle data and privacy?",
-                  answer: "You own your data. Leads, messages, and bookings live in your account, not ours. We follow platform policies and provide opt-in/opt-out language so your business stays compliant."
-                },
-                {
-                  question: "What happens if I cancel?",
-                  answer: "You keep your software system, pipelines, and assets in your account. If you stop monthly management, we hand over full documentation and walkthroughs so your team can keep things running. Third-party subscriptions remain under your control."
-                },
-                {
-                  question: "Who is this best for?",
-                  answer: "Local service businesses, real estate agents, coaches, consultants, and online offers. If you regularly miss leads or spend too much time answering the same questions, automations will make the biggest impact."
-                },
-                {
-                  question: "What does onboarding look like?",
-                  answer: "We start with a kickoff call, gather your offers and FAQs, build out the software system + agent, then test and refine. Most systems go live in 7–14 days depending on scope."
-                },
-                {
-                  question: "Do you do live demos or workshops in Michigan?",
-                  answer: "Yes. Dan offers in-person talks and workshops where we demo live chat/voice agents and booking flows. It's a hands-on way for teams to see AI systems in action."
-                },
-                {
-                  question: "Do you use affiliate links for tools?",
-                  answer: "Sometimes. If a recommended tool has an affiliate program, we'll disclose it. We only suggest platforms we personally trust and would use ourselves."
-                }
-              ].map((faq, index) => (
-                <motion.div 
-                  key={index}
-                  className="faq-item group bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-600/50 hover:border-cyan-400/50 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500"
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: 0.1 * index, duration: 0.6 }}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="relative overflow-hidden">
-                    {/* Glowing border effect on hover */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    <button
-                      onClick={() => {
-                        const faqItems = document.querySelectorAll('.faq-item');
-                        const faqContent = faqItems[index].querySelector('.faq-content');
-                        const faqIcon = faqItems[index].querySelector('.faq-icon');
-                        
-                        // Close all other FAQ items
-                        faqItems.forEach((item, i) => {
-                          if (i !== index) {
-                            item.classList.remove('active');
-                            item.querySelector('.faq-content').style.maxHeight = '0px';
-                            item.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
-                          }
-                        });
-                        
-                        // Toggle current FAQ item
-                        if (faqItems[index].classList.contains('active')) {
-                          faqItems[index].classList.remove('active');
-                          faqContent.style.maxHeight = '0px';
-                          faqIcon.style.transform = 'rotate(0deg)';
-                        } else {
-                          faqItems[index].classList.add('active');
-                          faqContent.style.maxHeight = faqContent.scrollHeight + 'px';
-                          faqIcon.style.transform = 'rotate(180deg)';
-                        }
-                      }}
-                      className="w-full p-6 text-left flex items-center justify-between hover:bg-gray-700/30 transition-all duration-300 relative z-10"
-                    >
-                      <h3 className="text-xl font-bold text-white pr-4 group-hover:text-cyan-300 transition-colors duration-300">
-                        {faq.question}
-                      </h3>
-                      <div className="faq-icon w-6 h-6 text-cyan-400 transition-all duration-300 flex-shrink-0 group-hover:scale-110">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                    </button>
-                    <div 
-                      className="faq-content overflow-hidden transition-all duration-500 ease-in-out bg-gray-700/20"
-                      style={{ maxHeight: '0px' }}
-                    >
-                      <div className="px-6 pb-6">
-                        <p className="text-gray-300 leading-relaxed text-lg">{faq.answer}</p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            <motion.p 
+              className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              Get answers to all your questions about AI automation, lead generation, and building systems that work while you sleep.
+            </motion.p>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <Link 
+                href="/faq"
+                className="inline-flex items-center bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-10 py-5 rounded-xl font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50"
+              >
+                <span>View All FAQs</span>
+                <svg className="w-6 h-6 ml-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </Link>
+            </motion.div>
           </div>
         </motion.section>
 
         {/* Social Proof Section */}
         <motion.section 
+          id="testimonials"
           className="py-20 px-4"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1249,17 +1189,17 @@ export default function Home() {
                   Done-for-you AI systems that work while you sleep.
                 </p>
                 <div className="flex justify-center md:justify-start space-x-4">
-                  <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">
+                  <a href="https://twitter.com/dantalksai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors hover:scale-110 transform duration-200">
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
                     </svg>
                   </a>
-                  <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">
+                  <a href="https://youtube.com/@dantalksai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors hover:scale-110 transform duration-200">
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
                   </a>
-                  <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">
+                  <a href="https://linkedin.com/company/dantalksai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors hover:scale-110 transform duration-200">
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                     </svg>
@@ -1271,10 +1211,10 @@ export default function Home() {
               <div className="text-center md:text-left">
                 <h4 className="text-lg font-semibold text-white mb-4">Services</h4>
                 <ul className="space-y-2 text-gray-400">
-                  <li><a href="#" className="hover:text-cyan-400 transition-colors">AI Lead Qualification</a></li>
-                  <li><a href="#" className="hover:text-cyan-400 transition-colors">CRM Automation</a></li>
-                  <li><a href="#" className="hover:text-cyan-400 transition-colors">Voice Agents</a></li>
-                  <li><a href="#" className="hover:text-cyan-400 transition-colors">Chat Agents</a></li>
+                  <li><a href="/#ai-system" className="hover:text-cyan-400 transition-colors cursor-pointer">AI Lead Qualification</a></li>
+                  <li><a href="/#ai-system" className="hover:text-cyan-400 transition-colors cursor-pointer">CRM Automation</a></li>
+                  <li><a href="/#ai-system" className="hover:text-cyan-400 transition-colors cursor-pointer">Voice Agents</a></li>
+                  <li><a href="/#ai-system" className="hover:text-cyan-400 transition-colors cursor-pointer">Chat Agents</a></li>
                 </ul>
               </div>
 
@@ -1282,10 +1222,10 @@ export default function Home() {
               <div className="text-center md:text-left">
                 <h4 className="text-lg font-semibold text-white mb-4">Resources</h4>
                 <ul className="space-y-2 text-gray-400">
-                  <li><a href="#" className="hover:text-cyan-400 transition-colors">Blog</a></li>
-                  <li><a href="#" className="hover:text-cyan-400 transition-colors">Case Studies</a></li>
-                  <li><a href="#" className="hover:text-cyan-400 transition-colors">YouTube</a></li>
-                  <li><a href="#" className="hover:text-cyan-400 transition-colors">Free Guide</a></li>
+                  <li><a href="/#blog" className="hover:text-cyan-400 transition-colors cursor-pointer">Blog</a></li>
+                  <li><a href="/#testimonials" className="hover:text-cyan-400 transition-colors cursor-pointer">Case Studies</a></li>
+                  <li><a href="/#video" className="hover:text-cyan-400 transition-colors cursor-pointer">YouTube</a></li>
+                  <li><a href="/#ai-system" className="hover:text-cyan-400 transition-colors cursor-pointer">Free Guide</a></li>
                 </ul>
               </div>
 
@@ -1295,7 +1235,7 @@ export default function Home() {
                 <ul className="space-y-2 text-gray-400">
                   <li>Michigan, USA</li>
                   <li><a href="mailto:dan@dantalks.ai" className="hover:text-cyan-400 transition-colors">dan@dantalks.ai</a></li>
-                  <li>Available for workshops</li>
+                  <li><a href="mailto:dan@dantalks.ai?subject=Workshop%20Inquiry" className="hover:text-cyan-400 transition-colors cursor-pointer">Available for workshops</a></li>
                 </ul>
               </div>
             </div>
@@ -1314,13 +1254,16 @@ export default function Home() {
           </div>
 
           {/* Floating Social Button */}
-          <motion.button 
-            className="fixed bottom-6 right-6 bg-black border-2 border-cyan-500 text-cyan-400 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-cyan-500 hover:text-black transition-all duration-300 z-50 pulse-glow hover:pulse-glow"
+          <motion.a 
+            href="https://twitter.com/dantalksai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fixed bottom-6 right-6 bg-black border-2 border-cyan-500 text-cyan-400 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-cyan-500 hover:text-black transition-all duration-300 z-50 pulse-glow hover:pulse-glow cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Follow on X
-          </motion.button>
+          </motion.a>
         </motion.footer>
 
         {/* Floating Action Button with Particles */}
@@ -1330,10 +1273,9 @@ export default function Home() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 2, duration: 0.5 }}
         >
-          <motion.button 
-            className="relative bg-gradient-to-r from-cyan-500 to-blue-600 text-black px-6 py-3 rounded-full font-semibold shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300"
-            whileHover={{ scale: 1.1, y: -5 }}
-            whileTap={{ scale: 0.95 }}
+          <Link 
+            href="/#ai-system"
+            className="relative bg-gradient-to-r from-cyan-500 to-blue-600 text-black px-6 py-3 rounded-full font-semibold shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 block"
           >
             <span className="flex items-center space-x-2">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -1364,7 +1306,7 @@ export default function Home() {
                 }}
               />
             ))}
-          </motion.button>
+          </Link>
         </motion.div>
       </main>
     </>
