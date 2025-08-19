@@ -416,161 +416,307 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-cyan-400">
-                Meet Rhea, Your AI Assistant
+                Chat with Rhea, Your AI Assistant
               </h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Let Rhea guide you through building your perfect AI system. She'll ask you a few questions and create a personalized strategy.
+                Have a conversation with Rhea to build your perfect AI system. She'll guide you through everything step by step.
               </p>
             </motion.div>
 
+            {/* ChatGPT-style Chat Interface */}
             <motion.div 
-              className="glass-effect rounded-3xl border border-white/10 p-8 md:p-12"
+              className="bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-600/50 shadow-xl overflow-hidden"
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              {/* Rhea's Welcome Message */}
-              {formStep === 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-center space-y-6"
-                >
-                  <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span className="text-3xl">🤖</span>
+              {/* Chat Header */}
+              <div className="bg-gray-700/50 border-b border-gray-600/50 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <img 
+                    src="/Rhea.png" 
+                    alt="Rhea" 
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                  <div>
+                    <h3 className="font-semibold text-white">Rhea</h3>
+                    <p className="text-sm text-gray-400">Dan Talks AI Assistant</p>
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Hi! I'm Rhea, your Dan Talks AI Assistant</h3>
-                  <p className="text-gray-300 mb-8 text-lg">
-                    I'm here to help you build an AI system that works while you sleep. Let me ask you a few questions to understand your needs better.
-                  </p>
+                </div>
+              </div>
+
+              {/* Chat Messages Area */}
+              <div className="h-96 overflow-y-auto p-6 space-y-4">
+                {/* Rhea's Welcome Message */}
+                {formStep === 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex gap-3"
+                  >
+                    <img 
+                      src="/Rhea.png" 
+                      alt="Rhea" 
+                      className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                    />
+                    <div className="bg-gray-700/50 rounded-2xl px-4 py-3 max-w-sm">
+                      <p className="text-white text-sm leading-relaxed">
+                        Hi! I'm Rhea, your Dan Talks AI Assistant. I'm here to help you build an AI system that works while you sleep. Let me ask you a few questions to understand your needs better.
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* User's Name Response */}
+                {formStep >= 1 && formData.name && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex gap-3 justify-end"
+                  >
+                    <div className="bg-cyan-600/20 border border-cyan-500/30 rounded-2xl px-4 py-3 max-w-sm">
+                      <p className="text-cyan-300 text-sm leading-relaxed">
+                        {formData.name}
+                      </p>
+                    </div>
+                    <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-semibold">
+                        {formData.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Rhea's Questions */}
+                {formStep >= 1 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex gap-3"
+                  >
+                    <img 
+                      src="/Rhea.png" 
+                      alt="Rhea" 
+                      className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                    />
+                    <div className="bg-gray-700/50 rounded-2xl px-4 py-3 max-w-sm">
+                      {formStep === 1 && (
+                        <p className="text-white text-sm leading-relaxed">
+                          Great to meet you! What's your main business focus? This helps me tailor your AI strategy perfectly.
+                        </p>
+                      )}
+                      {formStep === 2 && (
+                        <p className="text-white text-sm leading-relaxed">
+                          Thanks {formData.name}! Now, how many leads do you want weekly? Let's set some ambitious but realistic AI-powered goals together.
+                        </p>
+                      )}
+                      {formStep === 3 && (
+                        <p className="text-white text-sm leading-relaxed">
+                          Perfect! What type of AI agent do you need? I'll help you choose the automation that fits your workflow perfectly.
+                        </p>
+                      )}
+                      {formStep === 4 && (
+                        <p className="text-white text-sm leading-relaxed">
+                          Excellent choice! What's your monthly budget for AI tools? I'll recommend solutions that fit your investment level perfectly.
+                        </p>
+                      )}
+                      {formStep === 5 && (
+                        <p className="text-white text-sm leading-relaxed">
+                          Almost there, {formData.name}! Let me build your personalized AI system now. This will just take a moment...
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* User's Responses */}
+                {formStep >= 2 && formData.businessFocus && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex gap-3 justify-end"
+                  >
+                    <div className="bg-cyan-600/20 border border-cyan-500/30 rounded-2xl px-4 py-3 max-w-sm">
+                      <p className="text-cyan-300 text-sm leading-relaxed">
+                        {formData.businessFocus}
+                      </p>
+                    </div>
+                    <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-semibold">
+                        {formData.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
+
+                {formStep >= 3 && formData.weeklyLeads && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex gap-3 justify-end"
+                  >
+                    <div className="bg-cyan-600/20 border border-cyan-500/30 rounded-2xl px-4 py-3 max-w-sm">
+                      <p className="text-cyan-300 text-sm leading-relaxed">
+                        {formData.weeklyLeads}
+                      </p>
+                    </div>
+                    <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-semibold">
+                        {formData.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
+
+                {formStep >= 4 && formData.aiAgent && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex gap-3 justify-end"
+                  >
+                    <div className="bg-cyan-600/20 border border-cyan-500/30 rounded-2xl px-4 py-3 max-w-sm">
+                      <p className="text-cyan-300 text-sm leading-relaxed">
+                        {formData.aiAgent}
+                      </p>
+                    </div>
+                    <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-semibold">
+                        {formData.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
+
+                {formStep >= 5 && formData.monthlyBudget && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex gap-3 justify-end"
+                  >
+                    <div className="bg-cyan-600/20 border border-cyan-500/30 rounded-2xl px-4 py-3 max-w-sm">
+                      <p className="text-cyan-300 text-sm leading-relaxed">
+                        {formData.monthlyBudget}
+                      </p>
+                    </div>
+                    <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-semibold">
+                        {formData.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Loading State */}
+                {isLoading && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex gap-3"
+                  >
+                    <img 
+                      src="/Rhea.png" 
+                      alt="Rhea" 
+                      className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                    />
+                    <div className="bg-gray-700/50 rounded-2xl px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        </div>
+                        <span className="text-gray-400 text-sm">Building your AI system, {formData.name}...</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Chat Input Area */}
+              <div className="border-t border-gray-600/50 p-4">
+                {formStep === 0 ? (
                   <motion.button
                     onClick={() => setFormStep(1)}
-                    className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50"
-                    whileHover={{ scale: 1.05, y: -2 }}
+                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50"
+                    whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     Let's Get Started!
                   </motion.button>
-                </motion.div>
-              )}
+                ) : formStep < 5 ? (
+                  <div className="space-y-4">
+                    {/* Question Options */}
+                    {formStep === 1 && (
+                      <div className="space-y-4">
+                        <div className="relative">
+                          <input
+                            type="text"
+                            value={formData.name}
+                            onChange={(e) => updateFormData('name', e.target.value)}
+                            placeholder="Enter your name..."
+                            className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-700/70 transition-all duration-300"
+                            required
+                          />
+                          <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {['Lead Generation', 'Customer Service', 'Sales Automation', 'Content Creation', 'Data Analysis', 'Other'].map((focus) => (
+                            <motion.button
+                              key={focus}
+                              type="button"
+                              onClick={() => updateFormData('businessFocus', focus)}
+                              className={`p-3 rounded-xl border-2 transition-all duration-300 text-left group ${
+                                formData.businessFocus === focus
+                                  ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
+                                  : 'border-gray-600/50 bg-gray-700/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
+                              }`}
+                              whileHover={{ scale: 1.02, y: -2 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <span className="font-medium text-sm">{focus}</span>
+                              {formData.businessFocus === focus && (
+                                <motion.div 
+                                  className="inline-block ml-2 text-cyan-400"
+                                  initial={{ scale: 0 }}
+                                  animate={{ scale: 1 }}
+                                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                >
+                                  ✓
+                                </motion.div>
+                              )}
+                            </motion.button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
-              <form onSubmit={handleFormSubmit} className="space-y-8">
-                <AnimatePresence mode="wait">
-                  {formStep === 1 && (
-                    <motion.div
-                      key="step1"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <span className="text-2xl">👋</span>
-                        </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">Great to meet you! What's your name?</h3>
-                        <p className="text-gray-400">I'd love to personalize your AI strategy, {formData.name || 'friend'}!</p>
-                      </div>
-                      
-                      <div className="relative">
-                        <input
-                          type="text"
-                          value={formData.name}
-                          onChange={(e) => updateFormData('name', e.target.value)}
-                          placeholder="Enter your name..."
-                          className="w-full px-6 py-4 bg-gray-800/40 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-800/60 transition-all duration-300 shadow-lg"
-                          required
-                        />
-                        <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                          <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {formStep === 2 && (
-                    <motion.div
-                      key="step2"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <span className="text-2xl">🎯</span>
-                        </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">Thanks {formData.name}! What's your main business focus?</h3>
-                        <p className="text-gray-400">This helps me tailor your AI strategy perfectly.</p>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {['Lead Generation', 'Customer Service', 'Sales Automation', 'Content Creation', 'Data Analysis', 'Other'].map((focus) => (
-                          <motion.button
-                            key={focus}
-                            type="button"
-                            onClick={() => updateFormData('businessFocus', focus)}
-                            className={`p-4 rounded-xl border-2 transition-all duration-300 text-left group ${
-                              formData.businessFocus === focus
-                                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
-                                : 'border-gray-600/50 bg-gray-800/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
-                            }`}
-                            whileHover={{ scale: 1.02, y: -2 }}
-                            whileTap={{ scale: 0.98 }}
-                          >
-                            <span className="font-medium">{focus}</span>
-                            {formData.businessFocus === focus && (
-                              <motion.div 
-                                className="inline-block ml-2 text-cyan-400"
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                              >
-                                ✓
-                              </motion.div>
-                            )}
-                          </motion.button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {formStep === 3 && (
-                    <motion.div
-                      key="step3"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <span className="text-2xl">📊</span>
-                        </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">Perfect! Now, {formData.name}, how many leads do you want weekly?</h3>
-                        <p className="text-gray-400">Let's set some ambitious but realistic AI-powered goals together.</p>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {formStep === 2 && (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                         {['1-10', '11-50', '51-100', '100-500', '500+'].map((range) => (
                           <motion.button
                             key={range}
                             type="button"
                             onClick={() => updateFormData('weeklyLeads', range)}
-                            className={`p-4 rounded-xl border-2 transition-all duration-300 text-center group ${
+                            className={`p-3 rounded-xl border-2 transition-all duration-300 text-center group ${
                               formData.weeklyLeads === range
                                 ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
-                                : 'border-gray-600/50 bg-gray-800/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
+                                : 'border-gray-600/50 bg-gray-700/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
                             }`}
                             whileHover={{ scale: 1.02, y: -2 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            <span className="font-medium">{range}</span>
+                            <span className="font-medium text-sm">{range}</span>
                             {formData.weeklyLeads === range && (
                               <motion.div 
                                 className="inline-block ml-2 text-cyan-400"
@@ -584,41 +730,24 @@ export default function Home() {
                           </motion.button>
                         ))}
                       </div>
-                    </motion.div>
-                  )}
+                    )}
 
-                  {formStep === 4 && (
-                    <motion.div
-                      key="step4"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <span className="text-2xl">🤖</span>
-                        </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">Excellent choice, {formData.name}! What type of AI agent do you need?</h3>
-                        <p className="text-gray-400">I'll help you choose the automation that fits your workflow perfectly.</p>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {formStep === 3 && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {['Chat Agent', 'Voice Agent', 'Email Agent', 'Social Media Agent', 'Multi-Channel Agent'].map((agent) => (
                           <motion.button
                             key={agent}
                             type="button"
                             onClick={() => updateFormData('aiAgent', agent)}
-                            className={`p-4 rounded-xl border-2 transition-all duration-300 text-left group ${
+                            className={`p-3 rounded-xl border-2 transition-all duration-300 text-left group ${
                               formData.aiAgent === agent
                                 ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
-                                : 'border-gray-600/50 bg-gray-800/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
+                                : 'border-gray-600/50 bg-gray-700/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
                             }`}
                             whileHover={{ scale: 1.02, y: -2 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            <span className="font-medium">{agent}</span>
+                            <span className="font-medium text-sm">{agent}</span>
                             {formData.aiAgent === agent && (
                               <motion.div 
                                 className="inline-block ml-2 text-cyan-400"
@@ -632,41 +761,24 @@ export default function Home() {
                           </motion.button>
                         ))}
                       </div>
-                    </motion.div>
-                  )}
+                    )}
 
-                  {formStep === 5 && (
-                    <motion.div
-                      key="step5"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <span className="text-2xl">💰</span>
-                        </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">Almost there, {formData.name}! What's your monthly budget for AI tools?</h3>
-                        <p className="text-gray-400">I'll recommend solutions that fit your investment level perfectly.</p>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {formStep === 4 && (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                         {['$0-100', '$100-500', '$500-1000', '$1000-2500', '$2500+'].map((budget) => (
                           <motion.button
                             key={budget}
                             type="button"
                             onClick={() => updateFormData('monthlyBudget', budget)}
-                            className={`p-4 rounded-xl border-2 transition-all duration-300 text-center group ${
+                            className={`p-3 rounded-xl border-2 transition-all duration-300 text-center group ${
                               formData.monthlyBudget === budget
                                 ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
-                                : 'border-gray-600/50 bg-gray-800/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
+                                : 'border-gray-600/50 bg-gray-700/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
                             }`}
                             whileHover={{ scale: 1.02, y: -2 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            <span className="text-sm font-medium">{budget}</span>
+                            <span className="text-xs font-medium">{budget}</span>
                             {formData.monthlyBudget === budget && (
                               <motion.div 
                                 className="inline-block ml-2 text-cyan-400"
@@ -680,38 +792,29 @@ export default function Home() {
                           </motion.button>
                         ))}
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                    )}
 
-                {!isLoading && formStep > 0 && (
+                    {/* Continue Button */}
+                    <motion.button
+                      onClick={() => handleFormSubmit({ preventDefault: () => {} })}
+                      className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Continue
+                    </motion.button>
+                  </div>
+                ) : (
                   <motion.button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 disabled:opacity-50 disabled:cursor-not-allowed pulse-glow hover:pulse-glow"
+                    onClick={() => handleFormSubmit({ preventDefault: () => {} })}
+                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50"
                     whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <span className="flex items-center justify-center space-x-2">
-                      <span>{formStep < 5 ? 'Continue' : 'Build My AI System'}</span>
-                      <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                    </span>
+                    Build My AI System
                   </motion.button>
                 )}
-
-                {isLoading && (
-                  <motion.div 
-                    className="text-center py-8"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-cyan-400 font-medium text-lg">Building your AI system, {formData.name}...</p>
-                    <p className="text-gray-400 text-sm mt-2">This will only take a moment</p>
-                  </motion.div>
-                )}
-              </form>
+              </div>
             </motion.div>
           </div>
         </motion.section>
