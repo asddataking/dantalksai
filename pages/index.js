@@ -922,7 +922,7 @@ export default function Home() {
                           >
                             Read More 
                             <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                             </svg>
                           </Link>
                         </div>
@@ -977,6 +977,9 @@ export default function Home() {
             </motion.div>
           </div>
         </motion.section>
+
+        {/* Affiliate Tools Section */}
+        <AffiliateToolsSection />
 
         {/* Video Section */}
         <motion.section 
@@ -1266,9 +1269,6 @@ export default function Home() {
             Follow on X
           </motion.a>
         </motion.footer>
-
-        {/* Affiliate Tools Section */}
-        <AffiliateToolsSection />
 
         {/* Floating Action Button with Particles */}
         <motion.div 
