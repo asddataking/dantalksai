@@ -155,17 +155,102 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Dan Talks AI - AI-Powered Appointment Booking System</title>
-        <meta
-          name="description"
-          content="AI systems that book, follow up, and convert leads — even while you sleep."
-        />
+        <title>Dan Talks AI - Done-For-You AI Systems That Work While You Sleep</title>
+        <meta name="description" content="We design done-for-you AI systems that answer leads 24/7, qualify them, and book calls while you sleep. Transform your business with AI automation." />
+        <meta name="keywords" content="AI automation, lead generation, CRM automation, AI agents, business automation, lead qualification" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        {/* Schema.org structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Dan Talks AI",
+              "description": "We design done-for-you AI systems that answer leads 24/7, qualify them, and book calls while you sleep.",
+              "url": "https://dantalksai.com",
+              "logo": "https://dantalksai.com/logo.png",
+              "sameAs": [
+                "https://twitter.com/dantalksai",
+                "https://youtube.com/@dantalksai"
+              ],
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "availableLanguage": "English"
+              },
+              "serviceArea": {
+                "@type": "State",
+                "name": "Michigan"
+              },
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "AI Automation Services",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "AI Lead Qualification System",
+                      "description": "Automated lead qualification and appointment booking system"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "CRM Automation Setup",
+                      "description": "Complete CRM automation with AI agents"
+                    }
+                  }
+                ]
+              }
+            })
+          }}
+        />
+        
+        {/* FAQ Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "What does Dan Talks AI actually build?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "We design done-for-you AI systems that answer leads 24/7, qualify them, and book calls while you sleep. Our core setup is a software system that manages CRM, automations, and calendars, but we can also deploy chat or voice agents using tools like Vapi, Synthflow, or a custom stack."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Do I need a specific software system?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not necessarily. We usually recommend a central software system because it combines CRM, funnels, and automations in one place. If you're already on another platform, we can integrate with it. For chat or voice agents we often use Vapi or Synthflow and still route leads and bookings into your system."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How fast will I see results?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most clients notice more replies and booked calls within 1–3 weeks. ROI depends on your close rate and service pricing, but just a few extra appointments per week usually covers the cost of the system."
+                  }
+                }
+              ]
+            })
+          }}
+        />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
       
 
-      <main className="bg-black text-white min-h-screen font-['Inter']">
+      <main className="min-h-screen bg-black text-white">
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen">
           <div className="absolute inset-0 bg-gradient-to-br from-black via-purple-900/20 to-black"></div>
@@ -420,6 +505,164 @@ export default function Home() {
           </div>
         </motion.section>
 
+        {/* AI Tools & Talk Section - Substack Style */}
+        <motion.section 
+          className="py-20 px-4 bg-gradient-to-b from-black to-gray-900"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="max-w-6xl mx-auto">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-cyan-400">
+                AI Tips, Tools & Talk
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Weekly insights on AI automation, lead generation, and building systems that work while you sleep.
+              </p>
+            </motion.div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {blogLoading ? (
+                // Enhanced loading state with image placeholders
+                Array.from({ length: 3 }).map((_, index) => (
+                  <motion.div 
+                    key={index}
+                    className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="animate-pulse">
+                      <div className="h-48 bg-gray-700"></div>
+                      <div className="p-6">
+                        <div className="h-6 bg-gray-700 rounded mb-4"></div>
+                        <div className="h-4 bg-gray-700 rounded mb-2"></div>
+                        <div className="h-4 bg-gray-700 rounded mb-2"></div>
+                        <div className="h-4 bg-gray-700 rounded mb-6"></div>
+                        <div className="h-4 bg-gray-600 rounded w-1/3"></div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))
+              ) : blogPosts.length > 0 ? (
+                // Enhanced blog posts with images and Substack styling
+                blogPosts.map((post, index) => (
+                  <motion.article 
+                    key={post.id}
+                    className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 hover:border-cyan-500 transition-all duration-300 overflow-hidden group"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    viewport={{ once: true }}
+                  >
+                    {/* Featured Image */}
+                    <div className="relative h-48 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 overflow-hidden">
+                      {post.featured_image ? (
+                        <img 
+                          src={post.featured_image} 
+                          alt={post.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-16 h-16 bg-cyan-500/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                              <svg className="w-8 h-8 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            <p className="text-cyan-400 text-sm font-medium">AI Insights</p>
+                          </div>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="p-6">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-xs text-cyan-400 font-medium uppercase tracking-wide">AI Tools</span>
+                        <span className="text-gray-500">•</span>
+                        <span className="text-xs text-gray-400">
+                          {new Date(post.created_at).toLocaleDateString('en-US', { 
+                            month: 'short', 
+                            day: 'numeric' 
+                          })}
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold mb-3 text-white group-hover:text-cyan-400 transition-colors line-clamp-2">
+                        {post.title}
+                      </h3>
+                      
+                      <p className="text-gray-300 mb-6 leading-relaxed line-clamp-3">
+                        {post.snippet}
+                      </p>
+                      
+                      <div className="flex items-center justify-between">
+                        <Link 
+                          href={`/blog/${post.slug}`}
+                          className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors group-hover:underline"
+                        >
+                          Read More →
+                        </Link>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-500">5 min read</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.article>
+                ))
+              ) : (
+                // Enhanced empty state
+                <div className="col-span-full text-center py-16">
+                  <div className="w-24 h-24 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg className="w-12 h-12 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-300 mb-2">No posts yet</h3>
+                  <p className="text-gray-500">Check back soon for AI insights and automation tips!</p>
+                </div>
+              )}
+            </div>
+            
+            {/* Newsletter signup */}
+            <motion.div 
+              className="mt-16 text-center"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 max-w-2xl mx-auto">
+                <h3 className="text-2xl font-bold mb-4 text-cyan-400">Stay Updated</h3>
+                <p className="text-gray-300 mb-6">Get the latest AI automation tips and case studies delivered to your inbox.</p>
+                <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <input 
+                    type="email" 
+                    placeholder="Enter your email"
+                    className="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500"
+                  />
+                  <button className="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-black font-semibold rounded-lg transition-colors">
+                    Subscribe
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.section>
+
         {/* Video Section */}
         <motion.section 
           className="py-20 px-4"
@@ -567,6 +810,100 @@ export default function Home() {
                   <p className="text-gray-400 text-lg">No blog posts found. Check back soon!</p>
                 </div>
               )}
+            </div>
+          </div>
+        </motion.section>
+
+        {/* FAQ Section */}
+        <motion.section 
+          className="py-20 px-4"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="max-w-4xl mx-auto">
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-center mb-16 text-cyan-400"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              Frequently Asked Questions
+            </motion.h2>
+            
+            <div className="space-y-6">
+              {[
+                {
+                  question: "What does Dan Talks AI actually build?",
+                  answer: "We design done-for-you AI systems that answer leads 24/7, qualify them, and book calls while you sleep. Our core setup is a software system that manages CRM, automations, and calendars, but we can also deploy chat or voice agents using tools like Vapi, Synthflow, or a custom stack."
+                },
+                {
+                  question: "Do I need a specific software system?",
+                  answer: "Not necessarily. We usually recommend a central software system because it combines CRM, funnels, and automations in one place. If you're already on another platform, we can integrate with it. For chat or voice agents we often use Vapi or Synthflow and still route leads and bookings into your system."
+                },
+                {
+                  question: "How fast will I see results?",
+                  answer: "Most clients notice more replies and booked calls within 1–3 weeks. ROI depends on your close rate and service pricing, but just a few extra appointments per week usually covers the cost of the system."
+                },
+                {
+                  question: "What parts of my funnel get automated?",
+                  answer: "We automate lead capture, instant replies, FAQs, follow-ups, appointment scheduling, reminders, and even post-call nudges. Features like missed-call text-back and review prompts are included so you never lose a lead."
+                },
+                {
+                  question: "Should I use a voice agent or a chat agent?",
+                  answer: "Chat agents are great for websites, SMS, and social DMs. Voice agents are perfect for missed calls or phone-first customers. Many businesses use both: chat for inbound leads and voice for after-hours or overflow."
+                },
+                {
+                  question: "Do you help with YouTube Shorts or Reels for lead generation?",
+                  answer: "Yes. We set up simple workflows that repurpose your videos into short clips with clear CTAs. The AI system then captures viewers who engage and books them straight into your calendar."
+                },
+                {
+                  question: "How does pricing work?",
+                  answer: "There's a one-time setup fee to deploy your core AI system (CRM, automations, and agent). After that, we charge a flat monthly rate for management and support. Usage fees from tools like Vapi or Synthflow are billed directly to you."
+                },
+                {
+                  question: "Which tools can you integrate with?",
+                  answer: "We connect with software systems, Google/Outlook calendars, Stripe, Facebook/Instagram lead ads, Shopify, and more. Agents built on Vapi or Synthflow can also push data into your CRM or custom workflows."
+                },
+                {
+                  question: "How do you handle data and privacy?",
+                  answer: "You own your data. Leads, messages, and bookings live in your account, not ours. We follow platform policies and provide opt-in/opt-out language so your business stays compliant."
+                },
+                {
+                  question: "What happens if I cancel?",
+                  answer: "You keep your software system, pipelines, and assets in your account. If you stop monthly management, we hand over full documentation and walkthroughs so your team can keep things running. Third-party subscriptions remain under your control."
+                },
+                {
+                  question: "Who is this best for?",
+                  answer: "Local service businesses, real estate agents, coaches, consultants, and online offers. If you regularly miss leads or spend too much time answering the same questions, automations will make the biggest impact."
+                },
+                {
+                  question: "What does onboarding look like?",
+                  answer: "We start with a kickoff call, gather your offers and FAQs, build out the software system + agent, then test and refine. Most systems go live in 7–14 days depending on scope."
+                },
+                {
+                  question: "Do you do live demos or workshops in Michigan?",
+                  answer: "Yes. Dan offers in-person talks and workshops where we demo live chat/voice agents and booking flows. It's a hands-on way for teams to see AI systems in action."
+                },
+                {
+                  question: "Do you use affiliate links for tools?",
+                  answer: "Sometimes. If a recommended tool has an affiliate program, we'll disclose it. We only suggest platforms we personally trust and would use ourselves."
+                }
+              ].map((faq, index) => (
+                <motion.div 
+                  key={index}
+                  className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * index }}
+                  viewport={{ once: true }}
+                >
+                  <h3 className="text-xl font-bold mb-4 text-white">{faq.question}</h3>
+                  <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </motion.section>
