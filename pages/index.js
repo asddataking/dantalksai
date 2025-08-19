@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { submitFormResponse } from '../lib/formHandler'
 import { getLatestYouTubeVideo } from '../lib/youtubeApi'
 import { getBlogPosts } from '../lib/blogHandler'
+import AffiliateToolsSection from '../components/AffiliateToolsSection'
 
 export default function Home() {
   const router = useRouter()
@@ -1265,6 +1266,9 @@ export default function Home() {
             Follow on X
           </motion.a>
         </motion.footer>
+
+        {/* Affiliate Tools Section */}
+        <AffiliateToolsSection />
 
         {/* Floating Action Button with Particles */}
         <motion.div 
