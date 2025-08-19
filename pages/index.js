@@ -11,7 +11,7 @@ import AffiliateToolsSection from '../components/AffiliateToolsSection'
 export default function Home() {
   const router = useRouter()
   const [currentPhrase, setCurrentPhrase] = useState(0)
-  const [formStep, setFormStep] = useState(1)
+  const [formStep, setFormStep] = useState(0)
   const [formData, setFormData] = useState({
     name: '',
     businessFocus: '',
@@ -92,10 +92,10 @@ export default function Home() {
       const result = await submitFormResponse(formData)
       
       if (result.success) {
-        // Redirect to thank you page after successful submission
+        // Show success message briefly, then redirect to thank you page
         setTimeout(() => {
           router.push('/thank-you.html')
-        }, 2000)
+        }, 1500)
       } else {
         // Handle error - you might want to show an error message
         console.error('Form submission failed:', result.error)
@@ -416,10 +416,10 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-cyan-400">
-                Build Your AI System in 5 Simple Steps
+                Meet Rhea, Your AI Assistant
               </h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Answer a few questions and get a personalized AI automation strategy that works while you sleep.
+                Let Rhea guide you through building your perfect AI system. She'll ask you a few questions and create a personalized strategy.
               </p>
             </motion.div>
 
@@ -430,6 +430,32 @@ export default function Home() {
               transition={{ delay: 0.3, duration: 0.8 }}
               viewport={{ once: true }}
             >
+              {/* Rhea's Welcome Message */}
+              {formStep === 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-center space-y-6"
+                >
+                  <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span className="text-3xl">🤖</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4">Hi! I'm Rhea, your Dan Talks AI Assistant</h3>
+                  <p className="text-gray-300 mb-8 text-lg">
+                    I'm here to help you build an AI system that works while you sleep. Let me ask you a few questions to understand your needs better.
+                  </p>
+                  <motion.button
+                    onClick={() => setFormStep(1)}
+                    className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Let's Get Started!
+                  </motion.button>
+                </motion.div>
+              )}
+
               <form onSubmit={handleFormSubmit} className="space-y-8">
                 <AnimatePresence mode="wait">
                   {formStep === 1 && (
@@ -445,8 +471,8 @@ export default function Home() {
                         <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                           <span className="text-2xl">👋</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">Welcome! What's your name?</h3>
-                        <p className="text-gray-400">Let's start building your AI system together.</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">Great to meet you! What's your name?</h3>
+                        <p className="text-gray-400">I'd love to personalize your AI strategy, {formData.name || 'friend'}!</p>
                       </div>
                       
                       <div className="relative">
@@ -478,8 +504,8 @@ export default function Home() {
                         <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                           <span className="text-2xl">🎯</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">What's your main business focus?</h3>
-                        <p className="text-gray-400">This helps us tailor your AI strategy.</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">Thanks {formData.name}! What's your main business focus?</h3>
+                        <p className="text-gray-400">This helps me tailor your AI strategy perfectly.</p>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -526,8 +552,8 @@ export default function Home() {
                         <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                           <span className="text-2xl">📊</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">How many leads do you want weekly?</h3>
-                        <p className="text-gray-400">Let's set realistic AI-powered goals.</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">Perfect! Now, {formData.name}, how many leads do you want weekly?</h3>
+                        <p className="text-gray-400">Let's set some ambitious but realistic AI-powered goals together.</p>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -574,8 +600,8 @@ export default function Home() {
                         <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                           <span className="text-2xl">🤖</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">What type of AI agent do you need?</h3>
-                        <p className="text-gray-400">Choose the automation that fits your workflow.</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">Excellent choice, {formData.name}! What type of AI agent do you need?</h3>
+                        <p className="text-gray-400">I'll help you choose the automation that fits your workflow perfectly.</p>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -622,8 +648,8 @@ export default function Home() {
                         <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                           <span className="text-2xl">💰</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">What's your monthly budget for AI tools?</h3>
-                        <p className="text-gray-400">We'll recommend solutions that fit your investment level.</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">Almost there, {formData.name}! What's your monthly budget for AI tools?</h3>
+                        <p className="text-gray-400">I'll recommend solutions that fit your investment level perfectly.</p>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -640,7 +666,7 @@ export default function Home() {
                             whileHover={{ scale: 1.02, y: -2 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            <span className="font-medium">{budget}</span>
+                            <span className="text-sm font-medium">{budget}</span>
                             {formData.monthlyBudget === budget && (
                               <motion.div 
                                 className="inline-block ml-2 text-cyan-400"
@@ -658,7 +684,7 @@ export default function Home() {
                   )}
                 </AnimatePresence>
 
-                {!isLoading && (
+                {!isLoading && formStep > 0 && (
                   <motion.button
                     type="submit"
                     className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 disabled:opacity-50 disabled:cursor-not-allowed pulse-glow hover:pulse-glow"
@@ -681,7 +707,7 @@ export default function Home() {
                     animate={{ opacity: 1 }}
                   >
                     <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-cyan-400 font-medium text-lg">Building your AI system...</p>
+                    <p className="text-cyan-400 font-medium text-lg">Building your AI system, {formData.name}...</p>
                     <p className="text-gray-400 text-sm mt-2">This will only take a moment</p>
                   </motion.div>
                 )}
