@@ -55,6 +55,12 @@ export default function Home() {
     fetchLatestVideo()
   }, [fetchLatestVideo])
 
+  const simulateTyping = useCallback(async (delay = 1500) => {
+    setIsTyping(true)
+    await new Promise(resolve => setTimeout(resolve, delay))
+    setIsTyping(false)
+  }, [])
+
   const handleFormSubmit = useCallback(async (e) => {
     e.preventDefault()
     
@@ -83,12 +89,6 @@ export default function Home() {
 
   const updateFormData = useCallback((field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }))
-  }, [])
-
-  const simulateTyping = useCallback(async (delay = 1500) => {
-    setIsTyping(true)
-    await new Promise(resolve => setTimeout(resolve, delay))
-    setIsTyping(false)
   }, [])
 
   const containerVariants = {
