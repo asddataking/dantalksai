@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { submitFormResponse } from '../lib/formHandler'
 import { getLatestYouTubeVideo } from '../lib/youtubeApi'
+import { getBlogPosts } from '../lib/blogHandler'
 
 export default function Home() {
   const router = useRouter()
@@ -20,6 +21,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [latestVideo, setLatestVideo] = useState(null)
   const [videoLoading, setVideoLoading] = useState(true)
+  const [blogPosts, setBlogPosts] = useState([])
+  const [blogLoading, setBlogLoading] = useState(true)
   const [isTyping, setIsTyping] = useState(false)
   
   const heroPhrases = useMemo(() => [
@@ -51,9 +54,22 @@ export default function Home() {
     setVideoLoading(false)
   }, [])
 
+  const fetchBlogPosts = useCallback(async () => {
+    setBlogLoading(true)
+    const result = await getBlogPosts()
+    if (result.success) {
+      setBlogPosts(result.data)
+    }
+    setBlogLoading(false)
+  }, [])
+
   useEffect(() => {
     fetchLatestVideo()
   }, [fetchLatestVideo])
+
+  useEffect(() => {
+    fetchBlogPosts()
+  }, [fetchBlogPosts])
 
   const simulateTyping = useCallback(async (delay = 1500) => {
     setIsTyping(true)
@@ -245,9 +261,35 @@ export default function Home() {
 
       <main className="min-h-screen bg-black text-white">
         {/* Hero Section */}
-        <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen">
+        <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen overflow-hidden">
+          {/* Enhanced background with multiple layers */}
           <div className="absolute inset-0 bg-gradient-to-br from-black via-purple-900/20 to-black"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,255,0.1),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(139,92,246,0.1),transparent_50%)]"></div>
+          
+          {/* Floating particles effect */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-20"
+                style={{
+                  left: `${20 + i * 15}%`,
+                  top: `${30 + i * 10}%`,
+                }}
+                animate={{
+                  y: [0, -20, 0],
+                  opacity: [0.2, 0.6, 0.2],
+                }}
+                transition={{
+                  duration: 3 + i * 0.5,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                }}
+              />
+            ))}
+          </div>
+          
           <motion.div 
             className="relative z-10 max-w-5xl mx-auto"
             initial="hidden"
@@ -258,8 +300,8 @@ export default function Home() {
               className="text-6xl md:text-8xl font-bold mb-8"
               variants={itemVariants}
             >
-              <span className="text-white">Dan Talks</span>
-              <span className="text-cyan-400"> AI</span>
+              <span className="text-white neon-glow">Dan Talks</span>
+              <span className="gradient-text"> AI</span>
             </motion.h1>
             
             <motion.div 
@@ -269,7 +311,7 @@ export default function Home() {
               <AnimatePresence mode="wait">
                 <motion.h2 
                   key={currentPhrase}
-                  className="text-4xl md:text-6xl font-bold text-cyan-400"
+                  className="text-4xl md:text-6xl font-bold text-cyan-400 neon-glow"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
@@ -312,18 +354,28 @@ export default function Home() {
               variants={itemVariants}
             >
               <motion.button 
-                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-10 py-5 rounded-xl font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
-                whileHover={{ scale: 1.05 }}
+                className="group bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-10 py-5 rounded-xl font-bold text-xl transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 pulse-glow hover:pulse-glow"
+                whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get the AI System
+                <span className="flex items-center space-x-2">
+                  <span>Get the AI System</span>
+                  <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </span>
               </motion.button>
               <motion.button 
-                className="border-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black px-10 py-5 rounded-xl font-bold text-xl transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
+                className="group glass-effect hover:glass-effect-hover border-2 border-cyan-500 text-cyan-400 hover:text-cyan-300 px-10 py-5 rounded-xl font-bold text-xl transition-all duration-500 hover:scale-105 hover-lift"
+                whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Watch Demo First
+                <span className="flex items-center space-x-2">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                  </svg>
+                  <span>Watch Demo First</span>
+                </span>
               </motion.button>
             </motion.div>
           </motion.div>
@@ -348,17 +400,17 @@ export default function Home() {
               Chat with Rhea to Build Your AI System
             </motion.h2>
             
-            <motion.div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden shadow-2xl">
+            <motion.div className="glass-effect rounded-2xl border border-gray-600/50 overflow-hidden shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500">
               {/* Chat Header */}
-              <div className="bg-gray-800/50 border-b border-gray-700 px-6 py-4">
+              <div className="bg-gray-800/50 backdrop-blur-sm border-b border-gray-600/50 px-6 py-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center pulse-glow">
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.288 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.552-.552l1.562-1.562a4.006 4.006 0 001.9.03zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.08-.041l-.08-.08z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">Rhea - Dan Talks AI Assistant</h3>
+                    <h3 className="text-lg font-semibold text-white neon-glow">Rhea - Dan Talks AI Assistant</h3>
                     <p className="text-sm text-gray-400">Hi! I'm here to help you build an AI system that works while you sleep</p>
                   </div>
                 </div>
@@ -368,24 +420,24 @@ export default function Home() {
               <div className="p-6 space-y-6 max-h-96 overflow-y-auto">
                 {/* AI Welcome Message */}
                 <div className="flex space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0 pulse-glow">
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.288 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.552-.552l1.562-1.562a4.006 4.006 0 001.9.03zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.08-.041l-.08-.08z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <div className="bg-gray-800/50 rounded-2xl px-4 py-3 max-w-sm">
+                  <div className="bg-gray-800/40 backdrop-blur-sm rounded-2xl px-4 py-3 max-w-sm border border-gray-600/30 shadow-lg">
                     <p className="text-gray-300">Hi there! I'm Rhea, your AI assistant from Dan Talks AI. I'm excited to help you build a system that works while you sleep! First, what's your name?</p>
                   </div>
                 </div>
 
                 {/* Name Question */}
                 <div className="flex space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0 pulse-glow">
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.288 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.552-.552l1.562-1.562a4.006 4.006 0 001.9.03zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.08-.041l-.08-.08z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <div className="bg-gray-800/50 rounded-2xl px-4 py-3 max-w-sm">
+                  <div className="bg-gray-800/40 backdrop-blur-sm rounded-2xl px-4 py-3 max-w-sm border border-gray-600/30 shadow-lg">
                     <p className="text-gray-300">What's your name?</p>
                   </div>
                 </div>
@@ -393,8 +445,8 @@ export default function Home() {
                 {/* User Name Answer */}
                 {formData.name && (
                   <div className="flex space-x-3 justify-end">
-                    <div className="bg-cyan-600/20 border border-cyan-500/30 rounded-2xl px-4 py-3 max-w-sm">
-                      <p className="text-cyan-300">{formData.name}</p>
+                    <div className="bg-cyan-600/20 backdrop-blur-sm border border-cyan-500/40 rounded-2xl px-4 py-3 max-w-sm shadow-lg">
+                      <p className="text-cyan-300 font-medium">{formData.name}</p>
                     </div>
                     <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
                       <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -636,7 +688,7 @@ export default function Home() {
                           value={formData.name}
                           onChange={(e) => updateFormData('name', e.target.value)}
                           placeholder="Type your name here..."
-                          className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
+                          className="w-full px-4 py-3 bg-gray-800/40 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-800/60 transition-all duration-300 shadow-lg"
                           required
                         />
                       </motion.div>
@@ -656,7 +708,7 @@ export default function Home() {
                           value={formData.businessFocus}
                           onChange={(e) => updateFormData('businessFocus', e.target.value)}
                           placeholder="Type your business focus here..."
-                          className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
+                          className="w-full px-4 py-3 bg-gray-800/40 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-800/60 transition-all duration-300 shadow-lg"
                           required
                         />
                       </motion.div>
@@ -676,7 +728,7 @@ export default function Home() {
                           value={formData.weeklyLeads}
                           onChange={(e) => updateFormData('weeklyLeads', e.target.value)}
                           placeholder="Enter number of leads..."
-                          className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
+                          className="w-full px-4 py-3 bg-gray-800/40 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-800/60 transition-all duration-300 shadow-lg"
                           required
                         />
                       </motion.div>
@@ -695,10 +747,10 @@ export default function Home() {
                           <button
                             type="button"
                             onClick={() => updateFormData('aiAgent', 'yes')}
-                            className={`px-4 py-3 rounded-xl border-2 text-sm font-semibold transition-all ${
+                            className={`px-4 py-3 rounded-xl border-2 text-sm font-semibold transition-all duration-300 shadow-lg ${
                               formData.aiAgent === 'yes'
-                                ? 'border-cyan-500 bg-cyan-500 text-black'
-                                : 'border-gray-600 text-gray-300 hover:border-cyan-500 hover:bg-gray-700'
+                                ? 'border-cyan-500 bg-cyan-500 text-black shadow-cyan-500/50'
+                                : 'border-gray-600 text-gray-300 hover:border-cyan-500 hover:bg-gray-700/50 hover:shadow-cyan-500/20 backdrop-blur-sm'
                             }`}
                           >
                             Yes, that would be great!
@@ -706,10 +758,10 @@ export default function Home() {
                           <button
                             type="button"
                             onClick={() => updateFormData('aiAgent', 'no')}
-                            className={`px-4 py-3 border-2 text-sm font-semibold transition-all rounded-xl ${
+                            className={`px-4 py-3 border-2 text-sm font-semibold transition-all duration-300 rounded-xl shadow-lg ${
                               formData.aiAgent === 'no'
-                                ? 'border-cyan-500 bg-cyan-500 text-black'
-                                : 'border-gray-600 text-gray-300 hover:border-cyan-500 hover:bg-gray-700'
+                                ? 'border-cyan-500 bg-cyan-500 text-black shadow-cyan-500/50'
+                                : 'border-gray-600 text-gray-300 hover:border-cyan-500 hover:bg-gray-700/50 hover:shadow-cyan-500/20 backdrop-blur-sm'
                             }`}
                           >
                             No, I prefer to handle it myself
@@ -727,18 +779,14 @@ export default function Home() {
                         exit="exit"
                         transition={{ duration: 0.3 }}
                       >
-                        <select
+                        <input
+                          type="text"
                           value={formData.monthlyBudget}
                           onChange={(e) => updateFormData('monthlyBudget', e.target.value)}
-                          className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
+                          placeholder="Enter your monthly budget..."
+                          className="w-full px-4 py-3 bg-gray-800/40 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-800/60 transition-all duration-300 shadow-lg"
                           required
-                        >
-                          <option value="">Select your budget range</option>
-                          <option value="<$100">Less than $100</option>
-                          <option value="$100-$500">$100 – $500</option>
-                          <option value="$500-$2K">$500 – $2K</option>
-                          <option value="$2K+">$2K+</option>
-                        </select>
+                        />
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -746,12 +794,16 @@ export default function Home() {
                   {!isLoading && (
                     <motion.button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
-                      whileHover={{ scale: 1.02 }}
+                      className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 disabled:opacity-50 disabled:cursor-not-allowed pulse-glow hover:pulse-glow"
+                      whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
-                      disabled={!formData[Object.keys(formData)[formStep - 1]]}
                     >
-                      {formStep < 5 ? 'Send' : 'Let\'s Build My AI System!'}
+                      <span className="flex items-center justify-center space-x-2">
+                        <span>{formStep < 5 ? 'Continue' : 'Build My AI System'}</span>
+                        <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </span>
                     </motion.button>
                   )}
                 </form>
@@ -785,7 +837,83 @@ export default function Home() {
             </motion.div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Blog posts content remains unchanged */}
+              {blogLoading ? (
+                // Enhanced loading state with glass effects
+                Array.from({ length: 3 }).map((_, index) => (
+                  <motion.div 
+                    key={index}
+                    className="bg-gray-800/30 backdrop-blur-md p-6 rounded-2xl border border-gray-600/50 shadow-xl hover:shadow-2xl transition-all duration-500"
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="animate-pulse">
+                      <div className="h-6 bg-gray-700/50 rounded-lg mb-4 shimmer-effect"></div>
+                      <div className="h-4 bg-gray-700/50 rounded mb-2 shimmer-effect"></div>
+                      <div className="h-4 bg-gray-700/50 rounded mb-2 shimmer-effect"></div>
+                      <div className="h-4 bg-gray-700/50 rounded mb-6 shimmer-effect"></div>
+                      <div className="h-4 bg-cyan-600/30 rounded w-1/3 shimmer-effect"></div>
+                    </div>
+                  </motion.div>
+                ))
+              ) : blogPosts.length > 0 ? (
+                // Enhanced blog posts with glass effects and animations
+                blogPosts.map((post, index) => (
+                  <motion.div 
+                    key={post.id}
+                    className="group bg-gray-800/30 backdrop-blur-md p-6 rounded-2xl border border-gray-600/50 hover:border-cyan-400/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20"
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="relative overflow-hidden">
+                      {/* Glowing border effect on hover */}
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      
+                      <div className="relative z-10">
+                        <h3 className="text-xl font-bold mb-4 text-white group-hover:text-cyan-300 transition-colors duration-300">
+                          {post.title}
+                        </h3>
+                        <p className="text-gray-300 mb-6 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
+                          {post.snippet}
+                        </p>
+                        <Link 
+                          href={`/blog/${post.slug}`}
+                          className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold transition-all duration-300 group-hover:translate-x-1"
+                        >
+                          Read More 
+                          <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                          </svg>
+                        </Link>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                // Enhanced no posts found state
+                <motion.div 
+                  className="col-span-full text-center py-16"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="bg-gray-800/30 backdrop-blur-md p-8 rounded-2xl border border-gray-600/50 max-w-md mx-auto">
+                    <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-300 text-lg mb-2">No blog posts found</p>
+                    <p className="text-gray-500">Check back soon for fresh AI insights!</p>
+                  </div>
+                </motion.div>
+              )}
             </div>
             
             {/* Newsletter signup */}
@@ -796,16 +924,16 @@ export default function Home() {
               transition={{ delay: 0.6 }}
               viewport={{ once: true }}
             >
-              <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 max-w-2xl mx-auto">
-                <h3 className="text-2xl font-bold mb-4 text-cyan-400">Stay Updated</h3>
+              <div className="glass-effect p-8 rounded-2xl border border-gray-600/50 max-w-2xl mx-auto hover:glass-effect-hover transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20">
+                <h3 className="text-2xl font-bold mb-4 text-cyan-400 neon-glow">Stay Updated</h3>
                 <p className="text-gray-300 mb-6">Get the latest AI automation tips and case studies delivered to your inbox.</p>
                 <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <input 
                     type="email" 
                     placeholder="Enter your email"
-                    className="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500"
+                    className="flex-1 px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-700/70 transition-all duration-300 shadow-lg"
                   />
-                  <button className="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-black font-semibold rounded-lg transition-colors">
+                  <button className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 pulse-glow hover:pulse-glow">
                     Subscribe
                   </button>
                 </div>
@@ -914,7 +1042,7 @@ export default function Home() {
               Frequently Asked Questions
             </motion.h2>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               {[
                 {
                   question: "What does Dan Talks AI actually build?",
@@ -975,53 +1103,61 @@ export default function Home() {
               ].map((faq, index) => (
                 <motion.div 
                   key={index}
-                  className="faq-item bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index }}
+                  className="faq-item group bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-600/50 hover:border-cyan-400/50 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500"
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ delay: 0.1 * index, duration: 0.6 }}
+                  whileHover={{ y: -5, scale: 1.02 }}
                   viewport={{ once: true }}
                 >
-                  <button
-                    onClick={() => {
-                      const faqItems = document.querySelectorAll('.faq-item');
-                      const faqContent = faqItems[index].querySelector('.faq-content');
-                      const faqIcon = faqItems[index].querySelector('.faq-icon');
-                      
-                      // Close all other FAQ items
-                      faqItems.forEach((item, i) => {
-                        if (i !== index) {
-                          item.classList.remove('active');
-                          item.querySelector('.faq-content').style.maxHeight = '0px';
-                          item.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+                  <div className="relative overflow-hidden">
+                    {/* Glowing border effect on hover */}
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <button
+                      onClick={() => {
+                        const faqItems = document.querySelectorAll('.faq-item');
+                        const faqContent = faqItems[index].querySelector('.faq-content');
+                        const faqIcon = faqItems[index].querySelector('.faq-icon');
+                        
+                        // Close all other FAQ items
+                        faqItems.forEach((item, i) => {
+                          if (i !== index) {
+                            item.classList.remove('active');
+                            item.querySelector('.faq-content').style.maxHeight = '0px';
+                            item.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+                          }
+                        });
+                        
+                        // Toggle current FAQ item
+                        if (faqItems[index].classList.contains('active')) {
+                          faqItems[index].classList.remove('active');
+                          faqContent.style.maxHeight = '0px';
+                          faqIcon.style.transform = 'rotate(0deg)';
+                        } else {
+                          faqItems[index].classList.add('active');
+                          faqContent.style.maxHeight = faqContent.scrollHeight + 'px';
+                          faqIcon.style.transform = 'rotate(180deg)';
                         }
-                      });
-                      
-                      // Toggle current FAQ item
-                      if (faqItems[index].classList.contains('active')) {
-                        faqItems[index].classList.remove('active');
-                        faqContent.style.maxHeight = '0px';
-                        faqIcon.style.transform = 'rotate(0deg)';
-                      } else {
-                        faqItems[index].classList.add('active');
-                        faqContent.style.maxHeight = faqContent.scrollHeight + 'px';
-                        faqIcon.style.transform = 'rotate(180deg)';
-                      }
-                    }}
-                    className="w-full p-6 text-left flex items-center justify-between hover:bg-gray-700/50 transition-colors"
-                  >
-                    <h3 className="text-xl font-bold text-white pr-4">{faq.question}</h3>
-                    <div className="faq-icon w-6 h-6 text-cyan-400 transition-transform duration-300 flex-shrink-0">
-                      <svg fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </button>
-                  <div 
-                    className="faq-content overflow-hidden transition-all duration-300 ease-in-out"
-                    style={{ maxHeight: '0px' }}
-                  >
-                    <div className="px-6 pb-6">
-                      <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
+                      }}
+                      className="w-full p-6 text-left flex items-center justify-between hover:bg-gray-700/30 transition-all duration-300 relative z-10"
+                    >
+                      <h3 className="text-xl font-bold text-white pr-4 group-hover:text-cyan-300 transition-colors duration-300">
+                        {faq.question}
+                      </h3>
+                      <div className="faq-icon w-6 h-6 text-cyan-400 transition-all duration-300 flex-shrink-0 group-hover:scale-110">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    </button>
+                    <div 
+                      className="faq-content overflow-hidden transition-all duration-500 ease-in-out bg-gray-700/20"
+                      style={{ maxHeight: '0px' }}
+                    >
+                      <div className="px-6 pb-6">
+                        <p className="text-gray-300 leading-relaxed text-lg">{faq.answer}</p>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -1179,13 +1315,57 @@ export default function Home() {
 
           {/* Floating Social Button */}
           <motion.button 
-            className="fixed bottom-6 right-6 bg-black border-2 border-cyan-500 text-cyan-400 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-cyan-500 hover:text-black transition-all duration-300 z-50"
+            className="fixed bottom-6 right-6 bg-black border-2 border-cyan-500 text-cyan-400 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-cyan-500 hover:text-black transition-all duration-300 z-50 pulse-glow hover:pulse-glow"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Follow on X
           </motion.button>
         </motion.footer>
+
+        {/* Floating Action Button with Particles */}
+        <motion.div 
+          className="fixed bottom-6 left-6 z-50"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 2, duration: 0.5 }}
+        >
+          <motion.button 
+            className="relative bg-gradient-to-r from-cyan-500 to-blue-600 text-black px-6 py-3 rounded-full font-semibold shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300"
+            whileHover={{ scale: 1.1, y: -5 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="flex items-center space-x-2">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.288 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.552-.552l1.562-1.562a4.006 4.006 0 001.9.03zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.08-.041l-.08-.08z" clipRule="evenodd" />
+              </svg>
+              <span>Get Started</span>
+            </span>
+            
+            {/* Floating particles around button */}
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-60"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                }}
+                animate={{
+                  x: [0, Math.cos(i * 60 * Math.PI / 180) * 40],
+                  y: [0, Math.sin(i * 60 * Math.PI / 180) * 40],
+                  opacity: [0.6, 0, 0.6],
+                  scale: [1, 0, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                }}
+              />
+            ))}
+          </motion.button>
+        </motion.div>
       </main>
     </>
   )
