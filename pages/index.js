@@ -262,148 +262,152 @@ export default function Home() {
 
       <main className="min-h-screen bg-black text-white">
         {/* Hero Section */}
-        <motion.section 
-          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          {/* Enhanced Background Effects */}
-          <div className="absolute inset-0">
-            {/* Animated gradient orbs */}
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-blue-500/15 to-cyan-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen overflow-hidden">
+          {/* Enhanced background with multiple layers */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-purple-900/20 to-black"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,255,0.1),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(139,92,246,0.1),transparent_50%)]"></div>
+          
+          {/* Floating particles effect */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-20"
+                style={{
+                  left: `${20 + i * 15}%`,
+                  top: `${30 + i * 10}%`,
+                }}
+                animate={{
+                  y: [0, -20, 0],
+                  opacity: [0.2, 0.6, 0.2],
+                }}
+                transition={{
+                  duration: 3 + i * 0.5,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                }}
+              />
+            ))}
           </div>
-
-          {/* Grid Pattern Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(34,211,238,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.1)_1px,transparent_1px)] bg-[size:50px_50px] opacity-20"></div>
-
-          <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
-            {/* Enhanced Badge */}
-            <motion.div 
-              className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-300 mb-8 shadow-cyan-glow"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-              <span className="font-medium">AI Automation Expert</span>
-            </motion.div>
-
-            {/* Enhanced Main Heading */}
+          
+          <motion.div 
+            className="relative z-10 max-w-5xl mx-auto"
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+          >
             <motion.h1 
-              className="text-5xl md:text-7xl font-bold mb-8 leading-tight"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
+              className="text-6xl md:text-8xl font-bold mb-8"
+              variants={itemVariants}
             >
-              <span className="text-white text-shadow-strong">Build AI Systems That</span>
-              <br />
-              <span className="text-gradient-primary neon-glow-cyan">Work While You Sleep</span>
+              <span className="text-white">Dan Talks</span>
+              <span className="text-cyan-400"> AI</span>
             </motion.h1>
-
-            {/* Enhanced Subheading */}
-            <motion.p 
-              className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed text-shadow-medium"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-            >
-              Transform your business with intelligent automation. From lead generation to customer service, 
-              <span className="text-gradient-accent font-semibold"> AI agents work 24/7</span> while you focus on what matters most.
-            </motion.p>
-
-            {/* Enhanced CTA Buttons */}
+            
             <motion.div 
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
+              className="h-32 md:h-40 mb-8"
+              variants={itemVariants}
+            >
+              <AnimatePresence mode="wait">
+                <motion.h2 
+                  key={currentPhrase}
+                  className="text-4xl md:text-6xl font-bold text-cyan-400"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {renderHeroPhrase(heroPhrases[currentPhrase])}
+                </motion.h2>
+              </AnimatePresence>
+            </motion.div>
+            
+            {/* Animated Talking Waves */}
+            <motion.div 
+              className="flex justify-center items-center mb-6"
+              variants={itemVariants}
+            >
+              <div className="flex space-x-1">
+                {[0, 1, 2, 3, 4].map((index) => (
+                  <motion.div
+                    key={index}
+                    className="w-2 h-8 bg-cyan-400 rounded-full"
+                    variants={waveVariants}
+                    animate="animate"
+                    style={{
+                      animationDelay: `${index * 0.2}s`
+                    }}
+                  />
+                ))}
+              </div>
+            </motion.div>
+            
+            <motion.p 
+              className="text-xl md:text-2xl max-w-4xl mx-auto text-gray-300 mb-12 leading-relaxed"
+              variants={itemVariants}
+            >
+              AI systems that book, follow up, and convert leads — even while you sleep.
+            </motion.p>
+            
+            <motion.div 
+              className="mb-8"
+              variants={itemVariants}
+            >
+              <Link 
+                href="/faq"
+                className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold transition-colors text-lg"
+              >
+                <span>Have questions? Check out our FAQ</span>
+                <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                </svg>
+              </Link>
+            </motion.div>
+            
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+              variants={itemVariants}
             >
               <motion.button 
-                className="btn-premium px-8 py-4 rounded-xl font-bold text-lg text-white shadow-premium hover:shadow-premium-hover"
-                whileHover={{ scale: 1.05, y: -2 }}
+                className="group bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-10 py-5 rounded-xl font-bold text-xl transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 pulse-glow hover:pulse-glow"
+                whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get Your AI System
+                <span className="flex items-center space-x-2">
+                  <span>Get the AI System</span>
+                  <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                  </svg>
+                </span>
               </motion.button>
               
               <motion.button 
-                className="px-8 py-4 rounded-xl font-bold text-lg border-2 border-white/20 text-white hover:border-cyan-400/50 hover:text-cyan-400 transition-all duration-300 shadow-premium hover:shadow-premium-hover"
-                whileHover={{ scale: 1.05, y: -2 }}
+                className="group glass-effect hover:glass-effect-hover border-2 border-cyan-500 text-cyan-400 hover:text-cyan-300 px-10 py-5 rounded-xl font-bold text-xl transition-all duration-500 hover:scale-105 hover-lift"
+                whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Watch Demo
+                <span className="flex items-center space-x-2">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                  </svg>
+                  <span>Watch Demo First</span>
+                </span>
               </motion.button>
             </motion.div>
-
-            {/* Enhanced Stats */}
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-            >
-              {[
-                { number: "24/7", label: "AI Agent Uptime", icon: "🤖" },
-                { number: "500+", label: "Leads Generated", icon: "📈" },
-                { number: "95%", label: "Customer Satisfaction", icon: "⭐" }
-              ].map((stat, index) => (
-                <motion.div 
-                  key={stat.label}
-                  className="text-center group"
-                  whileHover={{ y: -5 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="text-4xl mb-2 group-hover:scale-110 transition-transform duration-300">
-                    {stat.icon}
-                  </div>
-                  <div className="text-3xl font-bold text-gradient-primary mb-2 neon-glow-cyan">
-                    {stat.number}
-                  </div>
-                  <div className="text-gray-400 text-shadow-soft">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Enhanced Scroll Indicator */}
-          <motion.div 
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
-          >
-            <div className="w-6 h-10 border-2 border-cyan-400/50 rounded-full flex justify-center">
-              <motion.div 
-                className="w-1 h-3 bg-cyan-400 rounded-full mt-2"
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </div>
           </motion.div>
-        </motion.section>
+        </section>
 
         {/* ChatGPT-Style AI System Builder */}
         <motion.section 
           id="ai-system"
-          className="py-20 px-4 bg-gradient-to-b from-black via-gray-900/50 to-black relative overflow-hidden"
+          className="py-20 px-4 bg-gradient-to-b from-black via-gray-900/50 to-black"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          {/* Enhanced Background Effects */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl"></div>
-          </div>
-
-          <div className="max-w-4xl mx-auto relative z-10">
-            {/* Enhanced Header */}
+          <div className="max-w-4xl mx-auto">
             <motion.div 
               className="text-center mb-16"
               initial={{ opacity: 0, y: 30 }}
@@ -411,32 +415,22 @@ export default function Home() {
               transition={{ delay: 0.2, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-300 mb-6 shadow-cyan-glow">
-                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                <span>AI System Builder</span>
-              </div>
-              
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-shadow-strong">
-                <span className="text-white">Build Your AI System in</span>
-                <br />
-                <span className="text-gradient-primary neon-glow-cyan">5 Simple Steps</span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-cyan-400">
+                Build Your AI System in 5 Simple Steps
               </h2>
-              
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto text-shadow-medium">
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
                 Answer a few questions and get a personalized AI automation strategy that works while you sleep.
               </p>
             </motion.div>
 
-            {/* Enhanced Form Container */}
             <motion.div 
-              className="glass-effect rounded-3xl border border-white/10 p-8 md:p-12 shadow-premium hover:shadow-premium-hover transition-all duration-500"
+              className="glass-effect rounded-3xl border border-white/10 p-8 md:p-12"
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
               viewport={{ once: true }}
             >
               <form onSubmit={handleFormSubmit} className="space-y-8">
-                {/* Enhanced Form Steps */}
                 <AnimatePresence mode="wait">
                   {formStep === 1 && (
                     <motion.div
@@ -448,10 +442,10 @@ export default function Home() {
                       className="space-y-6"
                     >
                       <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-cyan-glow">
+                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                           <span className="text-2xl">👋</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2 text-shadow-medium">Welcome! What's your name?</h3>
+                        <h3 className="text-2xl font-bold text-white mb-2">Welcome! What's your name?</h3>
                         <p className="text-gray-400">Let's start building your AI system together.</p>
                       </div>
                       
@@ -461,7 +455,7 @@ export default function Home() {
                           value={formData.name}
                           onChange={(e) => updateFormData('name', e.target.value)}
                           placeholder="Enter your name..."
-                          className="w-full px-6 py-4 bg-gray-800/40 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-800/60 transition-all duration-300 shadow-lg focus-premium"
+                          className="w-full px-6 py-4 bg-gray-800/40 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-800/60 transition-all duration-300 shadow-lg"
                           required
                         />
                         <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
@@ -481,10 +475,10 @@ export default function Home() {
                       className="space-y-6"
                     >
                       <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-cyan-glow">
+                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                           <span className="text-2xl">🎯</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2 text-shadow-medium">What's your main business focus?</h3>
+                        <h3 className="text-2xl font-bold text-white mb-2">What's your main business focus?</h3>
                         <p className="text-gray-400">This helps us tailor your AI strategy.</p>
                       </div>
                       
@@ -496,7 +490,7 @@ export default function Home() {
                             onClick={() => updateFormData('businessFocus', focus)}
                             className={`p-4 rounded-xl border-2 transition-all duration-300 text-left group ${
                               formData.businessFocus === focus
-                                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300 shadow-cyan-glow'
+                                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
                                 : 'border-gray-600/50 bg-gray-800/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
                             }`}
                             whileHover={{ scale: 1.02, y: -2 }}
@@ -529,10 +523,10 @@ export default function Home() {
                       className="space-y-6"
                     >
                       <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-cyan-glow">
+                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                           <span className="text-2xl">📊</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2 text-shadow-medium">How many leads do you want weekly?</h3>
+                        <h3 className="text-2xl font-bold text-white mb-2">How many leads do you want weekly?</h3>
                         <p className="text-gray-400">Let's set realistic AI-powered goals.</p>
                       </div>
                       
@@ -544,7 +538,7 @@ export default function Home() {
                             onClick={() => updateFormData('weeklyLeads', range)}
                             className={`p-4 rounded-xl border-2 transition-all duration-300 text-center group ${
                               formData.weeklyLeads === range
-                                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300 shadow-cyan-glow'
+                                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
                                 : 'border-gray-600/50 bg-gray-800/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
                             }`}
                             whileHover={{ scale: 1.02, y: -2 }}
@@ -577,10 +571,10 @@ export default function Home() {
                       className="space-y-6"
                     >
                       <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-cyan-glow">
+                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                           <span className="text-2xl">🤖</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2 text-shadow-medium">What type of AI agent do you need?</h3>
+                        <h3 className="text-2xl font-bold text-white mb-2">What type of AI agent do you need?</h3>
                         <p className="text-gray-400">Choose the automation that fits your workflow.</p>
                       </div>
                       
@@ -592,7 +586,7 @@ export default function Home() {
                             onClick={() => updateFormData('aiAgent', agent)}
                             className={`p-4 rounded-xl border-2 transition-all duration-300 text-left group ${
                               formData.aiAgent === agent
-                                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300 shadow-cyan-glow'
+                                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
                                 : 'border-gray-600/50 bg-gray-800/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
                             }`}
                             whileHover={{ scale: 1.02, y: -2 }}
@@ -625,10 +619,10 @@ export default function Home() {
                       className="space-y-6"
                     >
                       <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-cyan-glow">
+                        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                           <span className="text-2xl">💰</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2 text-shadow-medium">What's your monthly budget for AI tools?</h3>
+                        <h3 className="text-2xl font-bold text-white mb-2">What's your monthly budget for AI tools?</h3>
                         <p className="text-gray-400">We'll recommend solutions that fit your investment level.</p>
                       </div>
                       
@@ -640,7 +634,7 @@ export default function Home() {
                             onClick={() => updateFormData('monthlyBudget', budget)}
                             className={`p-4 rounded-xl border-2 transition-all duration-300 text-center group ${
                               formData.monthlyBudget === budget
-                                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300 shadow-cyan-glow'
+                                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
                                 : 'border-gray-600/50 bg-gray-800/30 text-gray-300 hover:border-cyan-400/50 hover:bg-cyan-500/10'
                             }`}
                             whileHover={{ scale: 1.02, y: -2 }}
@@ -664,11 +658,10 @@ export default function Home() {
                   )}
                 </AnimatePresence>
 
-                {/* Enhanced Submit Button */}
                 {!isLoading && (
                   <motion.button
                     type="submit"
-                    className="w-full btn-premium px-8 py-4 rounded-xl font-bold text-lg text-white shadow-premium hover:shadow-premium-hover"
+                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 disabled:opacity-50 disabled:cursor-not-allowed pulse-glow hover:pulse-glow"
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -681,14 +674,13 @@ export default function Home() {
                   </motion.button>
                 )}
 
-                {/* Enhanced Loading State */}
                 {isLoading && (
                   <motion.div 
                     className="text-center py-8"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                   >
-                    <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4 shadow-cyan-glow"></div>
+                    <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
                     <p className="text-cyan-400 font-medium text-lg">Building your AI system...</p>
                     <p className="text-gray-400 text-sm mt-2">This will only take a moment</p>
                   </motion.div>
@@ -832,7 +824,7 @@ export default function Home() {
               )}
             </div>
             
-            {/* Enhanced Newsletter signup */}
+            {/* Newsletter signup */}
             <motion.div 
               className="mt-16 text-center"
               initial={{ opacity: 0, y: 30 }}
@@ -840,16 +832,16 @@ export default function Home() {
               transition={{ delay: 0.6, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <div className="card-premium p-8 rounded-2xl border border-gray-600/50 max-w-2xl mx-auto shadow-premium hover:shadow-premium-hover transition-all duration-500">
-                <h3 className="text-2xl font-bold mb-4 text-gradient-primary neon-glow-cyan">Stay Updated</h3>
-                <p className="text-gray-300 mb-6 text-shadow-soft">Get the latest AI automation tips and case studies delivered to your inbox.</p>
+              <div className="glass-effect p-8 rounded-2xl border border-gray-600/50 max-w-2xl mx-auto hover:glass-effect-hover transition-all duration-500">
+                <h3 className="text-2xl font-bold mb-4 text-cyan-400">Stay Updated</h3>
+                <p className="text-gray-300 mb-6">Get the latest AI automation tips and case studies delivered to your inbox.</p>
                 <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <input 
                     type="email" 
                     placeholder="Enter your email"
-                    className="flex-1 px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-700/70 transition-all duration-300 shadow-lg focus-premium"
+                    className="flex-1 px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-700/70 transition-all duration-300 shadow-lg"
                   />
-                  <button className="btn-premium px-6 py-3 font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-premium hover:shadow-premium-hover">
+                  <button className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50">
                     Subscribe
                   </button>
                 </div>
@@ -857,9 +849,6 @@ export default function Home() {
             </motion.div>
           </div>
         </motion.section>
-
-        {/* Affiliate Tools Section */}
-        <AffiliateToolsSection />
 
         {/* Video Section */}
         <motion.section 
