@@ -1,0 +1,32 @@
+name: RSS Feed Update
+
+on:
+  schedule:
+    # Run every 10 minutes
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  update-rss-feeds:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Update RSS Feeds
+      run: |
+        # Get your Supabase project URL and service role key from secrets
+        SUPABASE_URL="${{ secrets.SUPABASE_URL }}"
+        SERVICE_ROLE_KEY="${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}"
+        
+        # Call the Edge Function
+        curl -X POST \
+          "https://$SUPABASE_URL/functions/v1/update-rss-feeds" \
+          -H "Authorization: Bearer $SERVICE_ROLE_KEY" \
+          -H "Content-Type: application/json" \
+          -d '{}'
+        
+        echo "RSS feeds updated at $(date)"
+      
+    - name: Log Success
+      run: |
+        echo "✅ RSS feed update completed successfully"
+        echo "Next update in 10 minutes"
