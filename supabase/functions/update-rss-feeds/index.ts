@@ -65,6 +65,8 @@ async function parseRSSFeed(url: string): Promise<any[]> {
     const items = xmlDoc.querySelectorAll('item')
     const articles = []
     
+    console.log(`Found ${items.length} items in RSS feed`)
+    
     for (const item of items) {
       const title = item.querySelector('title')?.textContent?.trim()
       const description = item.querySelector('description')?.textContent?.trim()
@@ -81,7 +83,10 @@ async function parseRSSFeed(url: string): Promise<any[]> {
       }
     }
     
-    return articles.slice(0, 5) // Limit to 5 most recent articles per source
+    console.log(`Processed ${articles.length} valid articles from RSS feed`)
+    
+    // Increase limit to get more articles per source
+    return articles.slice(0, 10) // Limit to 10 most recent articles per source
   } catch (error) {
     console.error(`Error parsing RSS feed ${url}:`, error)
     return []
@@ -204,6 +209,8 @@ serve(async (req) => {
       try {
         console.log(`Processing ${source.name}...`)
         const articles = await parseRSSFeed(source.url)
+        
+        console.log(`${source.name}: Found ${articles.length} articles`)
         
         if (articles.length > 0) {
           await updateNewsTable(supabase, articles, source)
