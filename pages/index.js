@@ -7,6 +7,7 @@ import { submitFormResponse } from '../lib/formHandler'
 import { getLatestYouTubeVideo } from '../lib/youtubeApi'
 import { getBlogPosts } from '../lib/blogHandler'
 import AffiliateToolsSection from '../components/AffiliateToolsSection'
+import RightSidebar from '../components/RightSidebar'
 
 export default function Home() {
   const router = useRouter()
@@ -260,7 +261,7 @@ export default function Home() {
       </Head>
       
 
-      <main className="min-h-screen bg-black text-white">
+      <main className="min-h-screen bg-black text-white lg:pr-80">
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen overflow-hidden">
           {/* Enhanced background with multiple layers */}
@@ -1329,6 +1330,9 @@ export default function Home() {
             ))}
           </Link>
         </motion.div>
+
+        {/* Right Sidebar */}
+        <RightSidebar />
       </main>
     </>
   )
