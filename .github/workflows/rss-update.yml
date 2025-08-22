@@ -9,6 +9,7 @@ on:
 jobs:
   update-rss-feeds:
     runs-on: ubuntu-latest
+    environment: production
     
     steps:
     - name: Update RSS Feeds
@@ -17,11 +18,12 @@ jobs:
         SUPABASE_URL="${{ secrets.SUPABASE_URL }}"
         SERVICE_ROLE_KEY="${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}"
         
-        # Call the Edge Function
+        # Call the Edge Function with proper authorization
         curl -X POST \
           "https://$SUPABASE_URL/functions/v1/update-rss-feeds" \
           -H "Authorization: Bearer $SERVICE_ROLE_KEY" \
           -H "Content-Type: application/json" \
+          -H "apikey: $SERVICE_ROLE_KEY" \
           -d '{}'
         
         echo "RSS feeds updated at $(date)"
