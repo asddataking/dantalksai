@@ -18,6 +18,13 @@ export default function RheaChatbot() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true)
+      // Track chatbot appearance
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'chatbot_appear', {
+          event_category: 'engagement',
+          event_label: 'rhea_chatbot'
+        })
+      }
     }, 5000)
 
     return () => clearTimeout(timer)
@@ -28,6 +35,14 @@ export default function RheaChatbot() {
     if (isExpanded && currentStep < 6) {
       const timer = setTimeout(() => {
         setCurrentStep(prev => prev + 1)
+        // Track conversation progress
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'conversation_step', {
+            event_category: 'engagement',
+            event_label: `step_${currentStep + 1}`,
+            value: currentStep + 1
+          })
+        }
       }, 2000)
 
       return () => clearTimeout(timer)
@@ -67,24 +82,85 @@ export default function RheaChatbot() {
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }))
+    
+    // Track field interactions
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'form_field_interaction', {
+        event_category: 'form',
+        event_label: field,
+        value: value
+      })
+    }
   }
 
   const handleSubmit = async () => {
     try {
+      // Track form submission start
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'form_submit_start', {
+          event_category: 'form',
+          event_label: 'rhea_chatbot'
+        })
+      }
+
       const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-client-id': getClientId(), // Send client ID for server-side tracking
         },
         body: JSON.stringify(formData),
       })
 
       if (response.ok) {
+        // Track successful form submission
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'form_submit_success', {
+            event_category: 'conversion',
+            event_label: 'rhea_chatbot',
+            value: 1,
+            custom_parameters: {
+              business_focus: formData.business_focus,
+              weekly_leads: formData.weekly_leads,
+              ai_agent: formData.ai_agent,
+              monthly_budget: formData.monthly_budget,
+              source: 'rhea_chatbot'
+            }
+          })
+        }
+        
         setCurrentStep(7) // Show success message
+      } else {
+        // Track form submission error
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'form_submit_error', {
+            event_category: 'form',
+            event_label: 'rhea_chatbot'
+          })
+        }
       }
     } catch (error) {
       console.error('Error submitting form:', error)
+      // Track form submission error
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'form_submit_error', {
+          event_category: 'form',
+          event_label: 'rhea_chatbot'
+        })
+      }
     }
+  }
+
+  // Get or generate client ID for Google Analytics
+  const getClientId = () => {
+    if (typeof window === 'undefined') return 'anonymous'
+    
+    let clientId = localStorage.getItem('ga_client_id')
+    if (!clientId) {
+      clientId = 'client_' + Math.random().toString(36).substr(2, 9)
+      localStorage.setItem('ga_client_id', clientId)
+    }
+    return clientId
   }
 
   const renderInput = (field) => {
@@ -240,7 +316,16 @@ export default function RheaChatbot() {
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white p-4 rounded-2xl shadow-2xl cursor-pointer hover:scale-105 transition-transform"
-            onClick={() => setIsExpanded(true)}
+            onClick={() => {
+              setIsExpanded(true)
+              // Track chatbot expansion
+              if (typeof window !== 'undefined' && window.gtag) {
+                window.gtag('event', 'chatbot_expand', {
+                  event_category: 'engagement',
+                  event_label: 'rhea_chatbot'
+                })
+              }
+            }}
           >
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
@@ -276,7 +361,16 @@ export default function RheaChatbot() {
                 </div>
               </div>
               <button
-                onClick={() => setIsExpanded(false)}
+                onClick={() => {
+                  setIsExpanded(false)
+                  // Track chatbot close
+                  if (typeof window !== 'undefined' && window.gtag) {
+                    window.gtag('event', 'chatbot_close', {
+                      event_category: 'engagement',
+                      event_label: 'rhea_chatbot'
+                    })
+                  }
+                }}
                 className="text-white/80 hover:text-white transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

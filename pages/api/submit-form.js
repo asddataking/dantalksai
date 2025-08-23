@@ -153,6 +153,48 @@ export default async function handler(req, res) {
       }
     }
 
+    // 4. Google Analytics Tracking (Server-side)
+    if (process.env.GA_MEASUREMENT_ID && process.env.GA_API_SECRET) {
+      try {
+        const gaResponse = await fetch(
+          `https://www.google-analytics.com/mp/collect?measurement_id=${process.env.GA_MEASUREMENT_ID}&api_secret=${process.env.GA_API_SECRET}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              client_id: req.headers['x-client-id'] || 'anonymous',
+              events: [
+                {
+                  name: 'form_submit',
+                  params: {
+                    form_name: 'rhea_chatbot',
+                    form_type: 'lead_capture',
+                    business_focus: formData.business_focus || 'not_specified',
+                    weekly_leads: formData.weekly_leads || 'not_specified',
+                    ai_agent_type: formData.ai_agent || 'not_specified',
+                    monthly_budget: formData.monthly_budget || 'not_specified',
+                    source: 'rhea_chatbot',
+                    engagement_time_msec: 1000,
+                  },
+                },
+              ],
+            }),
+          }
+        )
+
+        if (!gaResponse.ok) {
+          console.error('Google Analytics tracking failed:', await gaResponse.text())
+        } else {
+          console.log('Form submission tracked in Google Analytics')
+        }
+      } catch (gaError) {
+        console.error('Error tracking in Google Analytics:', gaError)
+        // Don't fail the entire request if GA fails
+      }
+    }
+
     return res.status(200).json({ 
       success: true, 
       message: 'Form submitted successfully',

@@ -9,6 +9,10 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
 NOTION_API_KEY=your-notion-api-key-here
 NOTION_DATABASE_ID=your-notion-database-id-here
 
+# Google Analytics 4 (GA4) - for tracking form submissions
+GA_MEASUREMENT_ID=G-XXXXXXXXXX
+GA_API_SECRET=your-ga4-api-secret-here
+
 # Email Notifications (Optional - for lead notifications)
 SENDGRID_API_KEY=your-sendgrid-api-key-here
 NOTIFICATION_EMAIL=your-email@example.com
