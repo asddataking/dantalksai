@@ -1,3 +1,14 @@
+// Type declaration for Google Analytics gtag function
+declare global {
+  interface Window {
+    gtag: (
+      command: 'event' | 'config' | 'set',
+      targetId: string,
+      config?: Record<string, any>
+    ) => void;
+  }
+}
+
 export function track(eventName: string, payload?: any) {
   // Track with Google Analytics if available
   if (typeof window !== 'undefined' && window.gtag) {
