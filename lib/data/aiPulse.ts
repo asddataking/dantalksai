@@ -63,7 +63,7 @@ export async function getAIPulse(): Promise<PulseData> {
     }, {} as Record<string, number>)
     
     const trending = Object.entries(tagCounts)
-      .sort(([, a], [, b]) => b - a)
+      .sort(([, a]: [string, number], [, b]: [string, number]) => b - a)
       .slice(0, 10)
       .map(([tag]) => tag)
 
