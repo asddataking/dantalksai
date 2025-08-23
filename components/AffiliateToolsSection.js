@@ -22,30 +22,9 @@ export default function AffiliateToolsSection() {
     sortOptions
   } = useTools()
 
-  if (loading) {
-    return (
-      <section className="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#0B0B18] to-[#05050A] p-6 sm:p-8 mx-4 mb-8">
-        <div className="flex items-center justify-center py-20">
-          <div className="text-center">
-            <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-400">Loading tools...</p>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  if (error) {
-    return (
-      <section className="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#0B0B18] to-[#05050A] p-6 sm:p-8 mx-4 mb-8">
-        <div className="flex items-center justify-center py-20">
-          <div className="text-center">
-            <p className="text-red-400 mb-4">Error loading tools: {error}</p>
-            <p className="text-gray-400">Please try again later.</p>
-          </div>
-        </div>
-      </section>
-    )
+  // Don't render if no tools available
+  if (!tools || tools.length === 0) {
+    return null
   }
 
   return (
@@ -69,7 +48,7 @@ export default function AffiliateToolsSection() {
             Build faster. Automate more. <span className="bg-gradient-to-r from-indigo-300 via-sky-300 to-fuchsia-300 bg-clip-text text-transparent">Even while you sleep.</span>
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-white/70">
-            Hand-picked tools I actually use. Filter by category, pricing, or search by what you need.
+            These are the tools I actually use to build client systems. No fluff.
           </p>
         </div>
 

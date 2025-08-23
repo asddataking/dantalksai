@@ -4,10 +4,12 @@ import { useRouter } from 'next/router'
 
 import Hero from '../components/Hero'
 import LiveTicker from '../components/LiveTicker'
-import ValueCards from '../components/ValueCards'
-import UseCaseTiles from '../components/UseCaseTiles'
+import HowWeWork from '../components/HowWeWork'
+import IndustriesGrid from '../components/IndustriesGrid'
+import TrustBadges from '../components/TrustBadges'
 import RheaModal from '../components/RheaModal'
 import AffiliateToolsSection from '../components/AffiliateToolsSection'
+import Footer from '../components/Footer'
 
 export default function Home() {
   const router = useRouter()
@@ -31,8 +33,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Dan Talks AI - AI That Works As Hard As You Do</title>
-        <meta name="description" content="From contractors to coaches, lawyers to garages — I build AI systems that answer calls, send quotes, and book jobs while you're working." />
+        <title>Dan Talks AI | AI Systems for Local Businesses & Contractors</title>
+        <meta name="description" content="AI that answers calls, sends quotes, and books jobs while you work. From contractors to coaches, lawyers to garages — see it in action." />
         <meta name="keywords" content="AI automation, lead generation, CRM automation, AI agents, business automation, local business, contractors, dumpster rentals, landscaping, painting, personal trainers, lawyers, car garages" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
@@ -96,14 +98,20 @@ export default function Home() {
         {/* Live Ticker */}
         <LiveTicker />
         
-        {/* Value Cards */}
-        <ValueCards />
+        {/* How We Work */}
+        <HowWeWork onOpenRhea={handleOpenRhea} />
         
-        {/* Use-Case Tiles */}
-        <UseCaseTiles onOpenRhea={handleOpenRhea} />
+        {/* Trust Badges */}
+        <TrustBadges />
+        
+        {/* Industries Grid */}
+        <IndustriesGrid onOpenRhea={handleOpenRhea} />
         
         {/* Affiliate Tools Section */}
         <AffiliateToolsSection />
+        
+        {/* Footer */}
+        <Footer />
       </main>
 
       {/* Rhea Modal */}

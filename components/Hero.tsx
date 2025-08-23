@@ -65,7 +65,7 @@ export default function Hero({ onOpenRhea }: HeroProps) {
         </motion.p>
         
         <motion.div 
-          className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8"
+          className="flex justify-center items-center mb-8"
           variants={itemVariants}
         >
           <motion.button 
@@ -78,18 +78,6 @@ export default function Hero({ onOpenRhea }: HeroProps) {
             }}
           >
             See It In Action
-          </motion.button>
-          
-          <motion.button 
-            className="group border-2 border-[#F5F7FA] text-[#F5F7FA] hover:bg-[#F5F7FA] hover:text-[#0B1C2E] px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-300 transform hover:scale-105"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              trackCtaClick('tools_recommended')
-              window.location.href = '/thank-you.html'
-            }}
-          >
-            Tools I Recommend
           </motion.button>
         </motion.div>
         

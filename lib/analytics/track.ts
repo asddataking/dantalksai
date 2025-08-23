@@ -49,3 +49,19 @@ export const trackTickerClick = (slugOrId: string) => {
 export const trackUsecaseTileClick = (industry: string) => {
   track('usecase_tile_click', { industry })
 }
+
+export const trackHowWeWorkCtaClick = () => {
+  track('how_we_work_cta_click')
+}
+
+export const trackIndustryTileOpen = (slug: string) => {
+  track('industry_tile_open', { slug })
+}
+
+export const trackIndustryTileRheaPreselect = (slug: string) => {
+  track('industry_tile_rhea_preselect', { slug })
+}
+
+export const trackIndustryPageView = (slug: string) => {
+  track('industry_page_view', { slug })
+}
