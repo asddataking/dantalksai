@@ -8,7 +8,7 @@
 const https = require('https')
 
 // Configuration - replace with your actual values
-const SUPABASE_URL = 'prxioffyzbmygsliuabt.supabase.co'
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace('https://', '') || 'your-project-id.supabase.co'
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || 'your-service-role-key'
 
 if (!SERVICE_ROLE_KEY || SERVICE_ROLE_KEY === 'your-service-role-key') {
