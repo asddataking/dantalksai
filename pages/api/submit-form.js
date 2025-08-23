@@ -12,23 +12,32 @@ export default async function handler(req, res) {
     }
 
     // 1. Save to Supabase (existing functionality)
-    const supabaseResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/submit-form`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      }
-    )
+    let supabaseSuccess = false
+    try {
+      const supabaseResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/submit-form`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      )
 
-    if (!supabaseResponse.ok) {
-      console.error('Supabase submission failed:', await supabaseResponse.text())
+      if (supabaseResponse.ok) {
+        supabaseSuccess = true
+        console.log('Form data saved to Supabase successfully')
+      } else {
+        console.error('Supabase submission failed:', await supabaseResponse.text())
+      }
+    } catch (supabaseError) {
+      console.error('Error calling Supabase function:', supabaseError)
     }
 
     // 2. Send to Notion
+    let notionSuccess = false
     if (process.env.NOTION_API_KEY && process.env.NOTION_DATABASE_ID) {
       try {
         const notionResponse = await fetch(
@@ -84,7 +93,7 @@ export default async function handler(req, res) {
                 },
                 Source: {
                   select: {
-                    name: 'Rhea Chatbot',
+                    name: formData.source || 'Rhea Chatbot',
                   },
                 },
                 'Submission Date': {
@@ -97,15 +106,19 @@ export default async function handler(req, res) {
           }
         )
 
-        if (!notionResponse.ok) {
-          console.error('Notion submission failed:', await notionResponse.text())
-        } else {
+        if (notionResponse.ok) {
+          notionSuccess = true
           console.log('Lead successfully added to Notion')
+        } else {
+          const notionErrorText = await notionResponse.text()
+          console.error('Notion submission failed:', notionErrorText)
+          console.error('Notion response status:', notionResponse.status)
         }
       } catch (notionError) {
         console.error('Error sending to Notion:', notionError)
-        // Don't fail the entire request if Notion fails
       }
+    } else {
+      console.log('Notion integration not configured - missing environment variables')
     }
 
     // 3. Send email notification (optional)
@@ -198,7 +211,10 @@ export default async function handler(req, res) {
     return res.status(200).json({ 
       success: true, 
       message: 'Form submitted successfully',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      supabase: supabaseSuccess ? 'success' : 'failed',
+      notion: notionSuccess ? 'success' : 'failed',
+      notionConfigured: !!(process.env.NOTION_API_KEY && process.env.NOTION_DATABASE_ID)
     })
 
   } catch (error) {

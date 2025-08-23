@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
       <Layout>
         <DefaultSeo {...SEO} />
         <Head>
-          <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="bvlXU7UBWdq7IayM" data-version="062024"></script>
+          {/* Google Analytics and other tracking scripts can be added here */}
         </Head>
         <Component {...pageProps} />
       </Layout>
