@@ -60,11 +60,47 @@ export default function DumpsterAI() {
 
     setIsLoading(true)
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    // Redirect to thank you page
-    router.push('/thank-you.html')
+    try {
+      // Submit to unified API endpoint
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          business_focus: 'Dumpster Rental',
+          weekly_leads: 'Industry Specific',
+          ai_agent: 'Customer Service & Booking',
+          monthly_budget: 'Custom',
+          source: 'dumpster_rental_landing'
+        }),
+      })
+
+      if (response.ok) {
+        // Track successful form submission
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'form_submit_success', {
+            event_category: 'conversion',
+            event_label: 'dumpster_rental_landing',
+            value: 1,
+            custom_parameters: {
+              business_focus: 'Dumpster Rental',
+              source: 'dumpster_rental_landing'
+            }
+          })
+        }
+        
+        // Redirect to thank you page
+        router.push('/thank-you.html')
+      } else {
+        console.error('Form submission failed')
+        setIsLoading(false)
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setIsLoading(false)
+    }
   }
 
   const updateFormData = (field: string, value: string) => {

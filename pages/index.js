@@ -3,12 +3,14 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { submitFormResponse } from '../lib/formHandler'
+
 import { getLatestYouTubeVideo } from '../lib/youtubeApi'
 import { getBlogPosts } from '../lib/blogHandler'
 import AffiliateToolsSection from '../components/AffiliateToolsSection'
 import RightSidebar from '../components/RightSidebar'
 import RheaChatbot from '../components/RheaChatbot'
+import IsThereAIForThat from '../components/IsThereAIForThat'
+import HeroPulse from '../components/HeroPulse'
 
 export default function Home() {
   const router = useRouter()
@@ -90,17 +92,52 @@ export default function Home() {
     } else {
       setIsLoading(true)
       
-      // Submit form data to Supabase
-      const result = await submitFormResponse(formData)
-      
-      if (result.success) {
-        // Show success message briefly, then redirect to thank you page
-        setTimeout(() => {
-          router.push('/thank-you.html')
-        }, 1500)
-      } else {
-        // Handle error - you might want to show an error message
-        console.error('Form submission failed:', result.error)
+      try {
+        // Submit to unified API endpoint
+        const response = await fetch('/api/submit-form', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.name || 'Hero Form User',
+            email: formData.email || 'hero@example.com', // You might want to add email field to hero form
+            business_focus: formData.businessFocus,
+            weekly_leads: formData.weeklyLeads,
+            ai_agent: formData.aiAgent,
+            monthly_budget: formData.monthlyBudget,
+            source: 'hero_section_form'
+          }),
+        })
+
+        if (response.ok) {
+          // Track successful form submission
+          if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('event', 'form_submit_success', {
+              event_category: 'conversion',
+              event_label: 'hero_section_form',
+              value: 1,
+              custom_parameters: {
+                business_focus: formData.businessFocus,
+                weekly_leads: formData.weeklyLeads,
+                ai_agent: formData.aiAgent,
+                monthly_budget: formData.monthlyBudget,
+                source: 'hero_section_form'
+              }
+            })
+          }
+          
+          // Show success message briefly, then redirect to thank you page
+          setTimeout(() => {
+            router.push('/thank-you.html')
+          }, 1500)
+        } else {
+          // Handle error
+          console.error('Form submission failed:', await response.text())
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error)
         setIsLoading(false)
       }
     }
@@ -349,26 +386,11 @@ export default function Home() {
               className="text-xl md:text-2xl max-w-4xl mx-auto text-gray-300 mb-12 leading-relaxed"
               variants={itemVariants}
             >
-              AI systems that book, follow up, and convert leads — even while you sleep.
+              Tutorials, tool drops, and real use cases for creators and small businesses.
             </motion.p>
             
             <motion.div 
-              className="mb-8"
-              variants={itemVariants}
-            >
-              <Link 
-                href="/faq"
-                className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold transition-colors text-lg"
-              >
-                <span>Have questions? Check out our FAQ</span>
-                <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                </svg>
-              </Link>
-            </motion.div>
-            
-            <motion.div 
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
               variants={itemVariants}
             >
               <motion.button 
@@ -377,7 +399,7 @@ export default function Home() {
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="flex items-center space-x-2">
-                  <span>Get the AI System</span>
+                  <span>Browse My Tool Stack</span>
                   <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                   </svg>
@@ -393,9 +415,25 @@ export default function Home() {
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                   </svg>
-                  <span>Watch Demo First</span>
+                  <span>Watch the Latest Video</span>
                 </span>
               </motion.button>
+            </motion.div>
+
+            {/* Is There AI for That? Search Card */}
+            <motion.div
+              variants={itemVariants}
+              className="w-full"
+            >
+              <IsThereAIForThat />
+            </motion.div>
+
+            {/* Hero Pulse Strip */}
+            <motion.div
+              variants={itemVariants}
+              className="w-full mt-8"
+            >
+              <HeroPulse />
             </motion.div>
           </motion.div>
         </section>

@@ -1,10 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useRouter } from 'next/router'
 
 export default function RheaChatbot() {
+  const router = useRouter()
   const [isVisible, setIsVisible] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const [currentStep, setCurrentStep] = useState(0)
+  const [messages, setMessages] = useState([])
+  const [userInput, setUserInput] = useState('')
+  const [isTyping, setIsTyping] = useState(false)
   const [formData, setFormData] = useState({
     business_focus: '',
     weekly_leads: '',
@@ -13,6 +18,8 @@ export default function RheaChatbot() {
     name: '',
     email: ''
   })
+  const messagesEndRef = useRef(null)
+  const inputRef = useRef(null)
 
   // Show chatbot after 5 seconds on page load
   useEffect(() => {
@@ -30,65 +37,123 @@ export default function RheaChatbot() {
     return () => clearTimeout(timer)
   }, [])
 
-  // Auto-advance conversation
+  // Initialize conversation when expanded
   useEffect(() => {
-    if (isExpanded && currentStep < 6) {
-      const timer = setTimeout(() => {
-        setCurrentStep(prev => prev + 1)
-        // Track conversation progress
-        if (typeof window !== 'undefined' && window.gtag) {
-          window.gtag('event', 'conversation_step', {
-            event_category: 'engagement',
-            event_label: `step_${currentStep + 1}`,
-            value: currentStep + 1
-          })
+    if (isExpanded && messages.length === 0) {
+      addMessage("Hi! I'm Rhea, your Dan Talks AI Assistant. I'm here to help you build an AI system that works while you sleep. Let me ask you a few questions to understand your needs better.", 'rhea')
+      setTimeout(() => {
+        addMessage("What's your main business focus?", 'rhea')
+        setCurrentStep(1)
+      }, 1000)
+    }
+  }, [isExpanded, messages.length])
+
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  // Focus input when expanded
+  useEffect(() => {
+    if (isExpanded && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [isExpanded])
+
+  const addMessage = (text, sender) => {
+    setMessages(prev => [...prev, { text, sender, timestamp: Date.now() }])
+  }
+
+  const simulateTyping = (callback, delay = 1000) => {
+    setIsTyping(true)
+    setTimeout(() => {
+      setIsTyping(false)
+      callback()
+    }, delay)
+  }
+
+  const handleUserInput = (input) => {
+    if (!input.trim()) return
+
+    // Add user message
+    addMessage(input, 'user')
+    setUserInput('')
+
+    // Process based on current step
+    switch (currentStep) {
+      case 1: // Business focus
+        setFormData(prev => ({ ...prev, business_focus: input }))
+        simulateTyping(() => {
+          addMessage("Great! How many leads do you typically get per week?", 'rhea')
+          setCurrentStep(2)
+        })
+        break
+      case 2: // Weekly leads
+        setFormData(prev => ({ ...prev, weekly_leads: input }))
+        simulateTyping(() => {
+          addMessage("What type of AI agent would be most helpful for your business?", 'rhea')
+          setCurrentStep(3)
+        })
+        break
+      case 3: // AI agent type
+        setFormData(prev => ({ ...prev, ai_agent: input }))
+        simulateTyping(() => {
+          addMessage("What's your monthly budget for AI automation?", 'rhea')
+          setCurrentStep(4)
+        })
+        break
+      case 4: // Monthly budget
+        setFormData(prev => ({ ...prev, monthly_budget: input }))
+        simulateTyping(() => {
+          addMessage("Perfect! Now I just need your name and email to send you a personalized AI system recommendation.", 'rhea')
+          setCurrentStep(5)
+        })
+        break
+      case 5: // Name and email
+        if (input.includes('@')) {
+          // This looks like an email
+          setFormData(prev => ({ ...prev, email: input }))
+          if (formData.name) {
+            simulateTyping(() => {
+              addMessage("Excellent! Let me process your information and send you a personalized recommendation.", 'rhea')
+              setCurrentStep(6)
+              setTimeout(() => {
+                handleSubmit()
+              }, 2000)
+            })
+          } else {
+            simulateTyping(() => {
+              addMessage("I got your email! What's your name?", 'rhea')
+            })
+          }
+        } else {
+          // This looks like a name
+          setFormData(prev => ({ ...prev, name: input }))
+          if (formData.email) {
+            simulateTyping(() => {
+              addMessage("Excellent! Let me process your information and send you a personalized recommendation.", 'rhea')
+              setCurrentStep(6)
+              setTimeout(() => {
+                handleSubmit()
+              }, 2000)
+            })
+          } else {
+            simulateTyping(() => {
+              addMessage("Thanks! What's your email address?", 'rhea')
+            })
+          }
         }
-      }, 2000)
-
-      return () => clearTimeout(timer)
+        break
+      default:
+        break
     }
-  }, [isExpanded, currentStep])
 
-  const conversationSteps = [
-    {
-      message: "Hi! I'm Rhea, your Dan Talks AI Assistant. I'm here to help you build an AI system that works while you sleep. Let me ask you a few questions to understand your needs better.",
-      type: 'rhea'
-    },
-    {
-      message: "What's your main business focus?",
-      type: 'rhea',
-      field: 'business_focus'
-    },
-    {
-      message: "How many leads do you typically get per week?",
-      type: 'rhea',
-      field: 'weekly_leads'
-    },
-    {
-      message: "What type of AI agent would be most helpful for your business?",
-      type: 'rhea',
-      field: 'ai_agent'
-    },
-    {
-      message: "What's your monthly budget for AI automation?",
-      type: 'rhea',
-      field: 'monthly_budget'
-    },
-    {
-      message: "Great! Now I just need your name and email to send you a personalized AI system recommendation.",
-      type: 'rhea'
-    }
-  ]
-
-  const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-    
-    // Track field interactions
+    // Track user interaction
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'form_field_interaction', {
-        event_category: 'form',
-        event_label: field,
-        value: value
+      window.gtag('event', 'chatbot_user_input', {
+        event_category: 'engagement',
+        event_label: `step_${currentStep}`,
+        value: input.length
       })
     }
   }
@@ -107,7 +172,7 @@ export default function RheaChatbot() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-client-id': getClientId(), // Send client ID for server-side tracking
+          'x-client-id': getClientId(),
         },
         body: JSON.stringify(formData),
       })
@@ -129,7 +194,13 @@ export default function RheaChatbot() {
           })
         }
         
-        setCurrentStep(7) // Show success message
+        // Show success message briefly, then redirect to thank you page
+        simulateTyping(() => {
+          addMessage("Perfect! I've got all the information I need. Let me redirect you to your personalized recommendation...", 'rhea')
+          setTimeout(() => {
+            router.push('/thank-you.html')
+          }, 2000)
+        })
       } else {
         // Track form submission error
         if (typeof window !== 'undefined' && window.gtag) {
@@ -138,6 +209,7 @@ export default function RheaChatbot() {
             event_label: 'rhea_chatbot'
           })
         }
+        addMessage("I'm sorry, there was an issue submitting your information. Please try again or contact support.", 'rhea')
       }
     } catch (error) {
       console.error('Error submitting form:', error)
@@ -148,6 +220,7 @@ export default function RheaChatbot() {
           event_label: 'rhea_chatbot'
         })
       }
+      addMessage("I'm sorry, there was an issue submitting your information. Please try again or contact support.", 'rhea')
     }
   }
 
@@ -163,145 +236,25 @@ export default function RheaChatbot() {
     return clientId
   }
 
-  const renderInput = (field) => {
-    switch (field) {
-      case 'business_focus':
-        return (
-          <div className="space-y-2">
-            <button
-              onClick={() => handleInputChange('business_focus', 'Lead Generation')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              Lead Generation
-            </button>
-            <button
-              onClick={() => handleInputChange('business_focus', 'Customer Support')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              Customer Support
-            </button>
-            <button
-              onClick={() => handleInputChange('business_focus', 'Sales Automation')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              Sales Automation
-            </button>
-          </div>
-        )
-      case 'weekly_leads':
-        return (
-          <div className="space-y-2">
-            <button
-              onClick={() => handleInputChange('weekly_leads', '0-10')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              0-10 leads
-            </button>
-            <button
-              onClick={() => handleInputChange('weekly_leads', '11-50')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              11-50 leads
-            </button>
-            <button
-              onClick={() => handleInputChange('weekly_leads', '50+')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              50+ leads
-            </button>
-          </div>
-        )
-      case 'ai_agent':
-        return (
-          <div className="space-y-2">
-            <button
-              onClick={() => handleInputChange('ai_agent', 'Chat Agent')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              Chat Agent
-            </button>
-            <button
-              onClick={() => handleInputChange('ai_agent', 'Voice Agent')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              Voice Agent
-            </button>
-            <button
-              onClick={() => handleInputChange('ai_agent', 'Email Agent')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              Email Agent
-            </button>
-          </div>
-        )
-      case 'monthly_budget':
-        return (
-          <div className="space-y-2">
-            <button
-              onClick={() => handleInputChange('monthly_budget', '$100-500')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              $100-500
-            </button>
-            <button
-              onClick={() => handleInputChange('monthly_budget', '$500-1000')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              $500-1000
-            </button>
-            <button
-              onClick={() => handleInputChange('monthly_budget', '$1000+')}
-              className="w-full text-left p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm"
-            >
-              $1000+
-            </button>
-          </div>
-        )
-      default:
-        return null
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleUserInput(userInput)
     }
   }
 
-  const renderCurrentStep = () => {
-    if (currentStep >= conversationSteps.length) {
-      return (
-        <div className="space-y-4">
-          <div className="space-y-3">
-            <input
-              type="text"
-              placeholder="Your name"
-              value={formData.name}
-              onChange={(e) => handleInputChange('name', e.target.value)}
-              className="w-full p-2 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:border-cyan-500"
-            />
-            <input
-              type="email"
-              placeholder="Your email"
-              value={formData.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              className="w-full p-2 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:border-cyan-500"
-            />
-          </div>
-          <button
-            onClick={handleSubmit}
-            disabled={!formData.name || !formData.email}
-            className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-2 px-4 rounded-lg font-medium hover:from-cyan-600 hover:to-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Get My AI System Recommendation
-          </button>
-        </div>
-      )
-    }
-
-    const step = conversationSteps[currentStep]
-    return (
-      <div className="space-y-4">
-        <div className="text-sm text-white/80 leading-relaxed">
-          {step.message}
-        </div>
-        {step.field && renderInput(step.field)}
-      </div>
-    )
+  const resetChat = () => {
+    setMessages([])
+    setCurrentStep(0)
+    setFormData({
+      business_focus: '',
+      weekly_leads: '',
+      ai_agent: '',
+      monthly_budget: '',
+      name: '',
+      email: ''
+    })
+    setUserInput('')
   }
 
   if (!isVisible) return null
@@ -347,7 +300,7 @@ export default function RheaChatbot() {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0, opacity: 0, y: 20 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="bg-black/90 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl w-80 max-h-96 overflow-hidden"
+            className="bg-black/90 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl w-96 max-h-[500px] overflow-hidden"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-4 flex items-center justify-between">
@@ -360,40 +313,94 @@ export default function RheaChatbot() {
                   <p className="text-xs text-white/90">AI Assistant</p>
                 </div>
               </div>
-              <button
-                onClick={() => {
-                  setIsExpanded(false)
-                  // Track chatbot close
-                  if (typeof window !== 'undefined' && window.gtag) {
-                    window.gtag('event', 'chatbot_close', {
-                      event_category: 'engagement',
-                      event_label: 'rhea_chatbot'
-                    })
-                  }
-                }}
-                className="text-white/80 hover:text-white transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={resetChat}
+                  className="text-white/80 hover:text-white transition-colors p-1"
+                  title="Reset chat"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => {
+                    setIsExpanded(false)
+                    // Track chatbot close
+                    if (typeof window !== 'undefined' && window.gtag) {
+                      window.gtag('event', 'chatbot_close', {
+                        event_category: 'engagement',
+                        event_label: 'rhea_chatbot'
+                      })
+                    }
+                  }}
+                  className="text-white/80 hover:text-white transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
-            {/* Chat Content */}
-            <div className="p-4 space-y-4 max-h-80 overflow-y-auto">
-              {currentStep === 7 ? (
-                <div className="text-center space-y-3">
-                  <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
-                    <span className="text-3xl">✅</span>
+            {/* Chat Messages */}
+            <div className="flex-1 p-4 space-y-3 max-h-80 overflow-y-auto">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div
+                    className={`max-w-[80%] p-3 rounded-2xl ${
+                      message.sender === 'user'
+                        ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white'
+                        : 'bg-white/10 text-white/90'
+                    }`}
+                  >
+                    <p className="text-sm leading-relaxed">{message.text}</p>
                   </div>
-                  <h3 className="font-semibold text-white">Thank you!</h3>
-                  <p className="text-sm text-white/80">
-                    I'll analyze your needs and send you a personalized AI system recommendation within 24 hours.
-                  </p>
                 </div>
-              ) : (
-                renderCurrentStep()
+              ))}
+              
+              {/* Typing indicator */}
+              {isTyping && (
+                <div className="flex justify-start">
+                  <div className="bg-white/10 text-white/90 p-3 rounded-2xl">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    </div>
+                  </div>
+                </div>
               )}
+              
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input Area */}
+            <div className="p-4 border-t border-white/10">
+              <div className="flex gap-2">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Type your message..."
+                  className="flex-1 p-2 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:border-cyan-500"
+                  disabled={isTyping}
+                />
+                <button
+                  onClick={() => handleUserInput(userInput)}
+                  disabled={!userInput.trim() || isTyping}
+                  className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg font-medium hover:from-cyan-600 hover:to-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
