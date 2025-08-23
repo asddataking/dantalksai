@@ -8,6 +8,7 @@ import { getLatestYouTubeVideo } from '../lib/youtubeApi'
 import { getBlogPosts } from '../lib/blogHandler'
 import AffiliateToolsSection from '../components/AffiliateToolsSection'
 import RightSidebar from '../components/RightSidebar'
+import RheaChatbot from '../components/RheaChatbot'
 
 export default function Home() {
   const router = useRouter()
@@ -1333,6 +1334,9 @@ export default function Home() {
 
         {/* Right Sidebar */}
         <RightSidebar />
+
+        {/* Rhea Chatbot */}
+        <RheaChatbot />
       </main>
     </>
   )

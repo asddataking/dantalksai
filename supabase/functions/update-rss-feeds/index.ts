@@ -47,43 +47,91 @@ const RSS_SOURCES = [
     name: 'NVIDIA AI',
     url: 'https://blogs.nvidia.com/blog/category/ai/feed/',
     tags: ['NVIDIA', 'Infrastructure', 'Training', 'AI']
+  },
+  // Add some more reliable RSS sources
+  {
+    name: 'TechCrunch AI',
+    url: 'https://techcrunch.com/tag/artificial-intelligence/feed/',
+    tags: ['TechCrunch', 'AI', 'News', 'Technology']
+  },
+  {
+    name: 'VentureBeat AI',
+    url: 'https://venturebeat.com/category/ai/feed/',
+    tags: ['VentureBeat', 'AI', 'Business', 'Technology']
   }
 ]
 
 // Parse RSS feed content
 async function parseRSSFeed(url: string): Promise<any[]> {
   try {
+    console.log(`Fetching RSS feed from: ${url}`)
+    
     const response = await fetch(url)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
     
     const text = await response.text()
-    const parser = new DOMParser()
-    const xmlDoc = parser.parseFromString(text, 'text/xml')
+    console.log(`RSS feed response length: ${text.length} characters`)
+    console.log(`RSS feed first 200 chars: ${text.substring(0, 200)}`)
     
-    const items = xmlDoc.querySelectorAll('item')
     const articles = []
     
-    console.log(`Found ${items.length} items in RSS feed`)
+    // Parse RSS items using regex (more reliable in Deno)
+    const itemRegex = /<item[^>]*>([\s\S]*?)<\/item>/gi
+    const entryRegex = /<entry[^>]*>([\s\S]*?)<\/entry>/gi
     
-    for (const item of items) {
-      const title = item.querySelector('title')?.textContent?.trim()
-      const description = item.querySelector('description')?.textContent?.trim()
-      const link = item.querySelector('link')?.textContent?.trim()
-      const pubDate = item.querySelector('pubDate')?.textContent?.trim()
+    // Try RSS format first
+    let matches = text.match(itemRegex)
+    if (matches) {
+      console.log(`Found ${matches.length} RSS items using regex`)
       
-      if (title && link) {
-        articles.push({
-          title,
-          description: description || '',
-          link,
-          pubDate: pubDate ? new Date(pubDate) : new Date()
-        })
+      for (const item of matches) {
+        const title = extractTagContent(item, 'title')
+        const description = extractTagContent(item, 'description')
+        const link = extractTagContent(item, 'link')
+        const pubDate = extractTagContent(item, 'pubDate')
+        
+        console.log(`Processing RSS item - Title: "${title}", Link: "${link}"`)
+        
+        if (title && link) {
+          articles.push({
+            title,
+            description: description || '',
+            link,
+            pubDate: pubDate ? new Date(pubDate) : new Date()
+          })
+        }
       }
     }
     
-    console.log(`Processed ${articles.length} valid articles from RSS feed`)
+    // Try Atom format if no RSS items found
+    if (articles.length === 0) {
+      matches = text.match(entryRegex)
+      if (matches) {
+        console.log(`Found ${matches.length} Atom entries using regex`)
+        
+        for (const entry of matches) {
+          const title = extractTagContent(entry, 'title')
+          const summary = extractTagContent(entry, 'summary')
+          const link = extractLinkHref(entry)
+          const published = extractTagContent(entry, 'published')
+          
+          console.log(`Processing Atom entry - Title: "${title}", Link: "${link}"`)
+          
+          if (title && link) {
+            articles.push({
+              title,
+              description: summary || '',
+              link,
+              pubDate: published ? new Date(published) : new Date()
+            })
+          }
+        }
+      }
+    }
+    
+    console.log(`Total processed articles: ${articles.length}`)
     
     // Increase limit to get more articles per source
     return articles.slice(0, 10) // Limit to 10 most recent articles per source
@@ -91,6 +139,20 @@ async function parseRSSFeed(url: string): Promise<any[]> {
     console.error(`Error parsing RSS feed ${url}:`, error)
     return []
   }
+}
+
+// Helper function to extract tag content
+function extractTagContent(xml: string, tagName: string): string {
+  const regex = new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, 'i')
+  const match = xml.match(regex)
+  return match ? match[1].trim() : ''
+}
+
+// Helper function to extract link href attribute
+function extractLinkHref(xml: string): string {
+  const regex = /<link[^>]*href=["']([^"']*)["'][^>]*>/i
+  const match = xml.match(regex)
+  return match ? match[1].trim() : ''
 }
 
 // Generate AI summary using a simple template (you can enhance this later)
