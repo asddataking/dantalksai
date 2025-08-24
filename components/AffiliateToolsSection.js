@@ -22,10 +22,21 @@ export default function AffiliateToolsSection() {
     sortOptions
   } = useTools()
 
+  // Debug logging
+  console.log('AffiliateToolsSection render:', {
+    tools: tools?.length || 0,
+    loading,
+    error,
+    hasTools: !!tools && tools.length > 0
+  })
+
   // Don't render if no tools available
   if (!tools || tools.length === 0) {
+    console.log('AffiliateToolsSection: No tools available, returning null')
     return null
   }
+
+  console.log('AffiliateToolsSection: Rendering with', tools.length, 'tools')
 
   return (
     <section className="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#0B0B18] to-[#05050A] p-6 sm:p-8 mx-4 mb-8">
@@ -55,7 +66,7 @@ export default function AffiliateToolsSection() {
         {/* Search */}
         <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-black/40 p-2">
           <svg className="h-4 w-4 text-white/50" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.08-.041l-.08-.08z" clipRule="evenodd" />
+            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.976 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.08-.041l-.08-.08z" clipRule="evenodd" />
           </svg>
           <input
             value={query}
