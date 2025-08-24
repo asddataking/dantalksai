@@ -3,9 +3,12 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import RheaChatbot from '../components/RheaChatbot'
+import RheaModal from '../components/RheaModal'
 
 export default function DumpsterAI() {
   const router = useRouter()
+  const [isRheaModalOpen, setIsRheaModalOpen] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -16,6 +19,14 @@ export default function DumpsterAI() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [consent, setConsent] = useState(false)
+
+  const handleOpenRhea = () => {
+    setIsRheaModalOpen(true)
+  }
+
+  const handleCloseRhea = () => {
+    setIsRheaModalOpen(false)
+  }
 
   // Industry-specific content variables (easy to swap for other industries)
   const industryConfig = {
@@ -235,12 +246,13 @@ export default function DumpsterAI() {
                 className="group bg-transparent hover:bg-[#C42B2B]/10 border-2 border-[#C42B2B] text-[#C42B2B] hover:text-[#C42B2B] px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 hover:scale-105"
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={handleOpenRhea}
               >
                 <span className="flex items-center space-x-2">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                  <span>See It In Action</span>
+                  <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                   </svg>
-                  <span>Watch Demo</span>
                 </span>
               </motion.button>
             </motion.div>
@@ -534,6 +546,16 @@ export default function DumpsterAI() {
           </div>
         </footer>
       </main>
+
+      {/* Rhea Chatbot */}
+      <RheaChatbot />
+
+      {/* Rhea Modal */}
+      <RheaModal 
+        isOpen={isRheaModalOpen}
+        onClose={handleCloseRhea}
+        preselectedIndustry="Dumpster Rentals"
+      />
     </>
   )
 }

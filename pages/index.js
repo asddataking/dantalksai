@@ -11,6 +11,7 @@ import RheaModal from '../components/RheaModal'
 import AffiliateToolsSection from '../components/AffiliateToolsSection'
 import BlogSection from '../components/BlogSection'
 import Footer from '../components/Footer'
+import RheaChatbot from '../components/RheaChatbot'
 
 export default function Home() {
   const router = useRouter()
@@ -124,6 +125,9 @@ export default function Home() {
         onClose={handleCloseRhea}
         preselectedIndustry={preselectedIndustry}
       />
+
+      {/* Rhea Chatbot */}
+      <RheaChatbot />
     </>
   )
 }
