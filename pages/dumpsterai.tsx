@@ -20,36 +20,36 @@ export default function DumpsterAI() {
   // Industry-specific content variables (easy to swap for other industries)
   const industryConfig = {
     industryName: 'Dumpster Rental',
-    headline: 'More Dumpster Rentals, Less Phone Tag.',
-    subheadline: 'AI answers leads 24/7, books jobs on your calendar, and follows up until they say yes.',
+    headline: 'AI That Works As Hard As Your Dumpster Business.',
+    subheadline: 'Stop playing phone tag with leads. I build AI systems that answer calls, send quotes, and book jobs while you\'re out delivering dumpsters.',
     benefits: [
-      'Never miss a lead - AI responds instantly to every inquiry',
+      'Never miss a lead again - AI responds instantly to every inquiry',
       'Book jobs automatically - customers schedule themselves 24/7',
-      'Follow up automatically - AI nurtures prospects until they convert',
-      'Reduce phone calls by 80% - let AI handle the routine questions'
+      'Follow up until they say yes - AI nurtures prospects automatically',
+      'Cut phone calls by 80% - let AI handle the routine questions'
     ],
     stats: [
       { number: '60%', label: 'faster responses' },
-      { number: '24/7', label: 'coverage' },
+      { number: '24/7', label: 'lead capture' },
       { number: '80%', label: 'fewer missed calls' },
       { number: '3x', label: 'more bookings' }
     ],
     faqs: [
       {
-        question: 'Do I need new software?',
-        answer: 'Not necessarily. We can integrate with your existing systems or recommend the best solution for your needs.'
+        question: 'Do I need to buy new software?',
+        answer: 'Not necessarily. I can integrate with your existing systems or recommend the best solution for your specific needs. Most businesses use what they already have.'
       },
       {
-        question: 'How fast is setup?',
-        answer: 'Most systems are up and running within 1-2 weeks, with full automation within 3-4 weeks.'
+        question: 'How fast can you get this running?',
+        answer: 'Most systems are up and running within 1-2 weeks, with full automation kicking in within 3-4 weeks. I work fast because I know you need results now.'
       },
       {
-        question: 'What if I get too many leads?',
-        answer: 'Our AI systems can handle unlimited volume and will prioritize leads based on your criteria.'
+        question: 'What if I get overwhelmed with too many leads?',
+        answer: 'That\'s a good problem to have! My AI systems can handle unlimited volume and will prioritize leads based on your criteria. You\'ll never lose a potential customer again.'
       },
       {
-        question: 'Can I customize the responses?',
-        answer: 'Absolutely. We train the AI on your specific services, pricing, and company voice.'
+        question: 'Can you make it sound like my company?',
+        answer: 'Absolutely. I train the AI on your specific services, pricing, and company voice. It\'ll sound like you wrote every response yourself.'
       }
     ]
   }
@@ -137,20 +137,20 @@ export default function DumpsterAI() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
 
-      <main className="min-h-screen bg-black text-white font-['Inter']">
+      <main className="min-h-screen bg-[#0B1C2E] text-white font-['Inter']">
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen overflow-hidden">
           {/* Enhanced background with multiple layers */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black via-purple-900/20 to-black"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,255,0.1),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(139,92,246,0.1),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0B1C2E] via-[#0B1C2E]/95 to-[#0B1C2E]"></div>
+          <div className="absolute inset-0 bg-[#C42B2B]/5"></div>
+          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `url('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"%3E%3Ccircle cx="50" cy="50" r="1" fill="%23C42B2B"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100" height="100" fill="url(%23grain)"/%3E%3C/svg%3E')` }}></div>
           
           {/* Floating particles effect */}
           <div className="absolute inset-0 overflow-hidden">
             {[...Array(6)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-20"
+                className="absolute w-2 h-2 bg-[#C42B2B] rounded-full opacity-20"
                 style={{
                   left: `${20 + i * 15}%`,
                   top: `${30 + i * 10}%`,
@@ -178,7 +178,7 @@ export default function DumpsterAI() {
               className="text-5xl md:text-7xl font-bold mb-8"
               variants={itemVariants}
             >
-              <span className="text-white">{industryConfig.headline}</span>
+              <span className="text-[#F5F7FA]">{industryConfig.headline}</span>
             </motion.h1>
             
             <motion.p 
@@ -202,8 +202,8 @@ export default function DumpsterAI() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 + index * 0.1 }}
                   >
-                    <div className="w-6 h-6 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <svg className="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 20 20">
+                    <div className="w-6 h-6 bg-[#C42B2B] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     </div>
@@ -218,7 +218,7 @@ export default function DumpsterAI() {
               variants={itemVariants}
             >
               <motion.button 
-                className="group bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black px-10 py-5 rounded-xl font-bold text-xl transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50"
+                className="group bg-[#C42B2B] hover:bg-[#A02020] text-white px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25"
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' })}
@@ -232,7 +232,7 @@ export default function DumpsterAI() {
               </motion.button>
               
               <motion.button 
-                className="group glass-effect hover:glass-effect-hover border-2 border-cyan-500 text-cyan-400 hover:text-cyan-300 px-10 py-5 rounded-xl font-bold text-xl transition-all duration-500 hover:scale-105 hover-lift"
+                className="group bg-transparent hover:bg-[#C42B2B]/10 border-2 border-[#C42B2B] text-[#C42B2B] hover:text-[#C42B2B] px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 hover:scale-105"
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -248,7 +248,7 @@ export default function DumpsterAI() {
         </section>
 
         {/* Lead Capture Form */}
-        <section id="lead-form" className="py-20 px-4 bg-gradient-to-b from-black via-gray-900/50 to-black">
+        <section id="lead-form" className="py-20 px-4 bg-gradient-to-b from-[#0B1C2E] via-gray-900/50 to-[#0B1C2E]">
           <div className="max-w-4xl mx-auto">
             <motion.div 
               className="text-center mb-16"
@@ -257,11 +257,11 @@ export default function DumpsterAI() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-cyan-400">
-                Get Your AI System
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#C42B2B]">
+                Let's Get Your AI System Running
               </h2>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                Fill out the form below and we'll get back to you within 24 hours with your personalized AI solution.
+                Fill out the form below and I'll get back to you within 24 hours with your personalized AI solution. No sales calls, just straight talk about what you need.
               </p>
             </motion.div>
 
@@ -284,7 +284,7 @@ export default function DumpsterAI() {
                       value={formData.name}
                       onChange={(e) => updateFormData('name', e.target.value)}
                       required
-                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-700/70 transition-all duration-300"
+                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
                       placeholder="Your full name"
                     />
                   </div>
@@ -299,7 +299,7 @@ export default function DumpsterAI() {
                       value={formData.company}
                       onChange={(e) => updateFormData('company', e.target.value)}
                       required
-                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-700/70 transition-all duration-300"
+                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
                       placeholder="Company name"
                     />
                   </div>
@@ -316,7 +316,7 @@ export default function DumpsterAI() {
                       value={formData.phone}
                       onChange={(e) => updateFormData('phone', e.target.value)}
                       required
-                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-700/70 transition-all duration-300"
+                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
                       placeholder="(555) 123-4567"
                     />
                   </div>
@@ -331,7 +331,7 @@ export default function DumpsterAI() {
                       value={formData.email}
                       onChange={(e) => updateFormData('email', e.target.value)}
                       required
-                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-700/70 transition-all duration-300"
+                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -347,7 +347,7 @@ export default function DumpsterAI() {
                     value={formData.serviceArea}
                     onChange={(e) => updateFormData('serviceArea', e.target.value)}
                     required
-                    className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-700/70 transition-all duration-300"
+                    className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
                     placeholder="e.g., Metro Detroit, Southeast Michigan"
                   />
                 </div>
@@ -361,7 +361,7 @@ export default function DumpsterAI() {
                     value={formData.notes}
                     onChange={(e) => updateFormData('notes', e.target.value)}
                     rows={4}
-                    className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-700/70 transition-all duration-300"
+                    className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
                     placeholder="Tell us about your current setup, challenges, or specific needs..."
                   />
                 </div>
@@ -373,7 +373,7 @@ export default function DumpsterAI() {
                     checked={consent}
                     onChange={(e) => setConsent(e.target.checked)}
                     required
-                    className="w-5 h-5 text-cyan-500 bg-gray-700 border-gray-600 rounded focus:ring-cyan-500 focus:ring-2"
+                    className="w-5 h-5 text-[#C42B2B] bg-gray-700 border-gray-600 rounded focus:ring-[#C42B2B] focus:ring-2"
                   />
                   <label htmlFor="consent" className="text-sm text-gray-300">
                     I agree to receive a demo link and texts about my AI system. I can unsubscribe at any time.
@@ -385,7 +385,7 @@ export default function DumpsterAI() {
                   disabled={!consent || isLoading}
                   className={`w-full py-4 px-8 rounded-xl font-bold text-lg transition-all duration-300 transform ${
                     consent && !isLoading
-                      ? 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-black hover:scale-105 shadow-lg hover:shadow-cyan-500/50'
+                      ? 'bg-[#C42B2B] hover:bg-[#A02020] text-white hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25'
                       : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                   }`}
                   whileHover={consent && !isLoading ? { scale: 1.02, y: -2 } : {}}
@@ -393,7 +393,7 @@ export default function DumpsterAI() {
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center space-x-2">
-                      <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                       <span>Submitting...</span>
                     </div>
                   ) : (
@@ -406,7 +406,7 @@ export default function DumpsterAI() {
         </section>
 
         {/* Social Proof Section */}
-        <section className="py-20 px-4 bg-gradient-to-b from-gray-900/50 to-black">
+        <section className="py-20 px-4 bg-gradient-to-b from-gray-900/50 to-[#0B1C2E]">
           <div className="max-w-6xl mx-auto">
             <motion.div 
               className="text-center mb-16"
@@ -415,11 +415,11 @@ export default function DumpsterAI() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-cyan-400">
-                Proven Results
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#C42B2B]">
+                Real Results from Real Businesses
               </h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                See how AI automation is transforming {industryConfig.industryName.toLowerCase()} businesses
+                See how AI automation is transforming dumpster rental businesses just like yours
               </p>
             </motion.div>
 
@@ -434,8 +434,8 @@ export default function DumpsterAI() {
                   transition={{ delay: index * 0.1, duration: 0.8 }}
                   viewport={{ once: true }}
                 >
-                  <div className="bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-600/50 p-6 hover:border-cyan-500/50 transition-colors duration-300">
-                    <div className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2">
+                  <div className="bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-600/50 p-6 hover:border-[#C42B2B]/50 transition-colors duration-300">
+                    <div className="text-4xl md:text-5xl font-bold text-[#C42B2B] mb-2">
                       {stat.number}
                     </div>
                     <div className="text-gray-300 text-sm md:text-base">
@@ -455,19 +455,19 @@ export default function DumpsterAI() {
               viewport={{ once: true }}
             >
               <div className="bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-600/50 p-8 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-16 h-16 bg-[#C42B2B] rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7z" clipRule="evenodd" />
                   </svg>
                 </div>
                 <blockquote className="text-xl text-gray-200 mb-6 italic">
-                  "Dan's AI system transformed our dumpster rental business. We went from missing 60% of leads to booking every single one. The AI handles all the routine questions and schedules jobs automatically. It's like having a full-time sales team that never sleeps."
+                  "Dan's AI system completely changed how we handle leads. We used to miss 60% of them because we were out on jobs. Now the AI books every single one and follows up until they commit. It's like having a sales team that never sleeps and never takes a day off."
                 </blockquote>
-                <div className="text-cyan-400 font-semibold">
+                <div className="text-[#C42B2B] font-semibold">
                   Mike Johnson, Owner
                 </div>
                 <div className="text-gray-400 text-sm">
-                  Johnson Dumpster Services
+                  Johnson Dumpster Services, Detroit Metro
                 </div>
               </div>
             </motion.div>
@@ -475,7 +475,7 @@ export default function DumpsterAI() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
+        <section className="py-20 px-4 bg-gradient-to-b from-[#0B1C2E] to-gray-900">
           <div className="max-w-4xl mx-auto">
             <motion.div 
               className="text-center mb-16"
@@ -484,11 +484,11 @@ export default function DumpsterAI() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-cyan-400">
-                Frequently Asked Questions
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#C42B2B]">
+                Common Questions
               </h2>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                Everything you need to know about AI automation for your {industryConfig.industryName.toLowerCase()} business
+                Everything you need to know about getting AI automation for your dumpster rental business
               </p>
             </motion.div>
 
@@ -515,18 +515,18 @@ export default function DumpsterAI() {
         </section>
 
         {/* Footer */}
-        <footer className="bg-gradient-to-b from-gray-900 to-black border-t border-gray-800/50 py-12">
+        <footer className="bg-[#0B1C2E] border-t border-gray-800 py-12">
           <div className="max-w-6xl mx-auto px-4 text-center">
             <div className="mb-8">
-              <h3 className="text-2xl font-bold text-cyan-400 mb-4">
+              <h3 className="text-2xl font-bold text-[#C42B2B] mb-4">
                 Dan Talks AI
               </h3>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                Building AI systems that work while you sleep. Transform your {industryConfig.industryName.toLowerCase()} business with intelligent automation.
+                I build AI systems that work while you work. Transform your dumpster rental business with intelligent automation that never sleeps.
               </p>
             </div>
             
-            <div className="border-t border-gray-800/50 pt-8">
+            <div className="border-t border-gray-800 pt-8">
               <p className="text-gray-400">
                 © 2024 Dan Talks AI. Built by Dan Richmond
               </p>
