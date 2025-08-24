@@ -61,6 +61,16 @@ export default function Footer() {
               </li>
               <li>
                 <a 
+                  href="https://www.facebook.com/dantalksai/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-[#C42B2B] transition-colors text-sm flex items-center gap-2"
+                >
+                  <span>📘</span> Facebook
+                </a>
+              </li>
+              <li>
+                <a 
                   href="https://twitter.com/dantalksai" 
                   target="_blank" 
                   rel="noopener noreferrer"
@@ -100,6 +110,7 @@ export default function Footer() {
             "founder": "Dan Richmond",
             "sameAs": [
               "https://youtube.com/@dantalksai",
+              "https://www.facebook.com/dantalksai/",
               "https://twitter.com/dantalksai"
             ],
             "address": {

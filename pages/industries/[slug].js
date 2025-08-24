@@ -5,143 +5,40 @@ import { useEffect } from 'react'
 import { trackIndustryPageView } from '../../lib/analytics/track'
 import TrustBadges from '../../components/TrustBadges'
 import Link from 'next/link'
+import ImageBanner from '../../components/ImageBanner'
+import { getIndustryBySlug } from '../../lib/industries/registry'
 
-// Industry data - this would typically come from a CMS or database
-const industryData = {
-  'dumpster-rental': {
-    title: 'Dumpster Rental',
-    description: 'Never miss a rental request again with AI that handles availability, pricing, and scheduling 24/7.',
-    benefits: [
-      'Never Miss a Call — instant replies 24/7',
-      'Quotes on Autopilot — fast, professional estimates',
-      'Book Jobs Faster — follow-ups without extra staff'
-    ],
-    howItWorks: [
-      'Tell Rhea about your dumpster sizes and availability',
-      'We build an AI system that handles customer inquiries',
-      'You get more bookings while working on other jobs'
-    ],
-    faqs: [
-      {
-        question: 'How quickly can you set up the AI system?',
-        answer: 'Most systems are ready in 2-3 business days after we gather your business details.'
-      },
-      {
-        question: 'What if a customer needs a custom quote?',
-        answer: 'The AI can handle basic pricing and flag complex requests for your review.'
-      }
-    ]
-  },
-  'driveway-snow': {
-    title: 'Driveway & Snow',
-    description: 'Weather-based availability updates and emergency service requests handled automatically.',
-    benefits: [
-      'Never Miss a Call — instant replies 24/7',
-      'Quotes on Autopilot — fast, professional estimates',
-      'Book Jobs Faster — follow-ups without extra staff'
-    ],
-    howItWorks: [
-      'Tell Rhea about your service areas and pricing',
-      'We build an AI system that handles weather-based requests',
-      'You get more bookings while working on other jobs'
-    ],
-    faqs: [
-      {
-        question: 'Can the AI handle emergency requests?',
-        answer: 'Yes, it can prioritize urgent requests and notify you immediately.'
-      }
-    ]
-  },
-  'excavation': {
-    title: 'Excavation',
-    description: 'Site visits and permits handled with AI that understands your equipment and capabilities.',
-    benefits: [
-      'Never Miss a Call — instant replies 24/7',
-      'Quotes on Autopilot — fast, professional estimates',
-      'Book Jobs Faster — follow-ups without extra staff'
-    ],
-    howItWorks: [
-      'Tell Rhea about your equipment and permit process',
-      'We build an AI system that handles site assessment requests',
-      'You get more bookings while working on other jobs'
-    ],
-    faqs: []
-  },
-  'landscaping': {
-    title: 'Landscaping',
-    description: 'Seasonal maintenance reminders and design consultation requests managed automatically.',
-    benefits: [
-      'Never Miss a Call — instant replies 24/7',
-      'Quotes on Autopilot — fast, professional estimates',
-      'Book Jobs Faster — follow-ups without extra staff'
-    ],
-    howItWorks: [
-      'Tell Rhea about your landscaping services and seasons',
-      'We build an AI system that handles maintenance scheduling',
-      'You get more bookings while working on other jobs'
-    ],
-    faqs: []
-  },
-  'painting': {
-    title: 'Painting',
-    description: 'Color consultations 24/7 and project estimates delivered instantly.',
-    benefits: [
-      'Never Miss a Call — instant replies 24/7',
-      'Quotes on Autopilot — fast, professional estimates',
-      'Book Jobs Faster — follow-ups without extra staff'
-    ],
-    howItWorks: [
-      'Tell Rhea about your painting services and pricing',
-      'We build an AI system that handles color consultations',
-      'You get more bookings while working on other jobs'
-    ],
-    faqs: []
-  },
-  'personal-trainer': {
-    title: 'Personal Trainer',
-    description: 'Workout plans and scheduling handled with AI that understands fitness goals.',
-    benefits: [
-      'Never Miss a Call — instant replies 24/7',
-      'Quotes on Autopilot — fast, professional estimates',
-      'Book Jobs Faster — follow-ups without extra staff'
-    ],
-    howItWorks: [
-      'Tell Rhea about your training specialties and availability',
-      'We build an AI system that handles fitness consultations',
-      'You get more bookings while working on other jobs'
-    ],
-    faqs: []
-  },
-  'lawyer': {
-    title: 'Lawyer',
-    description: 'Case intake and consultations managed with AI that understands legal processes.',
-    benefits: [
-      'Never Miss a Call — instant replies 24/7',
-      'Quotes on Autopilot — fast, professional estimates',
-      'Book Jobs Faster — follow-ups without extra staff'
-    ],
-    howItWorks: [
-      'Tell Rhea about your practice areas and consultation process',
-      'We build an AI system that handles case intake',
-      'You get more bookings while working on other jobs'
-    ],
-    faqs: []
-  },
-  'car-garage': {
-    title: 'Car Garage',
-    description: 'Service requests and parts inquiries handled with AI that knows your services.',
-    benefits: [
-      'Never Miss a Call — instant replies 24/7',
-      'Quotes on Autopilot — fast, professional estimates',
-      'Book Jobs Faster — follow-ups without extra staff'
-    ],
-    howItWorks: [
-      'Tell Rhea about your garage services and parts availability',
-      'We build an AI system that handles service requests',
-      'You get more bookings while working on other jobs'
-    ],
-    faqs: []
-  }
+// Standard benefits and how-it-works for all industries
+const standardBenefits = [
+  'Never Miss a Call — instant replies 24/7',
+  'Quotes on Autopilot — fast, professional estimates',
+  'Book Jobs Faster — follow-ups without extra staff'
+]
+
+const standardHowItWorks = [
+  'Tell Rhea about your business and services',
+  'We build an AI system that handles customer inquiries',
+  'You get more bookings while working on other jobs'
+]
+
+// FAQ data for industries that have specific questions
+const industryFaqs = {
+  'dumpster-rental': [
+    {
+      question: 'How quickly can you set up the AI system?',
+      answer: 'Most systems are ready in 2-3 business days after we gather your business details.'
+    },
+    {
+      question: 'What if a customer needs a custom quote?',
+      answer: 'The AI can handle basic pricing and flag complex requests for your review.'
+    }
+  ],
+  'driveway-snow': [
+    {
+      question: 'Can the AI handle emergency requests?',
+      answer: 'Yes, it can prioritize urgent requests and notify you immediately.'
+    }
+  ]
 }
 
 export default function IndustryPage() {
@@ -154,7 +51,13 @@ export default function IndustryPage() {
     }
   }, [slug])
 
-  if (!slug || !industryData[slug]) {
+  if (!slug) {
+    return null
+  }
+
+  const industry = getIndustryBySlug(slug)
+  
+  if (!industry) {
     return (
       <div className="min-h-screen bg-[#0B1C2E] text-white flex items-center justify-center">
         <div className="text-center">
@@ -167,48 +70,60 @@ export default function IndustryPage() {
     )
   }
 
-  const industry = industryData[slug]
+  const faqs = industryFaqs[slug] || []
+  const industryName = industry.title.split(' ').slice(-1)[0] // Get last word for dynamic content
 
   return (
     <>
       <Head>
-        <title>AI for {industry.title} | Dan Talks AI</title>
+        <title>AI for {industryName} | Dan Talks AI</title>
         <meta 
           name="description" 
-          content={`AI systems for ${industry.title.toLowerCase()} that answer calls, send quotes, and book jobs while you're working.`} 
+          content={`AI systems for ${industryName.toLowerCase()} that answer calls, send quotes, and book jobs while you're working.`} 
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <main className="min-h-screen bg-[#0B1C2E] text-white">
-        {/* Hero Section */}
-        <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-[60vh]">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0B1C2E] via-[#0B1C2E]/95 to-[#0B1C2E]"></div>
-          <div className="absolute inset-0 bg-black/40"></div>
-          
-          <motion.div 
-            className="relative z-10 max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 text-[#F5F7FA] leading-tight">
-              AI for {industry.title}
-            </h1>
+        {/* Hero Section with ImageBanner */}
+        <ImageBanner
+          src={industry.image || '/images/industries/default.jpg'}
+          alt={`${industry.title} - ${industry.benefit}`}
+          overlay={0.4}
+          className="min-h-[60vh] flex items-center justify-center"
+          priority={true}
+        >
+          <div className="text-center max-w-4xl mx-auto px-4">
+            <motion.h1 
+              className="text-5xl md:text-7xl font-bold mb-8 text-[#F5F7FA] leading-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              {industry.title}
+            </motion.h1>
             
-            <p className="text-xl md:text-2xl max-w-[70ch] mx-auto text-gray-300 mb-12 leading-relaxed">
-              {industry.description}
-            </p>
+            <motion.p 
+              className="text-xl md:text-2xl max-w-[70ch] mx-auto text-gray-300 mb-12 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              {industry.benefit}
+            </motion.p>
             
             <motion.button 
               className="group bg-[#C42B2B] hover:bg-[#A02020] text-white px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
               See It In Action
             </motion.button>
-          </motion.div>
-        </section>
+          </div>
+        </ImageBanner>
 
         {/* Benefits Section */}
         <section className="py-20 px-4 bg-[#F5F7FA]">
@@ -221,12 +136,12 @@ export default function IndustryPage() {
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[#0B1C2E] mb-6">
-                How AI Helps Your {industry.title} Business
+                How AI Helps Your {industryName} Business
               </h2>
             </motion.div>
             
             <div className="grid md:grid-cols-3 gap-8">
-              {industry.benefits.map((benefit, index) => (
+              {standardBenefits.map((benefit, index) => (
                 <motion.div
                   key={index}
                   className="bg-white rounded-2xl p-8 shadow-lg"
@@ -258,12 +173,12 @@ export default function IndustryPage() {
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[#F5F7FA] mb-6">
-                How It Works for {industry.title}
+                How It Works for {industryName}
               </h2>
             </motion.div>
             
             <div className="grid md:grid-cols-3 gap-8">
-              {industry.howItWorks.map((step, index) => (
+              {standardHowItWorks.map((step, index) => (
                 <motion.div
                   key={index}
                   className="text-center"
@@ -288,7 +203,7 @@ export default function IndustryPage() {
         </section>
 
         {/* FAQ Section */}
-        {industry.faqs.length > 0 && (
+        {faqs.length > 0 && (
           <section className="py-20 px-4 bg-[#F5F7FA]">
             <div className="mx-auto max-w-4xl">
               <motion.div
@@ -304,7 +219,7 @@ export default function IndustryPage() {
               </motion.div>
               
               <div className="space-y-6">
-                {industry.faqs.map((faq, index) => (
+                {faqs.map((faq, index) => (
                   <motion.div
                     key={index}
                     className="bg-white rounded-2xl p-6 shadow-lg"

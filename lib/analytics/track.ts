@@ -54,6 +54,10 @@ export const trackHowWeWorkCtaClick = () => {
   track('how_we_work_cta_click')
 }
 
+export const trackIndustryTileClick = (slug: string, target: 'page' | 'rhea') => {
+  track('industry_tile_click', { slug, target })
+}
+
 export const trackIndustryTileOpen = (slug: string) => {
   track('industry_tile_open', { slug })
 }
