@@ -51,8 +51,8 @@ export default function LiveTicker() {
 
   if (isLoading) {
     return (
-      <div className="bg-[#0B1C2E] border-y border-gray-800 py-3 px-4">
-        <div className="max-w-7xl mx-auto text-center text-gray-400">
+      <div className="bg-white border-y border-gray-200 py-3 px-4">
+        <div className="max-w-7xl mx-auto text-center text-gray-600">
           <span className="text-[#C42B2B] font-semibold">LIVE</span> • Loading updates...
         </div>
       </div>
@@ -61,8 +61,8 @@ export default function LiveTicker() {
 
   if (pulseItems.length === 0) {
     return (
-      <div className="bg-[#0B1C2E] border-y border-gray-800 py-3 px-4">
-        <div className="max-w-7xl mx-auto text-center text-gray-400">
+      <div className="bg-white border-y border-gray-200 py-3 px-4">
+        <div className="max-w-7xl mx-auto text-center text-gray-600">
           <span className="text-[#C42B2B] font-semibold">LIVE</span> • Updates available soon.
         </div>
       </div>
@@ -70,23 +70,30 @@ export default function LiveTicker() {
   }
 
   const tickerContent = pulseItems.map((item, index) => (
-    <span key={item.id} className="inline-flex items-center gap-2 mr-8">
-      <span className="text-gray-300">{item.title.length > 60 ? item.title.substring(0, 60) + '...' : item.title}</span>
+    <button
+      key={item.id}
+      onClick={() => {
+        trackTickerClick(item.id)
+        if (item.url) window.open(item.url, '_blank')
+      }}
+      className="inline-flex items-center gap-2 mr-8 hover:text-[#C42B2B] transition-colors cursor-pointer text-black"
+    >
+      <span>{item.title.length > 60 ? item.title.substring(0, 60) + '...' : item.title}</span>
       {item.tags && item.tags.length > 0 && (
         <span className="text-[#C42B2B] text-sm">· {item.tags[0]}</span>
       )}
-    </span>
+    </button>
   ))
 
   return (
-    <div className="bg-[#0B1C2E] border-y border-gray-800 py-3 px-4 overflow-hidden">
+    <div className="bg-white border-y border-gray-200 py-3 px-4 overflow-hidden">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-3">
           <span className="text-[#C42B2B] font-semibold text-sm">LIVE</span>
           
           {prefersReducedMotion ? (
             // Static display for users who prefer reduced motion
-            <div className="flex gap-6 text-gray-300 text-sm">
+            <div className="flex gap-6 text-black text-sm">
               {pulseItems.map((item) => (
                 <button
                   key={item.id}
@@ -94,7 +101,7 @@ export default function LiveTicker() {
                     trackTickerClick(item.id)
                     if (item.url) window.open(item.url, '_blank')
                   }}
-                  className="hover:text-white transition-colors cursor-pointer"
+                  className="hover:text-[#C42B2B] transition-colors cursor-pointer"
                 >
                   {item.title.length > 50 ? item.title.substring(0, 50) + '...' : item.title}
                   {item.tags && item.tags.length > 0 && (
@@ -106,7 +113,7 @@ export default function LiveTicker() {
           ) : (
             // Marquee animation for users who don't prefer reduced motion
             <motion.div
-              className="flex text-gray-300 text-sm whitespace-nowrap"
+              className="flex text-black text-sm whitespace-nowrap"
               animate={{
                 x: [0, -1000],
               }}
