@@ -9,6 +9,7 @@ import IndustriesGrid from '../components/IndustriesGrid'
 import TrustBadges from '../components/TrustBadges'
 import RheaModal from '../components/RheaModal'
 import AffiliateToolsSection from '../components/AffiliateToolsSection'
+import BlogSection from '../components/BlogSection'
 import Footer from '../components/Footer'
 
 export default function Home() {
@@ -106,6 +107,9 @@ export default function Home() {
         
         {/* Industries Grid */}
         <IndustriesGrid onOpenRhea={handleOpenRhea} />
+        
+        {/* Blog Section */}
+        <BlogSection />
         
         {/* Affiliate Tools Section */}
         <AffiliateToolsSection />
