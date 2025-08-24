@@ -5,7 +5,7 @@ interface ImageBannerProps {
   src: string
   alt: string
   overlay?: number // opacity 0-1
-  children: ReactNode
+  children?: ReactNode
   className?: string
   priority?: boolean
   sizes?: string
