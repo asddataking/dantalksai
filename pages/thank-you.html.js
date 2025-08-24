@@ -52,7 +52,7 @@ export default function ThankYou() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              Book a Strategy Call
+              Book with Calendar
             </motion.button>
           </motion.div>
         </div>

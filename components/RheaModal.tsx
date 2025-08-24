@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { trackRheaOpened, trackRheaIndustrySelected, trackLeadSubmitted, trackDemoViewed, trackBookWalkthroughClick } from '../lib/analytics/track'
+import Image from 'next/image'
 
 interface RheaModalProps {
   isOpen: boolean
@@ -214,9 +215,23 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
               >
-                <h2 className="text-2xl font-bold text-[#0B1C2E] mb-6">
-                  Hey — I'm Rhea. Want to see how AI can run your office while you work? Pick your business.
-                </h2>
+                <div className="text-center mb-6">
+                  <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
+                    <Image
+                      src="/Rhea.png"
+                      alt="Rhea"
+                      width={80}
+                      height={80}
+                      className="rounded-full"
+                    />
+                  </div>
+                  <h2 className="text-2xl font-bold text-[#0B1C2E] mb-2">
+                    Hey — I'm Rhea
+                  </h2>
+                  <p className="text-gray-600">
+                    Want to see how AI can run your office while you work? Pick your business.
+                  </p>
+                </div>
                 
                 <div className="grid grid-cols-2 gap-3">
                   {industries.map((industry) => (
@@ -239,9 +254,23 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
               >
-                <h2 className="text-2xl font-bold text-[#0B1C2E] mb-6">
-                  I'll send a 2-minute demo you can keep. What's the best way to reach you?
-                </h2>
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
+                    <Image
+                      src="/Rhea.png"
+                      alt="Rhea"
+                      width={64}
+                      height={64}
+                      className="rounded-full"
+                    />
+                  </div>
+                  <h2 className="text-2xl font-bold text-[#0B1C2E] mb-2">
+                    Great choice!
+                  </h2>
+                  <p className="text-gray-600">
+                    I'll send you a personalized AI system recommendation. What's the best way to reach you?
+                  </p>
+                </div>
                 
                 <form onSubmit={handleLeadSubmit} className="space-y-4">
                   <div>
@@ -293,7 +322,7 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
                       className="mt-1 h-4 w-4 text-[#C42B2B] focus:ring-[#C42B2B] border-gray-300 rounded"
                     />
                     <label htmlFor="consent" className="text-sm text-gray-600">
-                      You agree to a quick follow-up about this demo.
+                      You agree to a quick follow-up about your AI system.
                     </label>
                   </div>
                   
@@ -302,7 +331,7 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
                     disabled={isSubmitting}
                     className="w-full bg-[#C42B2B] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#A02020] transition-colors disabled:opacity-50"
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Demo'}
+                    {isSubmitting ? 'Getting your AI system...' : 'Get my AI system'}
                   </button>
                 </form>
               </motion.div>
@@ -315,9 +344,20 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
               >
-                <h2 className="text-2xl font-bold text-[#0B1C2E] mb-6">
-                  Here's how AI can help your {selectedIndustry.toLowerCase()} business:
-                </h2>
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
+                    <Image
+                      src="/Rhea.png"
+                      alt="Rhea"
+                      width={64}
+                      height={64}
+                      className="rounded-full"
+                    />
+                  </div>
+                  <h2 className="text-2xl font-bold text-[#0B1C2E] mb-2">
+                    Perfect! Here's how AI can help your {selectedIndustry.toLowerCase()} business:
+                  </h2>
+                </div>
                 
                 <div className="space-y-3 mb-8">
                   {industryDemos[selectedIndustry as keyof typeof industryDemos]?.map((benefit, index) => (

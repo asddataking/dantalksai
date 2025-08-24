@@ -9,7 +9,7 @@ const steps = [
   {
     icon: "🤖",
     title: "Tell Rhea About Your Business",
-    description: "Open the demo and pick your industry."
+    description: "Start with industry selection and answer a few questions."
   },
   {
     icon: "⚙️", 

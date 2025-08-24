@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 export default function RheaChatbot() {
   const router = useRouter()
@@ -20,6 +21,20 @@ export default function RheaChatbot() {
   })
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+
+  // Industry options with "Other" option
+  const industries = [
+    'Contractors',
+    'Dumpster Rentals',
+    'Driveway/Snow',
+    'Excavation', 
+    'Landscaping',
+    'Painting',
+    'Personal Trainer',
+    'Lawyer',
+    'Car Garage',
+    'Other'
+  ]
 
   // Show chatbot after 5 seconds on page load
   useEffect(() => {
@@ -42,7 +57,7 @@ export default function RheaChatbot() {
     if (isExpanded && messages.length === 0) {
       addMessage("Hi! I'm Rhea, your Dan Talks AI Assistant. I'm here to help you build an AI system that works while you sleep. Let me ask you a few questions to understand your needs better.", 'rhea')
       setTimeout(() => {
-        addMessage("What's your main business focus?", 'rhea')
+        addMessage("What industry are you in? (You can type 'other' if your industry isn't listed)", 'rhea')
         setCurrentStep(1)
       }, 1000)
     }
@@ -81,68 +96,50 @@ export default function RheaChatbot() {
 
     // Process based on current step
     switch (currentStep) {
-      case 1: // Business focus
+      case 1: // Industry selection
         setFormData(prev => ({ ...prev, business_focus: input }))
         simulateTyping(() => {
-          addMessage("Great! How many leads do you typically get per week?", 'rhea')
+          addMessage("Great! What's your name?", 'rhea')
           setCurrentStep(2)
         })
         break
-      case 2: // Weekly leads
-        setFormData(prev => ({ ...prev, weekly_leads: input }))
+      case 2: // Name
+        setFormData(prev => ({ ...prev, name: input }))
         simulateTyping(() => {
-          addMessage("What type of AI agent would be most helpful for your business?", 'rhea')
+          addMessage("Nice to meet you, " + input + "! How many leads do you typically get per week?", 'rhea')
           setCurrentStep(3)
         })
         break
-      case 3: // AI agent type
-        setFormData(prev => ({ ...prev, ai_agent: input }))
+      case 3: // Weekly leads
+        setFormData(prev => ({ ...prev, weekly_leads: input }))
         simulateTyping(() => {
-          addMessage("What's your monthly budget for AI automation?", 'rhea')
+          addMessage("What type of AI agent would be most helpful for your business?", 'rhea')
           setCurrentStep(4)
         })
         break
-      case 4: // Monthly budget
-        setFormData(prev => ({ ...prev, monthly_budget: input }))
+      case 4: // AI agent type
+        setFormData(prev => ({ ...prev, ai_agent: input }))
         simulateTyping(() => {
-          addMessage("Perfect! Now I just need your name and email to send you a personalized AI system recommendation.", 'rhea')
+          addMessage("What's your monthly budget for AI automation?", 'rhea')
           setCurrentStep(5)
         })
         break
-      case 5: // Name and email
-        if (input.includes('@')) {
-          // This looks like an email
-          setFormData(prev => ({ ...prev, email: input }))
-          if (formData.name) {
-            simulateTyping(() => {
-              addMessage("Excellent! Let me process your information and send you a personalized recommendation.", 'rhea')
-              setCurrentStep(6)
-              setTimeout(() => {
-                handleSubmit()
-              }, 2000)
-            })
-          } else {
-            simulateTyping(() => {
-              addMessage("I got your email! What's your name?", 'rhea')
-            })
-          }
-        } else {
-          // This looks like a name
-          setFormData(prev => ({ ...prev, name: input }))
-          if (formData.email) {
-            simulateTyping(() => {
-              addMessage("Excellent! Let me process your information and send you a personalized recommendation.", 'rhea')
-              setCurrentStep(6)
-              setTimeout(() => {
-                handleSubmit()
-              }, 2000)
-            })
-          } else {
-            simulateTyping(() => {
-              addMessage("Thanks! What's your email address?", 'rhea')
-            })
-          }
-        }
+      case 5: // Monthly budget
+        setFormData(prev => ({ ...prev, monthly_budget: input }))
+        simulateTyping(() => {
+          addMessage("Perfect! Now I just need your email to send you a personalized AI system recommendation.", 'rhea')
+          setCurrentStep(6)
+        })
+        break
+      case 6: // Email
+        setFormData(prev => ({ ...prev, email: input }))
+        simulateTyping(() => {
+          addMessage("Excellent! I have all the information I need. Let me process this and get you your personalized AI system recommendation.", 'rhea')
+          setCurrentStep(7)
+          setTimeout(() => {
+            handleSubmit()
+          }, 2000)
+        })
         break
       default:
         break
@@ -174,7 +171,10 @@ export default function RheaChatbot() {
           'Content-Type': 'application/json',
           'x-client-id': getClientId(),
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          source: 'rhea_chatbot'
+        }),
       })
 
       if (response.ok) {
@@ -281,8 +281,14 @@ export default function RheaChatbot() {
             }}
           >
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                <span className="text-2xl">🤖</span>
+              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center overflow-hidden">
+                <Image
+                  src="/Rhea.png"
+                  alt="Rhea"
+                  width={48}
+                  height={48}
+                  className="rounded-full"
+                />
               </div>
               <div>
                 <h3 className="font-semibold">Rhea</h3>
@@ -305,8 +311,14 @@ export default function RheaChatbot() {
             {/* Header */}
             <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                  <span className="text-xl">🤖</span>
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="/Rhea.png"
+                    alt="Rhea"
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
                 </div>
                 <div>
                   <h3 className="font-semibold text-white">Rhea</h3>
