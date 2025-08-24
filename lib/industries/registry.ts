@@ -11,7 +11,7 @@ export const INDUSTRIES: Industry[] = [
     slug: "dumpster-rental", 
     title: "AI for Dumpster Rentals", 
     benefit: "Book pickups and deliveries while you're on the road.", 
-    image: "/dumpsterrental1.jpg", 
+    image: "/images/industries/dumpster-grid.jpg", 
     rheaLabel: "Dumpster Rentals" 
   },
   { 
