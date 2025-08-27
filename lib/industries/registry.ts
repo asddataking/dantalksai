@@ -15,6 +15,13 @@ export const INDUSTRIES: Industry[] = [
     rheaLabel: "Dumpster Rentals" 
   },
   { 
+    slug: "concrete-excavation", 
+    title: "AI for Concrete & Excavation", 
+    benefit: "Capture site details and schedule walk-throughs automatically.", 
+    image: "/images/industries/excavation-grid.jpg", 
+    rheaLabel: "Excavation" 
+  },
+  { 
     slug: "driveway-snow", 
     title: "AI for Driveways & Snow", 
     benefit: "Fill your route before the first snowfall.", 
@@ -67,7 +74,8 @@ export const INDUSTRIES: Industry[] = [
 
 // Track which industry pages actually exist
 export const EXISTING_INDUSTRY_SLUGS = new Set<string>([
-  "dumpster-rental"
+  "dumpster-rental",
+  "concrete-excavation"
 ]);
 
 // Helper to check if an industry page exists

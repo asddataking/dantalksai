@@ -21,7 +21,9 @@ export default function DumpsterAI() {
   const [consent, setConsent] = useState(false)
 
   const handleOpenRhea = () => {
+    console.log('Dumpster AI: Opening Rhea modal...')
     setIsRheaModalOpen(true)
+    console.log('Dumpster AI: Modal state set to:', true)
   }
 
   const handleCloseRhea = () => {
@@ -556,6 +558,13 @@ export default function DumpsterAI() {
         onClose={handleCloseRhea}
         preselectedIndustry="Dumpster Rentals"
       />
+      
+      {/* Debug indicator */}
+      {isRheaModalOpen && (
+        <div className="fixed top-4 left-4 bg-red-500 text-white p-2 rounded z-[99998]">
+          Modal should be open: {isRheaModalOpen.toString()}
+        </div>
+      )}
     </>
   )
 }

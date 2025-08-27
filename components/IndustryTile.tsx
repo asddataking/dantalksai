@@ -87,8 +87,20 @@ export default function IndustryTile({ industry, pageExists, onOpenRhea }: Indus
   )
 
   if (pageExists) {
+    // Map industry slugs to actual page routes
+    const getPageRoute = (slug: string) => {
+      switch (slug) {
+        case 'dumpster-rental':
+          return '/dumpsterai'
+        case 'concrete-excavation':
+          return '/concrete-excavation-ai'
+        default:
+          return `/industries/${slug}`
+      }
+    }
+    
     return (
-      <Link href={`/industries/${industry.slug}`}>
+      <Link href={getPageRoute(industry.slug)}>
         <motion.div
           className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 h-full cursor-pointer"
           whileHover={{ scale: 1.02 }}

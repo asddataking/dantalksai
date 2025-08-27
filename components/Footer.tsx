@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="bg-[#0B1C2E] border-t border-gray-800">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
           {/* Brand Column */}
           <div className="md:col-span-1">
             <h3 className="text-xl font-bold text-[#F5F7FA] mb-4">
@@ -27,6 +27,15 @@ export default function Footer() {
               <li><Link href="#industries" className="text-gray-400 hover:text-[#C42B2B] transition-colors text-sm">Industries</Link></li>
               <li><Link href="/tools" className="text-gray-400 hover:text-[#C42B2B] transition-colors text-sm">Tools</Link></li>
               <li><Link href="/blog" className="text-gray-400 hover:text-[#C42B2B] transition-colors text-sm">Blog</Link></li>
+            </ul>
+          </div>
+          
+          {/* Industries Column */}
+          <div>
+            <h4 className="text-[#F5F7FA] font-semibold mb-4">Industries</h4>
+            <ul className="space-y-2">
+              <li><Link href="/dumpsterai" className="text-gray-400 hover:text-[#C42B2B] transition-colors text-sm">Dumpster AI</Link></li>
+              <li><Link href="/concrete-excavation-ai" className="text-gray-400 hover:text-[#C42B2B] transition-colors text-sm">Concrete & Excavation AI</Link></li>
             </ul>
           </div>
           

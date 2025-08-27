@@ -93,6 +93,7 @@ const industryDemos = {
 }
 
 export default function RheaModal({ isOpen, onClose, preselectedIndustry }: RheaModalProps) {
+  console.log('RheaModal render:', { isOpen, preselectedIndustry })
   const [step, setStep] = useState(1)
   const [selectedIndustry, setSelectedIndustry] = useState(preselectedIndustry || '')
   const [leadData, setLeadData] = useState<LeadData>({
@@ -174,14 +175,14 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
   if (!isOpen) return null
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className="fixed inset-0 z-[99999] flex items-center justify-center p-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        style={{ position: 'fixed', zIndex: 99999 }}
-      >
+    <AnimatePresence mode="wait">
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
         {/* Backdrop */}
         <motion.div
           className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -198,7 +199,6 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ type: "spring" as const, damping: 25, stiffness: 300 }}
-          style={{ position: 'relative', zIndex: 100000 }}
         >
           {/* Close button */}
           <button
@@ -390,6 +390,7 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
           </div>
         </motion.div>
       </motion.div>
+      )}
     </AnimatePresence>
   )
 }
