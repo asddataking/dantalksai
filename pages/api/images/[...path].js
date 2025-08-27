@@ -6,8 +6,9 @@ export const config = {
 
 export default async function handler(req) {
   try {
-    const { path } = req.nextUrl.searchParams
-    const imagePath = Array.isArray(path) ? path.join('/') : path
+    // Get the path from the URL segments
+    const pathSegments = req.nextUrl.pathname.split('/').slice(3) // Remove /api/images/
+    const imagePath = pathSegments.join('/')
     
     if (!imagePath) {
       return new NextResponse('Image path is required', { status: 400 })
