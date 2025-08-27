@@ -176,14 +176,15 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 z-[99999] flex items-center justify-center p-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        style={{ position: 'fixed', zIndex: 99999 }}
       >
         {/* Backdrop */}
         <motion.div
-          className="absolute inset-0 bg-black/60"
+          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -192,11 +193,12 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
         
         {/* Modal */}
         <motion.div
-          className="relative bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+          className="relative bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ type: "spring" as const, damping: 25, stiffness: 300 }}
+          style={{ position: 'relative', zIndex: 100000 }}
         >
           {/* Close button */}
           <button
