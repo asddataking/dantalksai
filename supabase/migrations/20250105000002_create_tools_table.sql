@@ -34,9 +34,16 @@ INSERT INTO tools (name, description, category, pricing, tags, rating, url, affi
 -- Enable RLS (Row Level Security)
 ALTER TABLE tools ENABLE ROW LEVEL SECURITY;
 
--- Create policy to allow public read access
-CREATE POLICY "Allow public read access to active tools" ON tools
-  FOR SELECT USING (is_active = true);
+-- Create policy to allow public read access (only if it doesn't exist)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies WHERE policyname = 'Allow public read access to active tools' AND tablename = 'tools'
+  ) THEN
+    CREATE POLICY "Allow public read access to active tools" ON tools
+      FOR SELECT USING (is_active = true);
+  END IF;
+END $$;
 
 -- Create function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -47,6 +54,13 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
--- Create trigger to automatically update updated_at
-CREATE TRIGGER update_tools_updated_at BEFORE UPDATE ON tools
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+-- Create trigger to automatically update updated_at (only if it doesn't exist)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_trigger WHERE tgname = 'update_tools_updated_at'
+  ) THEN
+    CREATE TRIGGER update_tools_updated_at BEFORE UPDATE ON tools
+      FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+  END IF;
+END $$;

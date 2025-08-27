@@ -6,6 +6,7 @@ import { getFormResponses } from '../lib/formHandler'
 import { getAllBlogPosts, createBlogPost, deleteBlogPost } from '../lib/blogHandler'
 import { useAuth } from '../lib/authContext'
 import ProtectedRoute from '../components/ProtectedRoute'
+import { getImageUrl } from '../lib/storage'
 
 export default function Admin() {
   const { user, signOut } = useAuth()
@@ -19,7 +20,7 @@ export default function Admin() {
     slug: '',
     snippet: '',
     content: '',
-    featured_image: '/logo.png'
+    featured_image: getImageUrl('Home/logo.png')
   })
 
   useEffect(() => {
@@ -130,7 +131,7 @@ export default function Admin() {
           slug: '',
           snippet: '',
           content: '',
-          featured_image: '/logo.png'
+          featured_image: getImageUrl('Home/logo.png')
         })
         loadData() // Reload blog posts
       } else {
@@ -355,7 +356,7 @@ export default function Admin() {
                         value={newBlogPost.featured_image}
                         onChange={(e) => setNewBlogPost(prev => ({ ...prev, featured_image: e.target.value }))}
                         className="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none"
-                        placeholder="/logo.png"
+                        placeholder={getImageUrl('Home/logo.png')}
                       />
                     </div>
                     

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import ImageBanner from './ImageBanner'
 import { Industry } from '../lib/industries/registry'
+import { getImageUrl } from '../lib/storage'
 
 interface IndustryTileProps {
   industry: Industry
@@ -21,7 +22,7 @@ export default function IndustryTile({ industry, pageExists, onOpenRhea }: Indus
       {/* Background Image */}
       {industry.image && (
         <ImageBanner
-          src={industry.image}
+          src={getImageUrl(industry.image)}
           alt={`${industry.title} - ${industry.benefit}`}
           overlay={0.3}
           className="absolute inset-0"

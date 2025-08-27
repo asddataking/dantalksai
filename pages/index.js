@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { getImageUrl } from '../lib/storage'
 
 import Hero from '../components/Hero'
 import LiveTicker from '../components/LiveTicker'
@@ -50,7 +51,7 @@ export default function Home() {
               "name": "Dan Talks AI",
               "description": "AI systems that answer calls, send quotes, and book jobs while you're working.",
               "url": "https://dantalksai.com",
-              "logo": "https://dantalksai.com/logo.png",
+              "logo": getImageUrl('Home/logo.png'),
               "sameAs": [
                 "https://twitter.com/dantalksai",
                 "https://youtube.com/@dantalksai"

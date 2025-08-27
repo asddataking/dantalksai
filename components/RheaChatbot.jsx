@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { getImageUrl } from '../lib/storage'
 
 export default function RheaChatbot() {
   const router = useRouter()
@@ -283,7 +284,7 @@ export default function RheaChatbot() {
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center overflow-hidden">
                 <Image
-                  src="/Rhea.png"
+                  src={getImageUrl('Home/rhea.png')}
                   alt="Rhea"
                   width={48}
                   height={48}
@@ -313,7 +314,7 @@ export default function RheaChatbot() {
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center overflow-hidden">
                   <Image
-                    src="/Rhea.png"
+                    src={getImageUrl('Home/rhea.png')}
                     alt="Rhea"
                     width={40}
                     height={40}

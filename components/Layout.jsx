@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useMemo } from 'react';
+import { getImageUrl } from '../lib/storage';
 
 const Layout = ({ children }) => {
   const organizationJsonLd = useMemo(() => ({
@@ -61,7 +62,7 @@ const Layout = ({ children }) => {
         {/* End Meta Pixel Code */}
         
         {/* Favicon */}
-        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="icon" type="image/png" href={getImageUrl('Home/logo.png')} />
         
         <title>AI Agency in Michigan serving the United States</title>
         <meta

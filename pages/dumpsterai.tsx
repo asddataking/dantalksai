@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import RheaChatbot from '../components/RheaChatbot'
 import RheaModal from '../components/RheaModal'
+import { getImageUrl } from '../lib/storage'
 
 export default function DumpsterAI() {
   const router = useRouter()
@@ -134,11 +135,11 @@ export default function DumpsterAI() {
         <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen overflow-hidden">
           {/* Header Photo Background */}
           <div className="absolute inset-0">
-            <img 
-              src="/dumpsterrental1.jpg" 
-              alt="Dumpster Rental Business" 
-              className="w-full h-full object-cover"
-            />
+                          <img
+                src={getImageUrl('Home/dumpsterrental1.jpg')}
+                alt="Dumpster Rental Business"
+                className="w-full h-full object-cover"
+              />
             <div className="absolute inset-0 bg-[#0B1C2E]/80"></div>
           </div>
           

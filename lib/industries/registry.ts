@@ -11,15 +11,15 @@ export const INDUSTRIES: Industry[] = [
     slug: "dumpster-rental", 
     title: "AI for Dumpster Rentals", 
     benefit: "Book pickups and deliveries while you're on the road.", 
-    image: "/images/industries/dumpster-grid.jpg", 
+    image: "industries/dumpsterrental1.jpg", 
     rheaLabel: "Dumpster Rentals" 
   },
-  { 
-    slug: "concrete-excavation", 
-    title: "AI for Concrete & Excavation", 
-    benefit: "Capture site details and schedule walk-throughs automatically.", 
-    image: "/images/industries/excavation-grid.jpg", 
-    rheaLabel: "Excavation" 
+    {
+    slug: "concrete-excavation",
+    title: "AI for Concrete & Excavation",
+    benefit: "Capture site details and schedule walk-throughs automatically.",
+    image: "industries/Excavation1.jpg",
+    rheaLabel: "Excavation"
   },
   { 
     slug: "driveway-snow", 

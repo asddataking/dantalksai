@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { trackRheaOpened, trackRheaIndustrySelected, trackLeadSubmitted, trackDemoViewed, trackBookWalkthroughClick } from '../lib/analytics/track'
 import Image from 'next/image'
+import { getImageUrl } from '../lib/storage'
 
 interface RheaModalProps {
   isOpen: boolean
@@ -220,7 +221,7 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
                 <div className="text-center mb-6">
                   <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
                     <Image
-                      src="/Rhea.png"
+                      src={getImageUrl('Home/rhea.png')}
                       alt="Rhea"
                       width={80}
                       height={80}
@@ -259,7 +260,7 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
                 <div className="text-center mb-6">
                   <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
                     <Image
-                      src="/Rhea.png"
+                      src={getImageUrl('Home/rhea.png')}
                       alt="Rhea"
                       width={64}
                       height={64}
@@ -349,7 +350,7 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
                 <div className="text-center mb-6">
                   <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
                     <Image
-                      src="/Rhea.png"
+                      src={getImageUrl('Home/rhea.png')}
                       alt="Rhea"
                       width={64}
                       height={64}
