@@ -134,14 +134,14 @@ export default function DumpsterAI() {
 
       <main className="min-h-screen bg-[#0B1C2E] text-white font-['Inter']">
         {/* Hero Section */}
-        <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen overflow-hidden">
+        <section className="relative flex flex-col items-center justify-center text-center py-16 px-4 min-h-[60vh] overflow-hidden">
           {/* Header Photo Background */}
           <div className="absolute inset-0">
-            <img
-              src={getImageUrl('Home/dumpsterrental1.jpg')}
-              alt="Dumpster Rental Business"
-              className="w-full h-full object-cover"
-            />
+                         <img
+               src="https://prxioffyzbmygsliuabt.supabase.co/storage/v1/object/public/images/Home/dumpsterrental1.jpg"
+               alt="Dumpster Rental Business"
+               className="w-full h-full object-cover"
+             />
             <div className="absolute inset-0 bg-[#0B1C2E]/80"></div>
           </div>
           
@@ -236,22 +236,47 @@ export default function DumpsterAI() {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {industryConfig.howItWorks.map((step, index) => (
-                <motion.div
-                  key={index}
-                  className="text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.8 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center text-4xl">
-                    {step.icon}
-                  </div>
-                  <div className="text-white font-semibold mb-2">{step.step}</div>
-                  <p className="text-gray-300 text-lg">{step.title}</p>
-                </motion.div>
-              ))}
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center text-4xl">
+                  🤖
+                </div>
+                <div className="text-white font-semibold mb-2">Step 1</div>
+                <p className="text-gray-300 text-lg">Tell Rhea about your business and services</p>
+              </motion.div>
+              
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center text-4xl">
+                  ⚙️
+                </div>
+                <div className="text-white font-semibold mb-2">Step 2</div>
+                <p className="text-gray-300 text-lg">We build an AI system that handles customer inquiries</p>
+              </motion.div>
+              
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center text-4xl">
+                  🚀
+                </div>
+                <div className="text-white font-semibold mb-2">Step 3</div>
+                <p className="text-gray-300 text-lg">You get more bookings while working on other jobs</p>
+              </motion.div>
             </div>
           </div>
         </section>
