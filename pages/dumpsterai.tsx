@@ -120,27 +120,6 @@ export default function DumpsterAI() {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5
-      }
-    }
-  }
-
   return (
     <>
       <Head>
@@ -151,8 +130,18 @@ export default function DumpsterAI() {
       </Head>
 
       <main className="min-h-screen bg-[#0B1C2E] text-white font-['Inter']">
-        {/* Hero Section */}
+        {/* Hero Section with Header Photo */}
         <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen overflow-hidden">
+          {/* Header Photo Background */}
+          <div className="absolute inset-0">
+            <img 
+              src="/dumpsterrental1.jpg" 
+              alt="Dumpster Rental Business" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-[#0B1C2E]/80"></div>
+          </div>
+          
           {/* Enhanced background with multiple layers */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#0B1C2E] via-[#0B1C2E]/95 to-[#0B1C2E]"></div>
           <div className="absolute inset-0 bg-[#C42B2B]/5"></div>
@@ -183,20 +172,24 @@ export default function DumpsterAI() {
           
           <motion.div 
             className="relative z-10 max-w-5xl mx-auto"
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
             <motion.h1 
               className="text-5xl md:text-7xl font-bold mb-8"
-              variants={itemVariants}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
             >
               <span className="text-[#F5F7FA]">{industryConfig.headline}</span>
             </motion.h1>
             
             <motion.p 
               className="text-xl md:text-2xl max-w-4xl mx-auto text-gray-300 mb-12 leading-relaxed"
-              variants={itemVariants}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
             >
               {industryConfig.subheadline}
             </motion.p>
@@ -204,7 +197,9 @@ export default function DumpsterAI() {
             {/* Benefits List */}
             <motion.div 
               className="mb-12 max-w-4xl mx-auto"
-              variants={itemVariants}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {industryConfig.benefits.map((benefit, index) => (
@@ -213,7 +208,7 @@ export default function DumpsterAI() {
                     className="flex items-start space-x-3 text-left"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
+                    transition={{ delay: 0.8 + index * 0.1, duration: 0.8 }}
                   >
                     <div className="w-6 h-6 bg-[#C42B2B] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -226,33 +221,22 @@ export default function DumpsterAI() {
               </div>
             </motion.div>
             
+            {/* Single CTA Button */}
             <motion.div 
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-              variants={itemVariants}
+              className="flex justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.8 }}
             >
               <motion.button 
-                className="group bg-[#C42B2B] hover:bg-[#A02020] text-white px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25"
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                <span className="flex items-center space-x-2">
-                  <span>Get Started Today</span>
-                  <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                  </svg>
-                </span>
-              </motion.button>
-              
-              <motion.button 
-                className="group bg-transparent hover:bg-[#C42B2B]/10 border-2 border-[#C42B2B] text-[#C42B2B] hover:text-[#C42B2B] px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 hover:scale-105"
+                className="group bg-[#C42B2B] hover:bg-[#A02020] text-white px-12 py-6 rounded-2xl font-bold text-2xl transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25"
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleOpenRhea}
               >
-                <span className="flex items-center space-x-2">
-                  <span>See It In Action</span>
-                  <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                <span className="flex items-center space-x-3">
+                  <span>Get my AI system</span>
+                  <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                   </svg>
                 </span>
@@ -568,3 +552,4 @@ export default function DumpsterAI() {
     </>
   )
 }
+

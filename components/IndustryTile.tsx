@@ -23,7 +23,7 @@ export default function IndustryTile({ industry, pageExists, onOpenRhea }: Indus
         <ImageBanner
           src={industry.image}
           alt={`${industry.title} - ${industry.benefit}`}
-          overlay={0.6}
+          overlay={0.3}
           className="absolute inset-0"
         />
       )}

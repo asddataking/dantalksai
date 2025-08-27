@@ -123,72 +123,126 @@ export default function ConcreteExcavationAI() {
   return (
     <>
       <Head>
-        <title>Concrete & Excavation AI Automation | Dan Talks AI</title>
-        <meta name="description" content="Transform your concrete and excavation business with AI automation. Answer calls 24/7, book jobs automatically, and never miss a lead again. Get your personalized AI system today." />
-        <meta name="keywords" content="concrete AI, excavation AI, construction automation, AI phone system, concrete business automation, excavation business AI, construction lead management" />
-        <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="Concrete & Excavation AI Automation | Dan Talks AI" />
-        <meta property="og:description" content="Transform your concrete and excavation business with AI automation. Answer calls 24/7, book jobs automatically, and never miss a lead again." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dantalksai.com/concrete-excavation-ai" />
-        <meta property="og:image" content="https://dantalksai.com/og-image.jpg" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Concrete & Excavation AI Automation | Dan Talks AI" />
-        <meta name="twitter:description" content="Transform your concrete and excavation business with AI automation. Answer calls 24/7, book jobs automatically, and never miss a lead again." />
-        <link rel="canonical" href="https://dantalksai.com/concrete-excavation-ai" />
+        <title>{industryConfig.industryName} AI - Dan Talks AI</title>
+        <meta name="description" content={industryConfig.subheadline} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
 
-      <main className="min-h-screen bg-gradient-to-b from-[#0B1C2E] via-gray-900 to-[#0B1C2E] text-white">
-        {/* Hero Section */}
-        <section className="relative py-20 px-4 overflow-hidden">
-          {/* Background Elements */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0B1C2E] via-gray-900/80 to-[#0B1C2E]"></div>
-          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
-          
-          <div className="relative max-w-6xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-[#C42B2B] via-red-500 to-[#C42B2B] bg-clip-text text-transparent">
-                {industryConfig.headline}
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
-                {industryConfig.subheadline}
-              </p>
-              
-              <motion.div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <motion.button 
-                  className="group bg-[#C42B2B] hover:bg-[#A02020] text-white px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  <span className="flex items-center space-x-2">
-                    <span>Get My AI System</span>
-                    <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                    </svg>
-                  </span>
-                </motion.button>
-                
-                <motion.button 
-                  className="group bg-transparent hover:bg-[#C42B2B]/10 border-2 border-[#C42B2B] text-[#C42B2B] hover:text-[#C42B2B] px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 hover:scale-105"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={handleOpenRhea}
-                >
-                  <span className="flex items-center space-x-2">
-                    <span>See It In Action</span>
-                    <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                    </svg>
-                  </span>
-                </motion.button>
-              </motion.div>
-            </motion.div>
+      <main className="min-h-screen bg-[#0B1C2E] text-white font-['Inter']">
+        {/* Hero Section with Header Photo */}
+        <section className="relative flex flex-col items-center justify-center text-center py-20 px-4 min-h-screen overflow-hidden">
+          {/* Header Photo Background */}
+          <div className="absolute inset-0">
+            <img 
+              src="/images/industries/excavation-grid.jpg" 
+              alt="Concrete & Excavation Business" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-[#0B1C2E]/80"></div>
           </div>
+          
+          {/* Enhanced background with multiple layers */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0B1C2E] via-[#0B1C2E]/95 to-[#0B1C2E]"></div>
+          <div className="absolute inset-0 bg-[#C42B2B]/5"></div>
+          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `url('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"%3E%3Ccircle cx="50" cy="50" r="1" fill="%23C42B2B"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100" height="100" fill="url(%23grain)"/%3E%3C/svg%3E')` }}></div>
+          
+          {/* Floating particles effect */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 bg-[#C42B2B] rounded-full opacity-20"
+                style={{
+                  left: `${20 + i * 15}%`,
+                  top: `${30 + i * 10}%`,
+                }}
+                animate={{
+                  y: [0, -20, 0],
+                  opacity: [0.2, 0.6, 0.2],
+                }}
+                transition={{
+                  duration: 3 + i * 0.5,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                }}
+              />
+            ))}
+          </div>
+          
+          <motion.div 
+            className="relative z-10 max-w-5xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.h1 
+              className="text-5xl md:text-7xl font-bold mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              <span className="text-[#F5F7FA]">{industryConfig.headline}</span>
+            </motion.h1>
+            
+            <motion.p 
+              className="text-xl md:text-2xl max-w-4xl mx-auto text-gray-300 mb-12 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+            >
+              {industryConfig.subheadline}
+            </motion.p>
+            
+            {/* Benefits List */}
+            <motion.div 
+              className="mb-12 max-w-4xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {industryConfig.benefits.map((benefit, index) => (
+                  <motion.div
+                    key={index}
+                    className="flex items-start space-x-3 text-left"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.8 + index * 0.1, duration: 0.8 }}
+                  >
+                    <div className="w-6 h-6 bg-[#C42B2B] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-lg text-gray-200">{benefit}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+            
+            {/* Single CTA Button */}
+            <motion.div 
+              className="flex justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.8 }}
+            >
+              <motion.button 
+                className="group bg-[#C42B2B] hover:bg-[#A02020] text-white px-12 py-6 rounded-2xl font-bold text-2xl transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25"
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleOpenRhea}
+              >
+                <span className="flex items-center space-x-3">
+                  <span>Get my AI system</span>
+                  <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </motion.button>
+            </motion.div>
+          </motion.div>
         </section>
 
         {/* Lead Capture Form */}
@@ -281,35 +335,33 @@ export default function ConcreteExcavationAI() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="serviceArea" className="block text-sm font-medium text-gray-300 mb-2">
-                      Service Area *
-                    </label>
-                    <input
-                      type="text"
-                      id="serviceArea"
-                      value={formData.serviceArea}
-                      onChange={(e) => updateFormData('serviceArea', e.target.value)}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
-                      placeholder="e.g., Metro Detroit, Oakland County"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="notes" className="block text-sm font-medium text-gray-300 mb-2">
-                      Additional Notes
-                    </label>
-                    <textarea
-                      id="notes"
-                      value={formData.notes}
-                      onChange={(e) => updateFormData('notes', e.target.value)}
-                      rows={3}
-                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
-                      placeholder="Tell me about your current challenges..."
-                    />
-                  </div>
+                <div>
+                  <label htmlFor="serviceArea" className="block text-sm font-medium text-gray-300 mb-2">
+                    Service Area *
+                  </label>
+                  <input
+                    type="text"
+                    id="serviceArea"
+                    value={formData.serviceArea}
+                    onChange={(e) => updateFormData('serviceArea', e.target.value)}
+                    required
+                    className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
+                    placeholder="e.g., Metro Detroit, Oakland County"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="notes" className="block text-sm font-medium text-gray-300 mb-2">
+                    Additional Notes
+                  </label>
+                  <textarea
+                    id="notes"
+                    value={formData.notes}
+                    onChange={(e) => updateFormData('notes', e.target.value)}
+                    rows={4}
+                    className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
+                    placeholder="Tell us about your current setup, challenges, or specific needs..."
+                  />
                 </div>
 
                 <div className="flex items-start space-x-3">
@@ -318,17 +370,18 @@ export default function ConcreteExcavationAI() {
                     id="consent"
                     checked={consent}
                     onChange={(e) => setConsent(e.target.checked)}
-                    className="mt-1 h-4 w-4 text-[#C42B2B] focus:ring-[#C42B2B] border-gray-600 rounded"
+                    required
+                    className="w-5 h-5 text-[#C42B2B] bg-gray-700 border-gray-600 rounded focus:ring-[#C42B2B] focus:ring-2"
                   />
                   <label htmlFor="consent" className="text-sm text-gray-300">
-                    I agree to receive communications about AI automation solutions for my business.
+                    I agree to receive a demo link and texts about my AI system. I can unsubscribe at any time.
                   </label>
                 </div>
 
                 <motion.button
                   type="submit"
                   disabled={!consent || isLoading}
-                  className={`w-full py-4 px-8 rounded-2xl font-bold text-xl transition-all duration-300 ${
+                  className={`w-full py-4 px-8 rounded-xl font-bold text-lg transition-all duration-300 transform ${
                     consent && !isLoading
                       ? 'bg-[#C42B2B] hover:bg-[#A02020] text-white hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25'
                       : 'bg-gray-600 text-gray-400 cursor-not-allowed'
