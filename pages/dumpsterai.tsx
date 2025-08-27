@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import RheaChatbot from '../components/RheaChatbot'
 import RheaModal from '../components/RheaModal'
+import Footer from '../components/Footer'
 import { getImageUrl } from '../lib/storage'
 
 export default function DumpsterAI() {
@@ -137,11 +138,11 @@ export default function DumpsterAI() {
         <section className="relative flex flex-col items-center justify-center text-center py-16 px-4 min-h-[60vh] overflow-hidden">
           {/* Header Photo Background */}
           <div className="absolute inset-0">
-                         <img
-               src="https://prxioffyzbmygsliuabt.supabase.co/storage/v1/object/public/images/Home/dumpsterrental1.jpg"
-               alt="Dumpster Rental Business"
-               className="w-full h-full object-cover"
-             />
+            <img
+              src={getImageUrl('Home/dumpsterrental1.jpg')}
+              alt="Dumpster Rental Business"
+              className="w-full h-full object-cover"
+            />
             <div className="absolute inset-0 bg-[#0B1C2E]/80"></div>
           </div>
           
@@ -169,39 +170,12 @@ export default function DumpsterAI() {
               {industryConfig.subheadline}
             </motion.p>
             
-            {/* Benefits List */}
-            <motion.div 
-              className="mb-12 max-w-4xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {industryConfig.benefits.map((benefit, index) => (
-                  <motion.div
-                    key={index}
-                    className="bg-white rounded-2xl p-6 text-center shadow-lg"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 + index * 0.1, duration: 0.8 }}
-                  >
-                    <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-3xl">
-                      {index === 0 && '📞'}
-                      {index === 1 && '💰'}
-                      {index === 2 && '📅'}
-                    </div>
-                    <p className="text-gray-800 font-semibold text-lg">{benefit}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-            
             {/* Single CTA Button */}
             <motion.div 
               className="flex justify-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.8 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
             >
               <motion.button 
                 className="group bg-[#C42B2B] hover:bg-[#A02020] text-white px-12 py-6 rounded-2xl font-bold text-2xl transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25"
@@ -218,6 +192,70 @@ export default function DumpsterAI() {
               </motion.button>
             </motion.div>
           </motion.div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="py-20 px-4 bg-gray-100">
+          <div className="max-w-6xl mx-auto">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
+                How AI Helps Your Rentals Business
+              </h2>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <motion.div
+                className="bg-white rounded-2xl p-8 text-center shadow-lg"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                  <svg className="w-16 h-16 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                  </svg>
+                </div>
+                <p className="text-gray-800 font-semibold text-xl">{industryConfig.benefits[0]}</p>
+              </motion.div>
+              
+              <motion.div
+                className="bg-white rounded-2xl p-8 text-center shadow-lg"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                  <svg className="w-16 h-16 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/>
+                  </svg>
+                </div>
+                <p className="text-gray-800 font-semibold text-xl">{industryConfig.benefits[1]}</p>
+              </motion.div>
+              
+              <motion.div
+                className="bg-white rounded-2xl p-8 text-center shadow-lg"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                  <svg className="w-16 h-16 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                  </svg>
+                </div>
+                <p className="text-gray-800 font-semibold text-xl">{industryConfig.benefits[2]}</p>
+              </motion.div>
+            </div>
+          </div>
         </section>
 
         {/* How It Works Section */}
@@ -318,185 +356,12 @@ export default function DumpsterAI() {
           </div>
         </section>
 
-        {/* Lead Capture Form */}
-        <section id="lead-form" className="py-20 px-4 bg-gradient-to-b from-[#0B1C2E] via-gray-900/50 to-[#0B1C2E]">
-          <div className="max-w-4xl mx-auto">
-            <motion.div 
-              className="text-center mb-16"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#C42B2B]">
-                Let's Get Your AI System Running
-              </h2>
-              <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                Fill out the form below and I'll get back to you within 24 hours with your personalized AI solution. No sales calls, just straight talk about what you need.
-              </p>
-            </motion.div>
 
-            <motion.div 
-              className="bg-gray-800/30 backdrop-blur-md rounded-2xl border border-gray-600/50 shadow-xl p-8"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                      Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => updateFormData('name', e.target.value)}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
-                      placeholder="Your full name"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-gray-300 mb-2">
-                      Company *
-                    </label>
-                    <input
-                      type="text"
-                      id="company"
-                      value={formData.company}
-                      onChange={(e) => updateFormData('company', e.target.value)}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
-                      placeholder="Company name"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
-                      Phone *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      value={formData.phone}
-                      onChange={(e) => updateFormData('phone', e.target.value)}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
-                      placeholder="(555) 123-4567"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      value={formData.email}
-                      onChange={(e) => updateFormData('email', e.target.value)}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="serviceArea" className="block text-sm font-medium text-gray-300 mb-2">
-                    Service Area *
-                  </label>
-                  <input
-                    type="text"
-                    id="serviceArea"
-                    value={formData.serviceArea}
-                    onChange={(e) => updateFormData('serviceArea', e.target.value)}
-                    required
-                    className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
-                    placeholder="e.g., Metro Detroit, Southeast Michigan"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="notes" className="block text-sm font-medium text-gray-300 mb-2">
-                    Additional Notes
-                  </label>
-                  <textarea
-                    id="notes"
-                    value={formData.notes}
-                    onChange={(e) => updateFormData('notes', e.target.value)}
-                    rows={4}
-                    className="w-full px-4 py-3 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-[#C42B2B] focus:outline-none focus:ring-2 focus:ring-[#C42B2B]/30 focus:bg-gray-700/70 transition-all duration-300"
-                    placeholder="Tell us about your current setup, challenges, or specific needs..."
-                  />
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <input
-                    type="checkbox"
-                    id="consent"
-                    checked={consent}
-                    onChange={(e) => setConsent(e.target.checked)}
-                    required
-                    className="w-5 h-5 text-[#C42B2B] bg-gray-700 border-gray-600 rounded focus:ring-[#C42B2B] focus:ring-2"
-                  />
-                  <label htmlFor="consent" className="text-sm text-gray-300">
-                    I agree to receive a demo link and texts about my AI system. I can unsubscribe at any time.
-                  </label>
-                </div>
-
-                <motion.button
-                  type="submit"
-                  disabled={!consent || isLoading}
-                  className={`w-full py-4 px-8 rounded-xl font-bold text-lg transition-all duration-300 transform ${
-                    consent && !isLoading
-                      ? 'bg-[#C42B2B] hover:bg-[#A02020] text-white hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25'
-                      : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                  }`}
-                  whileHover={consent && !isLoading ? { scale: 1.02, y: -2 } : {}}
-                  whileTap={consent && !isLoading ? { scale: 0.98 } : {}}
-                >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Submitting...</span>
-                    </div>
-                  ) : (
-                    'Get My AI System'
-                  )}
-                </motion.button>
-              </form>
-            </motion.div>
-          </div>
-        </section>
 
 
 
         {/* Footer */}
-        <footer className="bg-[#0B1C2E] border-t border-gray-800 py-12">
-          <div className="max-w-6xl mx-auto px-4 text-center">
-            <div className="mb-8">
-              <h3 className="text-2xl font-bold text-[#C42B2B] mb-4">
-                Dan Talks AI
-              </h3>
-              <p className="text-gray-400 max-w-2xl mx-auto">
-                I build AI systems that work while you work. Transform your dumpster rental business with intelligent automation that never sleeps.
-              </p>
-            </div>
-            
-            <div className="border-t border-gray-800 pt-8">
-              <p className="text-gray-400">
-                © 2024 Dan Talks AI. Built by Dan Richmond
-              </p>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </main>
 
       {/* Rhea Chatbot */}
