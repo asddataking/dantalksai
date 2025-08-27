@@ -18,11 +18,50 @@ export default function ConcreteExcavationAI() {
     setIsRheaModalOpen(false)
   }
 
+  // Industry-specific content variables for Concrete & Excavation
+  const industryConfig = {
+    industryName: 'Concrete & Excavation',
+    headline: 'AI for Concrete & Excavation',
+    subheadline: 'Capture site details and schedule walk-throughs automatically.',
+    benefits: [
+      'Never Miss a Call — instant replies 24/7',
+      'Quotes on Autopilot — fast, professional estimates',
+      'Book Jobs Faster — follow-ups without extra staff'
+    ],
+    howItWorks: [
+      {
+        step: 'Step 1',
+        title: 'Tell Rhea about your business and services',
+        icon: '🤖'
+      },
+      {
+        step: 'Step 2',
+        title: 'We build an AI system that handles customer inquiries',
+        icon: '⚙️'
+      },
+      {
+        step: 'Step 3',
+        title: 'You get more bookings while working on other jobs',
+        icon: '🚀'
+      }
+    ],
+    faqs: [
+      {
+        question: 'How quickly can you set up the AI system?',
+        answer: 'Most systems are ready in 2-3 business days after we gather your business details.'
+      },
+      {
+        question: 'What if a customer needs a custom quote?',
+        answer: 'The AI can handle basic pricing and flag complex requests for your review.'
+      }
+    ]
+  }
+
   return (
     <>
       <Head>
-        <title>Concrete & Excavation AI - Dan Talks AI</title>
-        <meta name="description" content="AI that answers calls, sends quotes, and books jobs while you're out on the job site. Transform your concrete & excavation business with intelligent automation." />
+        <title>{industryConfig.industryName} AI - Dan Talks AI</title>
+        <meta name="description" content={industryConfig.subheadline} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
@@ -40,33 +79,7 @@ export default function ConcreteExcavationAI() {
             <div className="absolute inset-0 bg-[#0B1C2E]/80"></div>
           </div>
           
-          {/* Enhanced background with multiple layers */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0B1C2E] via-[#0B1C2E]/95 to-[#0B1C2E]"></div>
-          <div className="absolute inset-0 bg-[#C42B2B]/5"></div>
-          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `url('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"%3E%3Ccircle cx="50" cy="50" r="1" fill="%23C42B2B"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100" height="100" fill="url(%23grain)"/%3E%3C/svg%3E')` }}></div>
-          
-          {/* Floating particles effect */}
-          <div className="absolute inset-0 overflow-hidden">
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 bg-[#C42B2B] rounded-full opacity-20"
-                style={{
-                  left: `${20 + i * 15}%`,
-                  top: `${30 + i * 10}%`,
-                }}
-                animate={{
-                  y: [0, -20, 0],
-                  opacity: [0.2, 0.6, 0.2],
-                }}
-                transition={{
-                  duration: 3 + i * 0.5,
-                  repeat: Infinity,
-                  delay: i * 0.3,
-                }}
-              />
-            ))}
-          </div>
+
           
           <motion.div 
             className="relative z-10 max-w-5xl mx-auto"
@@ -80,7 +93,7 @@ export default function ConcreteExcavationAI() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              <span className="text-[#F5F7FA]">AI That Works As Hard As Your Concrete & Excavation Business.</span>
+              <span className="text-[#F5F7FA]">{industryConfig.headline}</span>
             </motion.h1>
             
             <motion.p 
@@ -89,7 +102,7 @@ export default function ConcreteExcavationAI() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              Stop playing phone tag with leads. I build AI systems that answer calls, send quotes, and book jobs while you're out on the job site.
+              {industryConfig.subheadline}
             </motion.p>
             
             {/* Benefits List */}
@@ -99,26 +112,21 @@ export default function ConcreteExcavationAI() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[
-                  'Never miss a lead again - AI responds instantly to every inquiry',
-                  'Book jobs automatically - customers schedule themselves 24/7',
-                  'Follow up until they say yes - AI nurtures prospects automatically',
-                  'Cut phone calls by 80% - let AI handle the routine questions'
-                ].map((benefit, index) => (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {industryConfig.benefits.map((benefit, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-start space-x-3 text-left"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    className="bg-white rounded-2xl p-6 text-center shadow-lg"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 + index * 0.1, duration: 0.8 }}
                   >
-                    <div className="w-6 h-6 bg-[#C42B2B] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
+                    <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-3xl">
+                      {index === 0 && '📞'}
+                      {index === 1 && '💰'}
+                      {index === 2 && '📅'}
                     </div>
-                    <p className="text-lg text-gray-200">{benefit}</p>
+                    <p className="text-gray-800 font-semibold text-lg">{benefit}</p>
                   </motion.div>
                 ))}
               </div>
@@ -138,7 +146,7 @@ export default function ConcreteExcavationAI() {
                 onClick={handleOpenRhea}
               >
                 <span className="flex items-center space-x-3">
-                  <span>Get my AI system</span>
+                  <span>See It In Action</span>
                   <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                   </svg>
@@ -146,6 +154,79 @@ export default function ConcreteExcavationAI() {
               </motion.button>
             </motion.div>
           </motion.div>
+        </section>
+
+        {/* How It Works Section */}
+        <section className="py-20 px-4 bg-[#0B1C2E]">
+          <div className="max-w-6xl mx-auto">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                How It Works for Excavation
+              </h2>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {industryConfig.howItWorks.map((step, index) => (
+                <motion.div
+                  key={index}
+                  className="text-center"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center text-4xl">
+                    {step.icon}
+                  </div>
+                  <div className="text-white font-semibold mb-2">{step.step}</div>
+                  <p className="text-gray-300 text-lg">{step.title}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-20 px-4 bg-gray-100">
+          <div className="max-w-4xl mx-auto">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
+                Frequently Asked Questions
+              </h2>
+            </motion.div>
+
+            <div className="space-y-6">
+              {industryConfig.faqs.map((faq, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-white rounded-2xl p-6 shadow-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                    {faq.question}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </section>
       </main>
 
