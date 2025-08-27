@@ -73,7 +73,7 @@ export default function ConcreteExcavationAI() {
           {/* Header Photo Background */}
           <div className="absolute inset-0">
             <img
-              src={getImageUrl('Home/Excavation1.jpg')}
+              src={getImageUrl('industries/Excavation1.jpg')}
               alt="Concrete & Excavation Business"
               className="w-full h-full object-cover"
             />
@@ -305,7 +305,7 @@ export default function ConcreteExcavationAI() {
       <RheaModal 
         isOpen={isRheaModalOpen}
         onClose={handleCloseRhea}
-        preselectedIndustry="Concrete & Excavation"
+        preselectedIndustry="Excavation"
       />
       
       {/* Debug indicator */}
