@@ -5,6 +5,27 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: false,
   
+  images: {
+    domains: [
+      'prxioffyzbmygsliuabt.supabase.co',  // Your Supabase project
+      'supabase.co'                         // General Supabase domain
+    ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        port: '',
+        pathname: '/functions/v1/serve-images/**',
+      }
+    ]
+  },
+  
   async headers() {
     return [
       {

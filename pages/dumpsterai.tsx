@@ -136,15 +136,14 @@ export default function DumpsterAI() {
       <main className="min-h-screen bg-[#0B1C2E] text-white font-['Inter']">
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center text-center py-16 px-4 min-h-[60vh] overflow-hidden">
-          {/* Header Photo Background */}
-          <div className="absolute inset-0">
-            <img
-              src={getImageUrl('dumpsterrental1.jpg')}
-              alt="Dumpster Rental Business"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-[#0B1C2E]/80"></div>
-          </div>
+                     {/* Header Photo Background */}
+           <div className="absolute inset-0">
+             <img
+               src={getImageUrl('dumpsterrental1.jpg')}
+               alt="Dumpster Rental Business"
+               className="w-full h-full object-cover object-top"
+             />
+           </div>
           
           <motion.div 
             className="relative z-10 max-w-5xl mx-auto"
