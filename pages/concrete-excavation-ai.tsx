@@ -22,38 +22,38 @@ export default function ConcreteExcavationAI() {
   // Industry-specific content variables for Concrete & Excavation
   const industryConfig = {
     industryName: 'Concrete & Excavation',
-    headline: 'AI for Concrete & Excavation',
-    subheadline: 'Turn every site visit into a booked project automatically.',
+    headline: 'AI Software System for Concrete & Excavation',
+    subheadline: 'The complete AI system built specifically for concrete and excavation companies. Turn every site visit into a booked project automatically.',
     benefits: [
-      'Never Miss a Call — instant replies 24/7',
-      'Quotes on Autopilot — fast, professional estimates',
-      'Book Jobs Faster — follow-ups without extra staff'
+      'AI Call Answering — instant responses 24/7',
+      'SMS Follow-up — automated customer communication',
+      'AI Scheduling Dashboard — smart project management'
     ],
     howItWorks: [
       {
         step: 'Step 1',
-        title: 'Tell Rhea about your business and services',
-        icon: '🤖'
+        title: 'Leads come in from your ads and website',
+        icon: '📞'
       },
       {
         step: 'Step 2',
-        title: 'We build an AI system that handles customer inquiries',
-        icon: '⚙️'
+        title: 'AI responds instantly with quotes and scheduling',
+        icon: '🤖'
       },
       {
         step: 'Step 3',
-        title: 'You get more bookings while working on other jobs',
+        title: 'You complete projects and grow your business',
         icon: '🚀'
       }
     ],
     faqs: [
       {
         question: 'How quickly can you set up the AI system?',
-        answer: 'Most systems are ready in 2-3 business days after we gather your business details.'
+        answer: 'Most systems are ready in 2-3 business days after we gather your business details and configure it specifically for concrete and excavation work.'
       },
       {
         question: 'What if a customer needs a custom quote?',
-        answer: 'The AI can handle basic pricing and flag complex requests for your review.'
+        answer: 'The AI can handle basic pricing and flag complex requests for your review, ensuring no opportunity is missed.'
       }
     ]
   }
@@ -61,15 +61,15 @@ export default function ConcreteExcavationAI() {
   return (
     <>
              <Head>
-         <title>{industryConfig.industryName} AI - Dan Talks AI</title>
-         <meta name="description" content={industryConfig.subheadline} />
+         <title>AI Software System for Concrete & Excavation - Dan Talks AI</title>
+         <meta name="description" content="Complete AI system built specifically for concrete and excavation companies. AI call answering, SMS follow-up, scheduling dashboard, CRM, and ad integration." />
          <meta name="viewport" content="width=device-width, initial-scale=1" />
          
          {/* Open Graph / Facebook */}
          <meta property="og:type" content="website" />
          <meta property="og:url" content="https://dantalksai.com/concrete-excavation-ai" />
-         <meta property="og:title" content={industryConfig.headline} />
-         <meta property="og:description" content={industryConfig.subheadline} />
+         <meta property="og:title" content="AI Software System for Concrete & Excavation" />
+         <meta property="og:description" content="Complete AI system built specifically for concrete and excavation companies. AI call answering, SMS follow-up, scheduling dashboard, CRM, and ad integration." />
          <meta property="og:image" content={getImageUrl('industries/Excavation1.jpg')} />
          <meta property="og:image:width" content="1200" />
          <meta property="og:image:height" content="630" />
@@ -77,12 +77,12 @@ export default function ConcreteExcavationAI() {
          {/* Twitter */}
          <meta property="twitter:card" content="summary_large_image" />
          <meta property="twitter:url" content="https://dantalksai.com/concrete-excavation-ai" />
-         <meta property="twitter:title" content={industryConfig.headline} />
-         <meta property="twitter:description" content={industryConfig.subheadline} />
+         <meta property="twitter:title" content="AI Software System for Concrete & Excavation" />
+         <meta property="twitter:description" content="Complete AI system built specifically for concrete and excavation companies. AI call answering, SMS follow-up, scheduling dashboard, CRM, and ad integration." />
          <meta property="twitter:image" content={getImageUrl('industries/Excavation1.jpg')} />
          
          {/* Additional SEO */}
-         <meta name="keywords" content="concrete AI, excavation automation, construction AI, site visit automation, project booking AI, business automation" />
+         <meta name="keywords" content="AI Software System for Concrete & Excavation, concrete construction AI, excavation automation, construction project management, AI system for construction companies, dispatch management, concrete CRM" />
          <meta name="author" content="Dan Talks AI" />
          <meta name="robots" content="index, follow" />
          
@@ -165,8 +165,11 @@ export default function ConcreteExcavationAI() {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
-                How AI Helps Your Excavation Business
+                AI Software System for Concrete & Excavation
               </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Built specifically for concrete and excavation companies, not generic business software
+              </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -218,6 +221,108 @@ export default function ConcreteExcavationAI() {
           </div>
         </section>
 
+        {/* Core Features Section */}
+        <section className="py-20 px-4 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
+                Complete AI System Features
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Everything you need to automate your concrete and excavation business
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <motion.div
+                className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-200"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-red-100 rounded-full">
+                  <svg className="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">AI Call Answering</h3>
+                <p className="text-gray-600">24/7 intelligent call handling with instant responses and quote generation</p>
+              </motion.div>
+
+              <motion.div
+                className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-200"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-blue-100 rounded-full">
+                  <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">SMS Follow-up</h3>
+                <p className="text-gray-600">Automated text messaging for project confirmations and scheduling reminders</p>
+              </motion.div>
+
+              <motion.div
+                className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-200"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-green-100 rounded-full">
+                  <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">AI Scheduling Dashboard</h3>
+                <p className="text-gray-600">Smart project management and crew scheduling for your construction team</p>
+              </motion.div>
+
+              <motion.div
+                className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-200"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-purple-100 rounded-full">
+                  <svg className="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Construction CRM</h3>
+                <p className="text-gray-600">Customer relationship management built specifically for concrete and excavation work</p>
+              </motion.div>
+
+              <motion.div
+                className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-200"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-orange-100 rounded-full">
+                  <svg className="w-8 h-8 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Google & Facebook Ads</h3>
+                <p className="text-gray-600">Seamless integration with your advertising campaigns for lead generation</p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         {/* How It Works Section */}
         <section className="py-20 px-4 bg-[#0B1C2E]">
           <div className="max-w-6xl mx-auto">
@@ -229,8 +334,11 @@ export default function ConcreteExcavationAI() {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                How It Works for Excavation
+                How the AI System Works
               </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Simple 3-step process to automate your concrete and excavation business
+              </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -242,10 +350,10 @@ export default function ConcreteExcavationAI() {
                 viewport={{ once: true }}
               >
                 <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center text-4xl">
-                  🤖
+                  📞
                 </div>
                 <div className="text-white font-semibold mb-2">Step 1</div>
-                <p className="text-gray-300 text-lg">Tell Rhea about your business and services</p>
+                <p className="text-gray-300 text-lg">Leads come in from your ads and website</p>
               </motion.div>
               
               <motion.div
@@ -256,10 +364,10 @@ export default function ConcreteExcavationAI() {
                 viewport={{ once: true }}
               >
                 <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center text-4xl">
-                  ⚙️
+                  🤖
                 </div>
                 <div className="text-white font-semibold mb-2">Step 2</div>
-                <p className="text-gray-300 text-lg">We build an AI system that handles customer inquiries</p>
+                <p className="text-gray-300 text-lg">AI responds instantly with quotes and scheduling</p>
               </motion.div>
               
               <motion.div
@@ -273,7 +381,7 @@ export default function ConcreteExcavationAI() {
                   🚀
                 </div>
                 <div className="text-white font-semibold mb-2">Step 3</div>
-                <p className="text-gray-300 text-lg">You get more bookings while working on other jobs</p>
+                <p className="text-gray-300 text-lg">You complete projects and grow your business</p>
               </motion.div>
             </div>
           </div>

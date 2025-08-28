@@ -380,22 +380,6 @@ export default function DumpsterAI() {
                 <h3 className="text-xl font-bold text-gray-800 mb-3">Google & Facebook Ads</h3>
                 <p className="text-gray-600">Seamless integration with your advertising campaigns for lead generation</p>
               </motion.div>
-
-              <motion.div
-                className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-200"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-indigo-100 rounded-full">
-                  <svg className="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">Dispatch Management</h3>
-                <p className="text-gray-600">Efficient scheduling and route planning for your dumpster delivery team</p>
-              </motion.div>
             </div>
           </div>
         </section>
