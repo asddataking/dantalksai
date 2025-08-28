@@ -26,7 +26,7 @@ export default function LandscapingAI() {
   const industryConfig = {
     industryName: 'Landscaping',
     headline: 'AI for Landscaping',
-    subheadline: 'Upsell seasonal work while you\'re mowing.',
+    subheadline: 'Book next season\'s work while you\'re still mowing this year\'s.',
     benefits: [
       'Never Miss a Call — instant replies 24/7',
       'Quotes on Autopilot — fast, professional estimates',
@@ -63,14 +63,36 @@ export default function LandscapingAI() {
 
   return (
     <>
-      <Head>
-        <title>{industryConfig.industryName} AI - Dan Talks AI</title>
-        <meta name="description" content={industryConfig.subheadline} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-      </Head>
+             <Head>
+         <title>{industryConfig.industryName} AI - Dan Talks AI</title>
+         <meta name="description" content={industryConfig.subheadline} />
+         <meta name="viewport" content="width=device-width, initial-scale=1" />
+         
+         {/* Open Graph / Facebook */}
+         <meta property="og:type" content="website" />
+         <meta property="og:url" content="https://dantalksai.com/landscaping-ai" />
+         <meta property="og:title" content={industryConfig.headline} />
+         <meta property="og:description" content={industryConfig.subheadline} />
+         <meta property="og:image" content={getImageUrl('industries/landcapedyard.jpg')} />
+         <meta property="og:image:width" content="1200" />
+         <meta property="og:image:height" content="630" />
+         
+         {/* Twitter */}
+         <meta property="twitter:card" content="summary_large_image" />
+         <meta property="twitter:url" content="https://dantalksai.com/landscaping-ai" />
+         <meta property="twitter:title" content={industryConfig.headline} />
+         <meta property="twitter:description" content={industryConfig.subheadline} />
+         <meta property="twitter:image" content={getImageUrl('industries/landcapedyard.jpg')} />
+         
+         {/* Additional SEO */}
+         <meta name="keywords" content="landscaping AI, lawn care automation, garden maintenance AI, seasonal booking AI, business automation, customer service AI" />
+         <meta name="author" content="Dan Talks AI" />
+         <meta name="robots" content="index, follow" />
+         
+         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+       </Head>
 
-      <main className="min-h-screen bg-[#0B1C2E] text-white font-['Inter']">
+      <main className="min-h-screen bg-[#0B1C2E] text-white font-['Poppins']">
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center text-center py-16 px-4 min-h-[60vh] overflow-hidden">
           {/* Header Photo Background */}
