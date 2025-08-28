@@ -220,13 +220,13 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
               >
                 <div className="text-center mb-6">
                   <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
-                    <Image
-                      src={getImageUrl('Home/rhea.png')}
-                      alt="Rhea"
-                      width={80}
-                      height={80}
-                      className="rounded-full"
-                    />
+                                         <Image
+                       src={getImageUrl('Home/Rhea.png')}
+                       alt="Rhea"
+                       width={80}
+                       height={80}
+                       className="rounded-full"
+                     />
                   </div>
                   <h2 className="text-2xl font-bold text-[#0B1C2E] mb-2">
                     Hey — I'm Rhea
@@ -259,13 +259,13 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
               >
                 <div className="text-center mb-6">
                   <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
-                    <Image
-                      src={getImageUrl('Home/rhea.png')}
-                      alt="Rhea"
-                      width={64}
-                      height={64}
-                      className="rounded-full"
-                    />
+                                       <Image
+                     src={getImageUrl('Home/Rhea.png')}
+                     alt="Rhea"
+                     width={64}
+                     height={64}
+                     className="rounded-full"
+                   />
                   </div>
                   <h2 className="text-2xl font-bold text-[#0B1C2E] mb-2">
                     Great choice!
@@ -349,13 +349,13 @@ export default function RheaModal({ isOpen, onClose, preselectedIndustry }: Rhea
               >
                 <div className="text-center mb-6">
                   <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
-                    <Image
-                      src={getImageUrl('Home/rhea.png')}
-                      alt="Rhea"
-                      width={64}
-                      height={64}
-                      className="rounded-full"
-                    />
+                                         <Image
+                       src={getImageUrl('Home/Rhea.png')}
+                       alt="Rhea"
+                       width={64}
+                       height={64}
+                       className="rounded-full"
+                     />
                   </div>
                   <h2 className="text-2xl font-bold text-[#0B1C2E] mb-2">
                     Perfect! Here's how AI can help your {selectedIndustry.toLowerCase()} business:

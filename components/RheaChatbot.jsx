@@ -283,13 +283,13 @@ export default function RheaChatbot() {
           >
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center overflow-hidden">
-                <Image
-                  src={getImageUrl('Home/rhea.png')}
-                  alt="Rhea"
-                  width={48}
-                  height={48}
-                  className="rounded-full"
-                />
+                                 <Image
+                   src={getImageUrl('Home/Rhea.png')}
+                   alt="Rhea"
+                   width={48}
+                   height={48}
+                   className="rounded-full"
+                 />
               </div>
               <div>
                 <h3 className="font-semibold">Rhea</h3>
@@ -313,13 +313,13 @@ export default function RheaChatbot() {
             <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center overflow-hidden">
-                  <Image
-                    src={getImageUrl('Home/rhea.png')}
-                    alt="Rhea"
-                    width={40}
-                    height={40}
-                    className="rounded-full"
-                  />
+                                     <Image
+                     src={getImageUrl('Home/Rhea.png')}
+                     alt="Rhea"
+                     width={40}
+                     height={40}
+                     className="rounded-full"
+                   />
                 </div>
                 <div>
                   <h3 className="font-semibold text-white">Rhea</h3>

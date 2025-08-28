@@ -8,25 +8,25 @@ import RheaModal from '../components/RheaModal'
 import Footer from '../components/Footer'
 import { getImageUrl } from '../lib/storage'
 
-export default function IndustryAI() {
+export default function LandscapingAI() {
   const router = useRouter()
   const [isRheaModalOpen, setIsRheaModalOpen] = useState(false)
 
   const handleOpenRhea = () => {
-    console.log('Industry AI: Opening Rhea modal...')
+    console.log('Landscaping AI: Opening Rhea modal...')
     setIsRheaModalOpen(true)
-    console.log('Industry AI: Modal state set to:', true)
+    console.log('Landscaping AI: Modal state set to:', true)
   }
 
   const handleCloseRhea = () => {
     setIsRheaModalOpen(false)
   }
 
-  // Industry-specific content variables (easy to swap for other industries)
+  // Industry-specific content variables
   const industryConfig = {
-    industryName: 'Industry Name',
-    headline: 'AI for Industry Name',
-    subheadline: 'Your industry-specific subheadline here.',
+    industryName: 'Landscaping',
+    headline: 'AI for Landscaping',
+    subheadline: 'Upsell seasonal work while you\'re mowing.',
     benefits: [
       'Never Miss a Call — instant replies 24/7',
       'Quotes on Autopilot — fast, professional estimates',
@@ -75,8 +75,11 @@ export default function IndustryAI() {
         <section className="relative flex flex-col items-center justify-center text-center py-16 px-4 min-h-[60vh] overflow-hidden">
           {/* Header Photo Background */}
           <div className="absolute inset-0">
-            {/* Note: Replace 'Home/industry-image.jpg' with actual image path when using this template */}
-            <div className="w-full h-full bg-gradient-to-br from-blue-900 to-purple-900"></div>
+            <img
+              src={getImageUrl('industries/landcapedyard.jpg')}
+              alt="Landscaping Business"
+              className="w-full h-full object-cover"
+            />
             <div className="absolute inset-0 bg-[#0B1C2E]/80"></div>
           </div>
           
@@ -139,7 +142,7 @@ export default function IndustryAI() {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
-                How AI Helps Your Industry Business
+                How AI Helps Your Landscaping Business
               </h2>
             </motion.div>
 
@@ -203,7 +206,7 @@ export default function IndustryAI() {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                How It Works for Your Industry
+                How It Works for Landscaping
               </h2>
             </motion.div>
 
@@ -301,7 +304,7 @@ export default function IndustryAI() {
       <RheaModal 
         isOpen={isRheaModalOpen}
         onClose={handleCloseRhea}
-        preselectedIndustry="Industry Name"
+        preselectedIndustry="Landscaping"
       />
     </>
   )

@@ -25,49 +25,49 @@ export const INDUSTRIES: Industry[] = [
     slug: "driveway-snow", 
     title: "AI for Driveways & Snow", 
     benefit: "Fill your route before the first snowfall.", 
-    image: "/images/industries/driveway.jpg", 
+    image: "industries/driveway.jpg", 
     rheaLabel: "Driveway/Snow" 
   },
   { 
     slug: "excavation", 
     title: "AI for Excavation", 
     benefit: "Capture site details and schedule walk-throughs automatically.", 
-    image: "/images/industries/excavation.jpg", 
+    image: "industries/Excavation1.jpg", 
     rheaLabel: "Excavation" 
   },
   { 
     slug: "landscaping", 
     title: "AI for Landscaping", 
     benefit: "Upsell seasonal work while you're mowing.", 
-    image: "/images/industries/landscaping.jpg", 
+    image: "industries/landcapedyard.jpg", 
     rheaLabel: "Landscaping" 
   },
   { 
     slug: "painting", 
     title: "AI for Painting", 
     benefit: "Answer bids and book estimates while you're on the ladder.", 
-    image: "/images/industries/painting.jpg", 
+    image: "industries/painting.jpg", 
     rheaLabel: "Painting" 
   },
   { 
     slug: "personal-trainer", 
     title: "AI for Personal Trainers", 
     benefit: "Auto-book sessions and reduce no-shows.", 
-    image: "/images/industries/trainer.jpg", 
+    image: "industries/trainer.jpg", 
     rheaLabel: "Personal Trainer" 
   },
   { 
     slug: "lawyer", 
     title: "AI for Lawyers", 
     benefit: "Intake clients, send reminders, and book consults faster.", 
-    image: "/images/industries/lawyer.jpg", 
+    image: "industries/lawyer.jpg", 
     rheaLabel: "Lawyer" 
   },
   { 
     slug: "car-garage", 
     title: "AI for Car Garages", 
     benefit: "Answer repair inquiries and schedule drop-offs instantly.", 
-    image: "/images/industries/garage.jpg", 
+    image: "industries/garage.jpg", 
     rheaLabel: "Car Garage" 
   },
 ];
@@ -75,7 +75,8 @@ export const INDUSTRIES: Industry[] = [
 // Track which industry pages actually exist
 export const EXISTING_INDUSTRY_SLUGS = new Set<string>([
   "dumpster-rental",
-  "concrete-excavation"
+  "concrete-excavation",
+  "landscaping"
 ]);
 
 // Helper to check if an industry page exists
