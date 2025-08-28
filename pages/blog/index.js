@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { getAllBlogPosts } from '../../lib/blogHandler'
 import ImageBanner from '../../components/ImageBanner'
+import { getImageUrl } from '../../lib/storage'
 
 // Blog post type definition
 // interface BlogPost {

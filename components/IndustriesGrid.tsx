@@ -52,7 +52,7 @@ export default function IndustriesGrid({ onOpenRhea }: IndustriesGridProps) {
         </motion.div>
         
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

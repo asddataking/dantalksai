@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { getBlogPosts } from '../lib/blogHandler'
 import ImageBanner from './ImageBanner'
+import { getImageUrl } from '../lib/storage'
 
 interface BlogPost {
   id: number
@@ -104,7 +105,7 @@ export default function BlogSection() {
                 {post.featured_image ? (
                   <div className="relative h-48 overflow-hidden">
                     <ImageBanner
-                      src={post.featured_image}
+                      src={getImageUrl(post.featured_image)}
                       alt={post.title}
                       overlay={0.3}
                       className="h-full"

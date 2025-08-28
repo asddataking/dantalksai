@@ -95,6 +95,8 @@ export default function IndustryTile({ industry, pageExists, onOpenRhea }: Indus
           return '/dumpsterai'
         case 'concrete-excavation':
           return '/concrete-excavation-ai'
+        case 'landscaping':
+          return '/landscaping-ai'
         default:
           return `/industries/${slug}`
       }
