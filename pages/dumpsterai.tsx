@@ -139,7 +139,7 @@ export default function DumpsterAI() {
                      {/* Header Photo Background */}
            <div className="absolute inset-0">
              <img
-               src={getImageUrl('dumpsterrental1.jpg')}
+               src={getImageUrl('industries/dumpsterrental1.jpg')}
                alt="Dumpster Rental Business"
                className="w-full h-full object-cover object-top"
              />

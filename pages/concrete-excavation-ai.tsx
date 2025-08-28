@@ -77,7 +77,7 @@ export default function ConcreteExcavationAI() {
               alt="Concrete & Excavation Business"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-[#0B1C2E]/80"></div>
+
           </div>
           
 
