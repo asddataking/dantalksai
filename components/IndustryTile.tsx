@@ -22,7 +22,7 @@ export default function IndustryTile({ industry, pageExists, onOpenRhea }: Indus
       {/* Background Image */}
       {industry.image && (
         <ImageBanner
-          src={getImageUrl(industry.image)}
+          src={`https://prxioffyzbmygsliuabt.supabase.co/storage/v1/object/public/images/${industry.image}`}
           alt={`${industry.title} - ${industry.benefit}`}
           overlay={0.3}
           className="absolute inset-0"

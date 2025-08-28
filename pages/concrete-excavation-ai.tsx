@@ -86,10 +86,10 @@ export default function ConcreteExcavationAI() {
          <meta name="author" content="Dan Talks AI" />
          <meta name="robots" content="index, follow" />
          
-         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
        </Head>
 
-      <main className="min-h-screen bg-[#0B1C2E] text-white font-['Poppins']">
+      <main className="min-h-screen bg-[#0B1C2E] text-white font-['Outfit']">
         {/* Hero Section with Header Photo */}
         <section className="relative flex flex-col items-center justify-center text-center py-16 px-4 min-h-[60vh] overflow-hidden">
           {/* Header Photo Background */}
@@ -110,23 +110,23 @@ export default function ConcreteExcavationAI() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <motion.h1 
-              className="text-5xl md:text-7xl font-bold mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-            >
-              <span className="text-[#F5F7FA]">{industryConfig.headline}</span>
-            </motion.h1>
+                         <motion.h1 
+               className="text-5xl md:text-7xl font-bold mb-8 tracking-tight"
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ delay: 0.2, duration: 0.8 }}
+             >
+               <span className="text-[#F5F7FA] font-extrabold">{industryConfig.headline}</span>
+             </motion.h1>
             
-            <motion.p 
-              className="text-xl md:text-2xl max-w-4xl mx-auto text-gray-300 mb-12 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-            >
-              {industryConfig.subheadline}
-            </motion.p>
+                         <motion.p 
+               className="text-xl md:text-2xl max-w-4xl mx-auto text-gray-300 mb-12 leading-relaxed font-medium"
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ delay: 0.4, duration: 0.8 }}
+             >
+               {industryConfig.subheadline}
+             </motion.p>
             
 
             
@@ -137,12 +137,12 @@ export default function ConcreteExcavationAI() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
             >
-              <motion.button 
-                className="group bg-[#C42B2B] hover:bg-[#A02020] text-white px-12 py-6 rounded-2xl font-bold text-2xl transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25"
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleOpenRhea}
-              >
+                             <motion.button 
+                 className="group bg-[#C42B2B] hover:bg-[#A02020] text-white px-12 py-6 rounded-3xl font-bold text-2xl transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-[#C42B2B]/25"
+                 whileHover={{ scale: 1.05, y: -5 }}
+                 whileTap={{ scale: 0.95 }}
+                 onClick={handleOpenRhea}
+               >
                 <span className="flex items-center space-x-1">
                   <span>Get My AI System</span>
                   <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
