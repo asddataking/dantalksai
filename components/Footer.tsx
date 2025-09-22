@@ -37,6 +37,7 @@ export default function Footer() {
               <li><Link href="/dumpsterai" className="text-gray-400 hover:text-[#C42B2B] transition-colors text-sm">Dumpster AI</Link></li>
               <li><Link href="/concrete-excavation-ai" className="text-gray-400 hover:text-[#C42B2B] transition-colors text-sm">Concrete & Excavation AI</Link></li>
               <li><Link href="/landscaping-ai" className="text-gray-400 hover:text-[#C42B2B] transition-colors text-sm">Landscaping AI</Link></li>
+              <li><Link href="/snow-removal-ai" className="text-gray-400 hover:text-[#C42B2B] transition-colors text-sm">Snow Removal AI</Link></li>
             </ul>
           </div>
           
